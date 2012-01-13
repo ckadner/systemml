@@ -1,0 +1,2 @@
+A=Rand(rows=5, cols=55);
+writeMM(A, "A.data", format="text");

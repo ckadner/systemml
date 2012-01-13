@@ -1,0 +1,1260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252"><title>DML</title>
+
+<meta name="GENERATOR" content="OpenOffice.org 3.2 (Win32)">
+<meta name="CREATED" content="0;0">
+<meta name="CHANGEDBY" content=" ">
+<meta name="CHANGED" content="20110519;19170600">
+<meta name="Originator" content="Microsoft Word 10">
+<meta name="ProgId" content="Word.Document">
+<!--[if gte mso 9]><xml> <o:DocumentProperties> <o:Author>IBM_USER</o:Author> <o:LastAuthor>IBM_USER</o:LastAuthor> <o:Revision>63</o:Revision> <o:TotalTime>147</o:TotalTime> <o:Created>2010-09-28T21:37:00Z</o:Created> <o:LastSaved>2010-09-29T00:04:00Z</o:LastSaved> <o:Pages>1</o:Pages> <o:Words>1822</o:Words> <o:Characters>10387</o:Characters> <o:Company>IBM</o:Company> <o:Lines>86</o:Lines> <o:Paragraphs>24</o:Paragraphs> <o:CharactersWithSpaces>12185</o:CharactersWithSpaces> <o:Version>10.6858</o:Version> </o:DocumentProperties> </xml><![endif]--><!--[if gte mso 9]><xml> <w:WordDocument> <w:GrammarState>Clean</w:GrammarState> <w:Compatibility> <w:UseFELayout/> </w:Compatibility> <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel> </w:WordDocument> </xml><![endif]--><!--[if !mso]><object classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object> <style> st1\:*{behavior:url(#ieooui) } </style> <![endif]--><!--[if gte mso 10]> <style> /* Style Definitions */ table.MsoNormalTable {mso-style-name:"Table Normal"; mso-tstyle-rowband-size:0; mso-tstyle-colband-size:0; mso-style-noshow:yes; mso-style-parent:""; mso-padding-alt:0in 5.4pt 0in 5.4pt; mso-para-margin:0in; mso-para-margin-bottom:.0001pt; mso-pagination:widow-orphan; font-size:10.0pt; font-family:"Times New Roman";} </style> <![endif]--><!--[if gte mso 9]><xml> <o:shapedefaults v:ext="edit" spidmax="2050"/> </xml><![endif]--><!--[if gte mso 9]><xml> <o:shapelayout v:ext="edit"> <o:idmap v:ext="edit" data="1"/> </o:shapelayout></xml><![endif]-->
+<style type="text/css">
+<!--
+H1 { color: #000000 }
+P { color: #000000 }
+PRE { color: #000000 }
+PRE.cjk { font-family: "NSimSun", monospace }
+H2 { color: #000000 }
+H2.cjk { font-family: "SimSun" }
+H2.ctl { font-family: "Mangal" }
+A:link { color: #0000ff }
+A:visited { color: #0000ff }
+-->
+</style>
+</head>
+<body style="direction: ltr; color: rgb(0, 0, 0);" lang="en-US" link="#0000ff" vlink="#0000ff">
+<pre class="western" style="margin-bottom: 0.2in; text-align: center;"><font size="6"><b>An Introduction To DML</b></font></pre>
+<p class="msonormal"><a name="mozTocId182601"></a>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+May 19,
+2011</p>
+<ol>
+<li>
+<p style="margin-bottom: 0in;"><a name="mozToc"></a><!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6--><a href="#mozTocId452942">General</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId452943">Data Types and Variables</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId600673">Statements </a> </p>
+<ol>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId63369">InputOutput Statement</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId2532">Assignment Statement </a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId187579">While Statement</a></p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId187579">Rand Statement</a> </p>
+</li>
+</ol>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId399290">Expressions</a> </p>
+<ol>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId526747">Operators</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId926860">Builtin Functions</a> </p>
+</li>
+</ol>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId490093">Future Language Constructs</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId490094">Example Scripts</a> </p>
+<ol>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId959105">Gaussian Non-Negative Matrix
+Factorization (GNMF)</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId419387">PageRank</a> </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><a href="#mozTocId258037">LinearRegression</a> </p>
+</li>
+<li>
+<p><a href="#mozTocId569387">Descriptive
+Statistics</a> </p>
+</li>
+</ol>
+</li>
+</ol>
+<ol>
+<h1><a name="mozTocId452942"></a><!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->General</h1>
+<p class="msonormal">DML is case sensitive. <br>
+We use uppercase variables (e.g., X, Y) to denote matrices and
+lowercase variables (e.g., m, n) to denote scalars.</p>
+<h1><a name="mozTocId452943"></a>Data Types
+and Variables</h1>
+<p class="msonormal">DML supports two data types :
+matrices and scalars. Scalar data types supported are integer, double,
+string and logical. The cells in a matrix are of type double. </p>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# Variable i is of type integer</p>
+<p class="msonormal"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; i = 0;</i> </p>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; #
+Variable V is of type Matrix with cells of type double (default)</p>
+<p class="msonormal"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; V = read
+("in/v", rows=10, cols=8, format="text");</i> </p>
+<p class="msonormal">&nbsp;</p>
+<h1><a name="mozTocId600673"></a>Statements </h1>
+<p class="msonormal">A DML program consists of a
+sequence of statements, with the default computation semantics being
+sequential evaluation of the individual statements. The statements
+supported currently in DML are InputOutput, Assignment, While, If, and
+Rand statements.&nbsp; </p>
+<ol>
+<h2 class="western"><a name="mozTocId63369"></a>InputOutput
+Statement</h2>
+</ol>
+<p class="msonormal" style="margin-bottom: 0.17in;">Read
+and Write statements are provided for respectively reading and writing
+matrices, from and to files. The files are not managed in memory but
+kept in HDFS and processed by Hadoop.</p>
+<p class="msonormal" style="margin-bottom: 0.17in;">The
+first parameter in the Read statement is the path to the file
+containing the matrix. Additional properties of the matrix, such as
+dimensionality and sparsity (number of non-zero entries or nnzs) can be
+provided as illustrated by the following example. </p>
+<p class="msonormal"><i>V = read ("in/v", rows=10,
+cols=8, nnzs = 20, format="text");</i> </p>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal">SystemML supports a sparse text
+format on disk. The cell values are stored in <i>(row column
+value)</i>-format with the row and column indices being 1-based.
+The following example shows the “in/v” file for the above read
+statement. The <i>binary</i> format can only be read and
+written by SystemML. DML scripts with read and write statements can be
+executed to perform format conversions.</p>
+<p class="msonormal" style="margin-bottom: 0.17in;"><br>
+<i>1 1 4<br>
+3 4 10<br>
+5 6 7<br>
+9 8 20</i></p>
+<p class="msonormal">The first two parameters in the
+Write statement describe the matrix variable to be written along with
+the path to the file containing the matrix. Additional parameters can
+be provided as shown below. </p>
+<p class="msonormal" style="margin-bottom: 0.17in;"><b><br>
+</b><i>write(W, "out/w", format="text");</i></p>
+<p class="msonormal">The table below lists the various
+optional parameters supported in InputOutput Statements. In a Read
+statement, the dimensionality of each input matrix must be specified;
+if the rows and cols parameters are missing, they default to a value of
+1. The input files may be in text or binary format and the value type
+of the elements is double. Additional value types for matrices (int,
+string and logical) will be supported in the next release.</p>
+<p class="msonormal">&nbsp;</p>
+<table border="1" cellpadding="0" cellspacing="2">
+<tbody>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Name of
+parameter</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Description</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Value
+type</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Permissible
+Values</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Default</b></p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">rows</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Number of rows
+in matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Integer</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">&nbsp;</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">1 (for read
+statement)</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">cols</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Number of
+columns in matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Integer</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">&nbsp;</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">1 (for read
+statement)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;">format</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">File in text or
+binary format</p>
+</td>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;">String</p>
+</td>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;">text, binary</p>
+</td>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;">text</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">value_type</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Type of scalar
+values in matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">String</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">double, int,
+string</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">double</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">nnzs</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Number of
+non-zeroes</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Integer</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">&nbsp;</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">rows * cols (for
+read Statement)</p>
+</td>
+</tr>
+<tr>
+<td colspan="5">
+<p class="msonormal" style="border: medium none ; padding: 0in;" align="center">
+<b><br>
+Optional parameters in InputOutput Statements</b></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="msonormal">&nbsp;&nbsp;&nbsp; <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
+<ol>
+<h2 class="western"><a name="mozTocId2532"></a>Assignment
+Statement </h2>
+</ol>
+<p class="msonormal">An assignment statement consists of
+an expression, the result of which is assigned to a variable. The
+variable gets the appropriate type (matrix or scalar) depending on the
+type of the variable output by the expression. <br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;<i>max_iteration = 3;</i></p>
+<p class="msonormal">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <i>V = W %*%
+H</i>;<br>
+&nbsp;</p>
+<p class="msonormal"><i>max_iteration</i> is
+of type integer; <i>V</i> is of type matrix with the value
+type of the V cells being derived from W and H.<br>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
+<p class="msonormal">The operators allowed in
+expressions in an assignment statement are described below under <a href="#Expressions">Expressions</a> . </p>
+<ol>
+<h2 class="western"><a name="mozTocId626926"></a>While
+Statement</h2>
+</ol>
+<p class="msonormal">&nbsp; One control structure
+supported in DML is the While statement. The predicates in a While
+statement consist of operations on scalar variables and literals as
+shown below. <br>
+<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="font-family: Courier New;" lang="pl-PL">&nbsp;<i>while(
+(i &lt; 20) &amp; (!converge) ) {</i></span></p>
+<p style="font-family: Courier New;" class="msonormal">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span lang="pl-PL"><i>H = H * (t(W) %*% V) / ( t(W) %*% W
+%*% H);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;i = i + 1;</i></span></p>
+<p style="font-family: Courier New;" class="msonormal"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;}</i></p>
+<p class="msonormal" style="margin-bottom: 0.17in;"><br>
+The body of a while statement may contain any sequence of Assignment,
+InputOutput, While, If, and Rand statements. Thus, DML supports nested
+control structures </p>
+<ol>
+<h2 class="western"><a name="mozTocId6269261"></a>If
+Statement</h2>
+</ol>
+<p class="msonormal">&nbsp; Another control
+structure supported in DML is the If statement. The predicates in an If
+statement consist of operations on scalar variables and literals as
+shown below. <br>
+<br>
+</p>
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <i style="font-family: Courier New,Courier,monospace;">if( i
+&lt; 20 ) {</i> </span><br style="font-family: Courier New,Courier,monospace;">
+<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; converge = false</i> </span><br style="font-family: Courier New,Courier,monospace;">
+<i style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; else { </i>
+<ol style="font-family: Courier New,Courier,monospace;">
+<i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; converge
+= true;</i>
+</ol>
+<i style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i>
+<p class="msonormal"></p>
+<p class="msonormal">Conceptually, the If statement has
+two bodies: the if body (evaluated if the predicate evaluates to true)
+and the optional else body (evaluated otherwise). The body of the if
+statement may contain any sequence of Assignment, InputOutput, While,
+If, and Rand statements. Thus, DML supports nested control structures,
+such as in the following example:</p>
+</ol>
+<ol>
+<p style="margin-bottom: 0in;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<span style="font-family: Courier New,Courier,monospace;" lang="pl-PL">&nbsp;&nbsp;
+<i>while( !converge ) {</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <span lang="pl-PL"><i>&nbsp;H = H * (t(W) %*% V) / (
+t(W) %*% W %*% H);<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;i = i + 1;</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; zerror =
+z - H %*% W;</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if
+(zerror &lt; maxError){</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;converge = true;</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; else {</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp; &nbsp;converge = false;</i></span></p>
+<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i></span></p>
+<p class="msonormal" style="margin-bottom: 0.17in;"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp; </i></span><br>
+<br>
+<br>
+</p>
+</ol>
+<ol>
+<ol>
+<h2 class="western"><a name="mozTocId187579"></a>Rand
+Statement</h2>
+</ol>
+<p class="msonormal">&nbsp;The Rand statement is
+used to generate a random mxn matrix. </p>
+</ol>
+<p class="msonormal"><br>
+<br>
+</p>
+<p style="margin-left: 0.83in; margin-bottom: 0in;"><i>X&nbsp;
+=
+Rand(rows = 10, cols = 20, min = 0, max = 1, pdf = "uniform",
+sparsity=0.2);</i></p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
+<p class="msonormal" style="margin-left: 0.42in;">generates
+a 10 x 20
+matrix, where each cell value is chosen uniformly at random between 0
+and 1. Currently, the only pdf supported is uniform; additional
+distributions would be added in future DML releases. <br>
+The
+parameter <i>sparsity</i> takes a value between 0 and 1,
+and it
+denotes the fraction of non-zero cells in the matrix. In the current
+example, <i>approximately</i> 20% of cells in the
+generated matrix
+will have a non-zero value. </p>
+<ol>
+<h1><a name="mozTocId399290"></a><a name="Expressions"></a>Expressions</h1>
+<p class="msonormal">Expressions in DML apply an
+operation, such as matrix multiplication, over one or more input
+operands. The operations in DML are divided into operators such as <i>matrix
+multiplication</i> and builtin functions such as <i>diag</i>
+and <i>transpose</i>.</p>
+<ul type="disc">
+<h2 class="western"><a name="mozTocId526747"></a>Operators</h2>
+</ul>
+<p class="msonormal">In addition to linear algebra
+operations such as matrix multiplication, matrices can also be used in
+arithmetic, relational and boolean expressions. In these cases, the
+operations are performed element by element. For instance, </p>
+<p class="msonormal"><i>A = B * C;</i></p>
+<p class="msonormal">is evaluated by multiplying each
+cell in B with the corresponding cell in C. Note that the dimensions of
+the input matrices need to match based on the operator semantics;
+otherwise an exception will be raised at compile time. When one of the
+operands is a matrix and the other operand is a scalar, the operation
+is performed elementwise on the matrix using the scalar operand. For
+example </p>
+<p class="msonormal">&nbsp;<i>A = B * 20;</i></p>
+<p class="msonormal" style="margin-bottom: 0.17in;">&nbsp;is
+evaluated by multiplying every cell in B by the scalar value 20.<br>
+<br>
+The basic operators supported in a DML expression are shown below. </p>
+<table border="1" cellpadding="0" cellspacing="2">
+<tbody>
+<tr>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Operator</b></p>
+</td>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Example</b></p>
+</td>
+<td valign="top">
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Input
+Type</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Output
+Type</b></p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Arithmetic ( + ,
+- , *, / )</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X + Y</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">If one of the
+operands is a matrix, output is matrix; otherwise it is scalar</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix
+Multiplication</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X %*% Y</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Power</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X ^ y</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X can be matrix
+or scalar<br>
+y is a scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Same as X</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Relational
+(&lt;&nbsp; &gt;&nbsp; == != &lt;=&nbsp;
+&gt;= )</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X&nbsp;
+&lt;= Y</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Boolean (
+&amp;&nbsp; |&nbsp; !)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X &amp; Y<br>
+!X</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+</tr>
+<tr>
+<td colspan="4">
+<p class="msonormal" style="border: medium none ; padding: 0in;" align="center">
+<b><br>
+DML Operators</b></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="msonormal">&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
+<ul type="disc">
+<h2 class="western"><a name="mozTocId926860"></a>Builtin
+Functions</h2>
+</ul>
+<p class="msonormal">&nbsp; The builtin functions
+supported in DML can be broadly classified as follows.</p>
+<ul type="disc">
+<li>
+<p style="margin-bottom: 0in;"><b>Linear
+algebra </b><span style="font-weight: normal;">:</span>
+Functions applying linear algebra operations on matrices such as <i>transpose</i>,
+<i>diag</i> and <i>trace</i>. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><b>Matrix
+Aggregation </b><span style="font-weight: normal;">:</span>
+Functions performing aggregation operations on matrices, such as <i>sum</i>,
+<i>prod</i>, <i>avg</i>, <i>min</i>
+and <i>max</i>. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><b>Matrix
+Partial Aggregation </b><span style="font-weight: normal;">:</span>
+Functions aggregating matrices along a single dimension such as <i>rowSums</i>
+and <i>colSums</i>. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><b>Matrix
+Dimensionality </b><span style="font-weight: normal;">:</span>
+Functions to compute dimensionality of a matrix, such as <i>length</i>,
+<i>nRow </i>and <i>nCol</i>. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><b>Comparison</b>
+: Functions comparing two operands; for matrices the functions
+supported are <i>pmin</i> and <i>pmax</i> and
+for scalars the corresponding functions are <i>min </i>and
+<i>max</i> respecively. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;"><b>Mathematical</b>
+: Mathematical and trigonometric functions, such as <i>sqrt</i>,
+<i>log</i>, <i>abs</i>, <i>sin</i>,
+<i>cos</i> and <i>tan</i>. These
+functions can be applied on matrices or scalars.&nbsp; </p>
+</li>
+<li>
+<p><b>Cast</b> : Functions to cast objects from
+one type to another. E.g., <i>castAsScalar</i>. </p>
+</li>
+</ul>
+<p class="msonormal" style="margin-bottom: 0.17in;">The
+table below lists the functions currently supported in DML along with a
+description of the input and output types for each of them. For
+example, consider the following expressions. </p>
+<p class="msonormal"><i>s = sum(A);</i><br>
+<i>B = rowSums(A);</i><br>
+<i>C = colSums(A);<br>
+D = rowSums(C); </i><br>
+diff = s - castAsScalar(D);</p>
+<p class="msonormal" style="margin-bottom: 0.17in;"><br>
+The builtin function <i>sum</i> operates on a matrix (say <i>A</i>
+of dimensionality <i>mxn</i>) and returns a scalar value
+corresponding to the sum of all values in the matrix. The builtin
+functions <i>rowSum</i>s and <i>colSums</i>,
+on the other hand, aggregate values on a per-row and per-column basis
+respectively. They output matrices of dimensionality <i>mx1</i>
+and <i>1xn</i> respectively. Therefore, <i>B</i>
+is a <i>mx1</i> matrix and <i>C</i> is a <i>1xn</i>
+matrix. Applying <i>rowSums</i> on matrix <i>C</i>,
+we obtain matrix <i>D</i> as a <i>1x1</i>
+matrix. In DML, a <i>1x1</i> matrix is different from a
+scalar; to treat <i>D</i> as a scalar, an explicit <i>castAsScalar</i>
+operation is invoked in the final statement. The difference between <i>s</i>
+and <i>castAsScalar(D)</i> should be 0.</p>
+<table border="1" cellpadding="0" cellspacing="2" width="100%">
+<tbody>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Builtin
+Function</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Example</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Input
+Types</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Output
+Types</b></p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Comments</b></p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Trans (t)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">t(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Return transpose
+of a matrix</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">diag</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">diag(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">If input is a
+vector (i.e., 1xn or nx1 matrix), create a (nxn) matrix where the
+diagonal is the input matrix.<br>
+Otherwise, create a column vector (nx1) from the diagonal of the input
+matrix.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">sum</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">sum(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the sum
+of all the element values in the matrix</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">min/max for
+Matrices</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">min(X)<br>
+max(Y)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
+minimum/maximum element value in the entire matrix</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">rowSums/rowMeans/rowMaxs/rowMins</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">rowSums(X) <br>
+rowMeans(X) <br>
+rowMaxs(X) <br>
+rowMins(X) </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Row-wise
+computations -- for each row, compute the sum/mean/max/min of all
+element values</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">colSums/colMeans/colMaxs/colMins</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">colSums(X) <br>
+colMeans(X) <br>
+colMaxs(X) <br>
+colMins(X) </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Row-wise
+computations -- for each column, compute the sum/mean/max/min of all
+element values</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">max/max for
+scalars</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">min(x,y)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
+minimum/maximum amongst the given scalar values</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">pmin / pmax</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">pmin(X,Y) <br>
+pmax(X,y)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X is a Matrix,
+the second input can be a Matrix or a Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute
+cell-wise minimum/maximum. If the second input is a scalar then it is
+compared against all cells in the first input.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">ppred</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">ppred(X,Y,"&lt;")
+<br>
+ppred(X,y,"&lt;")</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X is a Matrix,
+the second input can be a Matrix or a Scalar, the third input is an
+operator</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">The operator
+specified in the third input is applied to all cells in X and Y
+matrices. If the second input is a scalar then it is used against all
+cells in the first input.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">avg</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">avg(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
+average value of all elements in the matrix</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">prod</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">prod(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
+product of all the element values in the matrix.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Trace</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">trace(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the sum
+of elements on the main diagonal for a given square matrix.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Trigonometric
+(sin, cos, tan)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">sin(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Same as input</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Apply the
+trigonometric function on the input (element wise if the input is a
+matrix)</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Dimensionality
+(nrow, ncol, length)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">nrow(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">nrow, ncol and
+length compute the number of rows, number of columns and number of
+cells in the matrix respectively.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Mathematical
+(log, abs, sqrt, round)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
+sqrt(X)<br>
+log(X)<br>
+log(X,y) <br>
+round(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Same as input</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Apply the
+mathematical function on the input (element wise if the input is a
+matrix)</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">castAsScalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">castAsScalar(X)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">A 1x1 matrix is
+cast as a scalar</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">print</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">print(x)<br>
+print("...", x)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Not Applicable</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Prints the value
+of a scalar variable <i>x</i>. This builtin takes an
+optional string parameter.</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">ctable</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">F = ctable(A,B) <br>
+F = ctable(A,B,C) </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Vectors</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Computes the
+contingency table between two vectors A and B. The resulting table <i>F</i>
+consists of <i>max(A)</i> rows and <i>max(B)</i>
+columns. <br>
+More precisely, F[i,j] = |{ k | A[k] = i and B[k] = j, 1 &#8804; k &#8804; n }|,
+where A and B are two <i>n-dimensional</i> vectors. <br>
+In an alternative form, it takes an optional third parameter C which is
+a vector that has same dimensions as that of A and B. <br>
+In this context, F[i,j] = &#8721;<sub>k</sub>C[k], where A[k] = i
+and B[k] = j (1 &#8804; k &#8804; n). </p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Simple Quantile</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
+quantile(X, p) <br>
+quantile(X, W, p)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X and W are
+column matrices (vectors) of the same size <br>
+W contains the weights for data in X <br>
+p is a scalar (0&lt;p&lt;1) that specifies the quantile to be
+computed </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">The p-quantile
+for a random variable X is the value x such that Pr[X&lt;x]
+&lt;= p and Pr[X&lt;= x] &gt;= p <br>
+let n=nrow(X), i=ceiling(p*n), quantile() will return X[i] </p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Quantile</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
+quantile(X, P) <br>
+quantile(X, W, P)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X, W are column
+matrices (vectors) of the same size <br>
+W contains the weights for data in X <br>
+P is a column matrix (vector) that specifies quantiles to be computed </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">A column matrix
+with the same size as P</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">This function
+returns a column matrix that contains all the quantiles required in P</p>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">Inter Quartile
+Mean</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
+interQuartileMean(X)<br>
+interQuartileMean(X, W)</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">X, W are column
+matrices (vectors) of the same size <br>
+W contains the weights for data in X </p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">scalar</p>
+</td>
+<td>
+<p class="msonormal" style="border: medium none ; padding: 0in;">This function
+returns the mean of all x in X such that x&gt;quantile(X, 0.25) and
+x&lt;=quantile(X, 0.75)</p>
+</td>
+</tr>
+<tr>
+<td colspan="5">
+<p class="msonormal" style="border: medium none ; padding: 0in;" align="center">
+<b><br>
+DML Builtin functions</b></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h1><a name="mozTocId490093"></a>Future
+Language Constructs</h1>
+<p class="msonormal" style="margin-bottom: 0.17in;">SystemML
+and DML are under active development. Adding additional constructs and
+features is mainly driven by requirements. We currently intend to add
+the following constructs to DML:</p>
+<ul type="disc">
+<li>
+<p style="margin-bottom: 0in;">for statement control
+structure </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">support for functions</p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">cross-validation
+statement </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">constructors for
+matrices (e.g., create a mxn matrix with all cells having the value c)</p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">integration with
+libraries such as LAPACK. </p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">index-based
+operations (e.g., A[1,5] = B[1,5] * 5 )</p>
+</li>
+<li>
+<p style="margin-bottom: 0in;">specialized functions
+such as Unique() and sparse() for contingency table computation </p>
+</li>
+<li>
+<p>support for additional value types for matrices (int,
+string and logical) </p>
+</li>
+</ul>
+<h1><a name="mozTocId490094"></a>Example
+Scripts</h1>
+<ul type="disc">
+<h2 class="western"><a name="mozTocId959105"></a><u>Gaussian
+Non-Negative Matrix Factorization (GNMF)</u></h2>
+</ul>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal"><i>V = read("in/v", rows=10,
+cols=8, format="text");</i></p>
+<p class="msonormal"><i>W = read("in/w", rows=10,
+cols=5, format="text");</i></p>
+<p class="msonormal"><i>H = read("in/h", rows=5,
+cols=8, format="text");<br>
+max_iteration = 3;<br>
+i = 0;<br>
+while(i &lt; max_iteration) {</i></p>
+<p class="msonormal" lang="pl-PL"><i>H = H
+* (t(W) %*% V) / ( t(W) %*% W %*% H);<br>
+W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
+i = i + 1;</i></p>
+<p class="msonormal"><i>}</i></p>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal"><i>write(W, "out/w",
+format="text");<br>
+write(H, "out/h", format="text");</i></p>
+<p class="msonormal">&nbsp;</p>
+<ul type="disc">
+<h2 class="western"><a name="mozTocId419387"></a><u>PageRank</u></h2>
+</ul>
+<p class="msonormal"><i>G = read("in/g",
+rows=1000, cols=1000, format="text");<br>
+# dense<br>
+p = read("in/p", rows=1000, cols=1, format="text");<br>
+e = read("in/e", rows=1000, cols=1, format="text");<br>
+u = read("in/u", rows=1, cols=1000, format="text");<br>
+alpha = 0.85;<br>
+max_iteration = 3;<br>
+i = 0;<br>
+<br>
+while(i &lt; max_iteration) {<br>
+&nbsp;&nbsp;&nbsp; p = alpha * (G %*% p) + (1 - alpha) * (e
+%*% u %*% p);<br>
+&nbsp;&nbsp;&nbsp; i = i + 1;<br>
+}<br>
+<br>
+write(p, "out/p", format="text");</i></p>
+<p class="msonormal">&nbsp;</p>
+<ul type="disc">
+<h2 class="western"><a name="mozTocId258037"></a><u>LinearRegression</u></h2>
+</ul>
+<p class="msonormal">&nbsp;</p>
+<p class="msonormal"><i>V = read("in/v",
+rows=10000, cols=500, format="text");<br>
+y = read("in/y", rows=10000, cols=1, format="text");<br>
+lambda = 0.000001;<br>
+r = -(t(V) %*% y);<br>
+p = -r;<br>
+norm_r2 = sum(r * r);<br>
+w = 0;<br>
+<br>
+max_iteration = 3;<br>
+i = 0;<br>
+while(i &lt; max_iteration) {<br>
+&nbsp;&nbsp;&nbsp; q = ((t(V) %*% (V %*% p)) + lambda * p);<br>
+&nbsp;&nbsp;&nbsp; alpha = norm_r2 / castAsScalar(t(p) %*%
+q);<br>
+&nbsp;&nbsp;&nbsp; w = w + alpha * p;<br>
+&nbsp;&nbsp;&nbsp; old_norm_r2 = norm_r2;<br>
+&nbsp;&nbsp;&nbsp; r = r + alpha * q;<br>
+&nbsp;&nbsp;&nbsp; norm_r2 = sum(r * r);<br>
+&nbsp;&nbsp;&nbsp; beta = norm_r2 / old_norm_r2;<br>
+&nbsp;&nbsp;&nbsp; p = -r + beta * p;<br>
+&nbsp;&nbsp;&nbsp; i = i + 1;<br>
+}<br>
+<br>
+write(w, "out/w", format="text");</i></p>
+<p class="msonormal">&nbsp;</p>
+<p></p>
+</ol>
+</body></html>
