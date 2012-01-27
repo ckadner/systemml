@@ -9,13 +9,13 @@ tol = 0.000001
 maxiter = 3
 maxinneriter = 3 
 
-#X = readMM("$$indir$$X", rows=$$rows$$, cols=$$cols$$, format="text")
+#X = read("$$indir$$X", rows=$$rows$$, cols=$$cols$$, format="text")
 X = Rand(rows = 1000, cols = 1000, min = 1, max = 10, pdf = "uniform");
 
 N = nrow(X)
 D = ncol(X)
 
-#y = readMM( "$$indir$$y", rows=$$rows$$, cols=1, format="text")
+#y = read( "$$indir$$y", rows=$$rows$$, cols=1, format="text")
 y = Rand(rows = 1000, cols = 1, min = 1, max = 10, pdf = "uniform");
 
 
@@ -157,4 +157,4 @@ while(!converge) {
 	
 } 
 
-writeMM(w, "w.ouput", format="text");
+write(w, "w.ouput", format="text");

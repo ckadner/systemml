@@ -1,6 +1,6 @@
-V = readMM("gnmf/in/v", rows=10, cols=8, format="text");
-W = readMM("gnmf/in/w", rows=10, cols=5, format="text");
-H = readMM("gnmf/in/h", rows=5, cols=8, format="text");
+V = read("gnmf/in/v", rows=10, cols=8, format="text");
+W = read("gnmf/in/w", rows=10, cols=5, format="text");
+H = read("gnmf/in/h", rows=5, cols=8, format="text");
 max_iteration = 1;
 i = 0;
 
@@ -12,5 +12,5 @@ while(i < max_iteration) {
 	i = i + 1;
 }
 
-writeMM(W, "gnmf/out/w", format="text");
-writeMM(H, "gnmf/out/h", format="text");
+write(W, "gnmf/out/w", format="text");
+write(H, "gnmf/out/h", format="text");

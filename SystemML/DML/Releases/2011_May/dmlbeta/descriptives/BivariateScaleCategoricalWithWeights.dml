@@ -5,9 +5,9 @@
 #Y <- scale variable
 #WM <- weights
 
-A = readMM("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
-Y = readMM("in/salary.scale.data", rows=474, cols=1, format="text");
-WM = readMM("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
+A = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
+Y = read("in/salary.scale.data", rows=474, cols=1, format="text");
+WM = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
 ones = Rand(rows=474, cols=1, min=1.0, max=1.0);
 
 # Category-wise Frequencies

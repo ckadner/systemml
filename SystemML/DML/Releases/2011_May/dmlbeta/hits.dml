@@ -1,6 +1,6 @@
-G = readMM("hits/in/graph",rows=10000, cols=10000, format="text");
+G = read("hits/in/graph",rows=10000, cols=10000, format="text");
 
-authorities=readMM("hits/in/authorities",rows=10000, cols=1, format="text");
+authorities=read("hits/in/authorities",rows=10000, cols=1, format="text");
 
 maxiter = 2;
 tol = 0.000001;
@@ -31,5 +31,5 @@ while(!converge) {
 	iter = iter + 1
 }
 
-writeMM(hubs,"hits/out/hubs",format="text")
-writeMM(authorities,"hits/out/authorities",format="text")
+write(hubs,"hits/out/hubs",format="text")
+write(authorities,"hits/out/authorities",format="text")

@@ -5,9 +5,9 @@
 # B <- nominal 
 # WM <- weights
 
-A = readMM("in/gender.nominal.data", rows=474, cols=1, format="text");
-B = readMM("in/educ.ordinal.data", rows=474, cols=1, format="text");
-WM = readMM("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
+A = read("in/gender.nominal.data", rows=474, cols=1, format="text");
+B = read("in/educ.ordinal.data", rows=474, cols=1, format="text");
+WM = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
 
 # Contingency Table
 F = ctable(A,B,WM);

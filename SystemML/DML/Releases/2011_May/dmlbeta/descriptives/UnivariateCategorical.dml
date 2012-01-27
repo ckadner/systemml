@@ -1,7 +1,7 @@
 # Univariate statistics for categorical variable
 # (with no weights)
 
-V = readMM("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
+V = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
 ones = Rand(rows=474, cols=1, min=1.0, max=1.0);
 
 # a set of number of values specify the number of cases of each categorical
@@ -24,7 +24,7 @@ mx = max(Nc)
 Mode =  ppred(Nc, mx, "==")
 
 print("Number of categories = ", R);
-writeMM(Nc, "out/Nc", format="text")
-writeMM(Pc, "out/Pc", format="text")
-writeMM(C, "out/C", format="text")
-writeMM(Mode, "out/Mode", format="text")
+write(Nc, "out/Nc", format="text")
+write(Pc, "out/Pc", format="text")
+write(C, "out/C", format="text")
+write(Mode, "out/Mode", format="text")

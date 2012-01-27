@@ -1,6 +1,6 @@
 
 
-X = readMM("descriptives/in/x", rows=1000, cols=500, format="text")
+X = read("descriptives/in/x", rows=1000, cols=500, format="text")
 
 n = 1000
 
@@ -41,13 +41,13 @@ g2 = (colSums(X^4) - 4*colSums(X^3)*mu + 6*colSums(X^2)*mu^2 - 3*n*mu^4)/(n*std_
 # Skewness
 g1 = (colSums(X^3) - 3*mu*colSums(X^2) + 2*n*mu^3)/(n*std_dev^3)
 
-writeMM(mu,"descriptives/out/mu",format="text")
-writeMM(std_dev,"descriptives/out/std_dev",format="text")
-writeMM(SE,"descriptives/out/SE",format="text")
-writeMM(var,"descriptives/out/var",format="text")
-writeMM(cv,"descriptives/out/cv",format="text")
-writeMM(geom_mu,"descriptives/out/geom_mu",format="text")
-writeMM(har_mu,"descriptives/out/har_mu",format="text")
-writeMM(g2,"descriptives/out/skewness",format="text")
-writeMM(g1,"descriptives/out/kurtosis",format="text")
+write(mu,"descriptives/out/mu",format="text")
+write(std_dev,"descriptives/out/std_dev",format="text")
+write(SE,"descriptives/out/SE",format="text")
+write(var,"descriptives/out/var",format="text")
+write(cv,"descriptives/out/cv",format="text")
+write(geom_mu,"descriptives/out/geom_mu",format="text")
+write(har_mu,"descriptives/out/har_mu",format="text")
+write(g2,"descriptives/out/skewness",format="text")
+write(g1,"descriptives/out/kurtosis",format="text")
 

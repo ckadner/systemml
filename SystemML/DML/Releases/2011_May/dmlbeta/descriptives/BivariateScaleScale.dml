@@ -4,8 +4,8 @@
 #X <- scale variable
 #Y <- scale variable
 
-X = readMM("in/salary.scale.data", rows=474, cols=1, format="text");
-Y = readMM("in/jobtime.scale.data", rows=474, cols=1, format="text");
+X = read("in/salary.scale.data", rows=474, cols=1, format="text");
+Y = read("in/jobtime.scale.data", rows=474, cols=1, format="text");
 
 s2X = sum(X^2);
 s2Y = sum(Y^2);

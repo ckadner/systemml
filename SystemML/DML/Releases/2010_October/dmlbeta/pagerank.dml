@@ -1,8 +1,8 @@
-G = readMM("pagerank/in/g", rows=1000, cols=1000, format="text");
+G = read("pagerank/in/g", rows=1000, cols=1000, format="text");
 # dense
-p = readMM("pagerank/in/p", rows=1000, cols=1, format="text");
-e = readMM("pagerank/in/e", rows=1000, cols=1, format="text");
-u = readMM("pagerank/in/u", rows=1, cols=1000, format="text");
+p = read("pagerank/in/p", rows=1000, cols=1, format="text");
+e = read("pagerank/in/e", rows=1000, cols=1, format="text");
+u = read("pagerank/in/u", rows=1, cols=1000, format="text");
 alpha = 0.85;
 max_iteration = 3;
 i = 0;
@@ -12,4 +12,4 @@ while(i < max_iteration) {
 	i = i + 1;
 }
 
-writeMM(p, "pagerank/out/p", format="text");
+write(p, "pagerank/out/p", format="text");

@@ -1,8 +1,8 @@
 $$readhelper$$
 
-V = readMM("in/salary.ordinal.data", rows=474, cols=1, format="text");
+V = read("in/salary.ordinal.data", rows=474, cols=1, format="text");
 # vector that has required quantiles
-P = readMM("in/prob", rows=5, cols=1, format="text")
+P = read("in/prob", rows=5, cols=1, format="text")
 
 n = nrow(V)
 
@@ -94,6 +94,6 @@ print("standard error in kurtosis = ", se_g2 );
 print("meadian = ", md );
 print("inter-quartile mean = ", iqm );
 
-writeMM(out_minus, "out/out_minus", format="text");
-writeMM(out_plus, "out/out_plus", format="text");
-writeMM(Q, "out/quantile", format="text");
+write(out_minus, "out/out_minus", format="text");
+write(out_plus, "out/out_plus", format="text");
+write(Q, "out/quantile", format="text");

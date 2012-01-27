@@ -1,5 +1,5 @@
-V = readMM("linear_regression/in/v", rows=50, cols=30, format="text");
-y = readMM("linear_regression/in/y", rows=50, cols=1, format="text");
+V = read("linear_regression/in/v", rows=50, cols=30, format="text");
+y = read("linear_regression/in/y", rows=50, cols=1, format="text");
 eps = 0.00000001;
 r = -(t(V) %*% y);
 p = -r;
@@ -20,4 +20,4 @@ while(i < max_iteration) {
 	i = i + 1;
 }
 
-writeMM(w, "linear_regression/out/w", format="text");
+write(w, "linear_regression/out/w", format="text");

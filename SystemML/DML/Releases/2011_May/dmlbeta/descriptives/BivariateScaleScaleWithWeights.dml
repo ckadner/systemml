@@ -5,9 +5,9 @@
 #Y <- scale variable
 #WM <- weights
 
-X = readMM("in/salary.scale.data", rows=474, cols=1, format="text");
-Y = readMM("in/jobtime.scale.data", rows=474, cols=1, format="text");
-WM = readMM("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
+X = read("in/salary.scale.data", rows=474, cols=1, format="text");
+Y = read("in/jobtime.scale.data", rows=474, cols=1, format="text");
+WM = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
 
 s1XW = sum(X*WM);
 s1YW = sum(Y*WM);
