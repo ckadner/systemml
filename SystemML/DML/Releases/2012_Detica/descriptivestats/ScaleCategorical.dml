@@ -1,0 +1,30 @@
+
+#A <- nominal variable
+#Y <- scale variable
+
+A = read("categorical.1.data", rows=200, cols=1, format="text");
+Y = read("scale.1.data", rows=200, cols=1, format="text");
+
+# mean and variance in target variable
+W = nrow(A);
+my = mean(Y);
+varY = centralMoment(Y,2) * W/(W-1.0)
+
+# category-wise (frequencies, means, variances)
+CFreq = groupedAggregate(target=Y, groups=A, fn="count"); 
+CMeans = groupedAggregate(target=Y, groups=A, fn="mean");
+CVars = groupedAggregate(target=Y, groups=A, fn="variance");
+
+# number of categories
+R = nrow(CFreq);
+
+Eta = sqrt(1 - ( sum((CFreq-1)*CVars) / ((W-1)*varY) ));
+
+anova_num = sum( (CFreq*(CMeans-my)^2) )/(R-1);
+anova_den = sum( (CFreq-1)*CVars )/(W-R);
+ANOVAF = anova_num/anova_den;
+
+print("Eta = ", Eta);
+print("ANOVA F = ", ANOVAF);
+
+

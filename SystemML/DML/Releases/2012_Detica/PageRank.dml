@@ -1,0 +1,16 @@
+G = read("in/g", rows=1000, cols=1000, format="text");
+# dense
+p = read("in/p", rows=1000, cols=1, format="text");
+e = read("in/e", rows=1000, cols=1, format="text");
+u = read("in/u", rows=1, cols=1000, format="text");
+
+alpha = 0.85;
+max_iteration = 3;
+i = 0;
+
+while(i < max_iteration) {
+	p = alpha * (G %*% p) + (1 - alpha) * (e %*% u %*% p);
+	i = i + 1;
+}
+
+write(p, "out/p", format="text");

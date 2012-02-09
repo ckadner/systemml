@@ -1,0 +1,23 @@
+
+#X <- scale variable
+#Y <- scale variable
+
+X = read("statiko/scale.1.data", rows=200, cols=1, format="text");
+Y = read("statiko/scale.2.data", rows=200, cols=1, format="text");
+
+W = nrow(X);
+
+# Unweighted co-variance
+covXY = cov(X,Y);
+
+# compute standard deviations for both X and Y by computing 2^nd central moment
+m2X = centralMoment(X,2);
+m2Y = centralMoment(Y,2);
+sigmaX = sqrt(m2X * (W/(W-1.0)) );
+sigmaY = sqrt(m2Y * (W/(W-1.0)) );
+
+# Pearson's R
+R = covXY / (sigmaX*sigmaY);
+
+print("Pearson's R = ", R);
+

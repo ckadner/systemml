@@ -1,0 +1,39 @@
+
+# A <- nominal 
+# B <- nominal 
+
+A = read($1, rows=$2, cols=1, format="text");
+B = read($3, rows=$4, cols=1, format="text");
+
+# Contingency Table
+F = ctable(A,B);
+
+# Chi-Squared
+#W = sum(F);
+#idr = 1/rowSums(F);
+#idc = 1/colSums(F);
+#E = (rowSums(F) %*% colSums(F))/W;
+#chi_squared = t(idr) %*% F^2 %*% idc + sum(E) - 2*W;
+
+W = sum(F);
+r = rowSums(F);
+c = colSums(F);
+E = (r %*% c)/W;
+T = (F-E)^2/E;
+chi_squared = sum(T);
+
+# compute p-value
+degFreedom = (nrow(F)-1)*(ncol(F)-1);
+pValue = 1 - cumulativeProbability(target=chi_squared, dist="chisq", df=degFreedom);
+
+# Cramer's V
+R = nrow(F);
+C = ncol(F);
+q = min(R,C);
+cramers_v = sqrt(chi_squared/(W*(q-1)));
+
+print("p-value = ",  pValue);
+print("cramers-v = ", cramers_v);
+
+
+

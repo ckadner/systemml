@@ -1,0 +1,24 @@
+
+V = read("$1", rows=$2, cols=$3, format="text");
+y = read("$4", rows=$2, cols=1, format="text");
+eps = $5;
+r = -(t(V) %*% y);
+p = -r;
+norm_r2 = sum(r * r);
+w = Rand(rows = $3, cols = 1, min = 0, max = 0);
+
+max_iteration = 3;
+i = 0;
+while(i < max_iteration) {
+	q = ((t(V) %*% (V %*% p)) + eps  * p);
+	alpha = norm_r2 / castAsScalar(t(p) %*% q);
+	w = w + alpha * p;
+	old_norm_r2 = norm_r2;
+	r = r + alpha * q;
+	norm_r2 = sum(r * r);
+	beta = norm_r2 / old_norm_r2;
+	p = -r + beta * p;
+	i = i + 1;
+}
+
+write(w, "$6", format="text");

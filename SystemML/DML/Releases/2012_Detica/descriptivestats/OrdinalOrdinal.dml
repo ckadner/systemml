@@ -1,0 +1,12 @@
+
+#A <- Ordinal
+#B <- Ordinal
+
+A = read("ordinal.1.data", rows=200, cols=1, format="text");
+B = read("ordinal.2.data", rows=200, cols=1, format="text");
+
+sp = spearman(A,B);
+
+print("Spearman correlation = ", sp);
+
+

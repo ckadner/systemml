@@ -1,0 +1,26 @@
+V = read("$1", rows=$2, cols=1, format="text")
+
+# a set of number of values specify the number of cases of each categorical
+Nc = ctable(V,1);
+
+# the number of categories of a categorical variable
+R = nrow(Nc)
+
+# total count
+s = sum(Nc)
+
+# percentage values of each categorical compare to the total case number
+Pc = Nc / s
+
+# all categorical values of a categorical variable
+C = ppred(Nc, 0, ">")
+
+# mode
+mx = max(Nc)
+Mode =  ppred(Nc, mx, "==")
+
+write(Nc, "Nc")
+write(R, "R")
+write(Pc, "Pc")
+write(C, "C")
+write(Mode, "Mode")
