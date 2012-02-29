@@ -11,5 +11,5 @@ WM = read("in/jobcat.ordinal.data", rows=$$rows$$, cols=1, format="text");
 
 sp = spearman(A,B,WM);
 
-print("Spearman correlation = ", sp);
+print("Spearman correlation = " + sp);
 

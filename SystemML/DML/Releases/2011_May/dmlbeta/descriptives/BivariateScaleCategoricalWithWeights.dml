@@ -39,6 +39,6 @@ anova_den = sum( (CFreq-1)*CVars )/(W-R);
 ANOVAF = anova_num/anova_den;
 #ANOVAF = exp(log(anova_num)-log(anova_den));
 
-print("Eta = ", Eta);
-print("ANOVA F measure = ", ANOVAF);
+print("Eta = " + Eta);
+print("ANOVA F measure = " + ANOVAF);
 

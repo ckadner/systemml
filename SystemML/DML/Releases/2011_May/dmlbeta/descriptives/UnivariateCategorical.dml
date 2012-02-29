@@ -23,7 +23,7 @@ C = ppred(Nc, 0, ">")
 mx = max(Nc)
 Mode =  ppred(Nc, mx, "==")
 
-print("Number of categories = ", R);
+print("Number of categories = " + R);
 write(Nc, "out/Nc", format="text")
 write(Pc, "out/Pc", format="text")
 write(C, "out/C", format="text")

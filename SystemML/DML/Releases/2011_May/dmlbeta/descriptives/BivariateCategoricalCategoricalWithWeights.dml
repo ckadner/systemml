@@ -20,7 +20,7 @@ E = (r %*% c)/W;
 T = (F-E)^2/E;
 chi_squared = sum(T);
 
-print("Chi-squared coef. = ", chi_squared);
+print("Chi-squared coef. = " + chi_squared);
 
 # Cramer's V
 R = nrow(F);
@@ -28,5 +28,5 @@ C = ncol(F);
 q = min(R,C);
 cramers_v = sqrt(chi_squared/(W*(q-1)));
 
-print("Cramers_v = ", cramers_v);
+print("Cramers_v = " + cramers_v);
 

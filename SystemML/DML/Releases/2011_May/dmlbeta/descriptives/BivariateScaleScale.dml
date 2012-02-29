@@ -26,5 +26,5 @@ covXY = sum((X-mx)*(Y-my))/(W-1);
 # Pearson's R
 R = covXY / (sigmaX*sigmaY);
 
-print("Pearson's R = ", R);
+print("Pearson's R = " + R);
 

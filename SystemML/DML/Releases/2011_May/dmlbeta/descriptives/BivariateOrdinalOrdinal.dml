@@ -9,4 +9,4 @@ B = read("in/jobcat.ordinal.data", rows=474, cols=1, format="text");
 
 sp = spearman(A,B);
 
-print("Spearman correlation = ", sp);
+print("Spearman correlation = " + sp);

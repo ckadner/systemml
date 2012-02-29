@@ -32,8 +32,8 @@ C = ncol(F);
 q = min(R,C);
 cramers_v = sqrt(chi_squared/(W*(q-1)));
 
-print("p-value = ",  pValue);
-print("cramers-v = ", cramers_v);
+print("p-value = "+  pValue);
+print("cramers-v = "+ cramers_v);
 
 
 

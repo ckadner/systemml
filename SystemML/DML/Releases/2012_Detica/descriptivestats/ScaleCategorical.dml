@@ -24,7 +24,7 @@ anova_num = sum( (CFreq*(CMeans-my)^2) )/(R-1);
 anova_den = sum( (CFreq-1)*CVars )/(W-R);
 ANOVAF = anova_num/anova_den;
 
-print("Eta = ", Eta);
-print("ANOVA F = ", ANOVAF);
+print("Eta = "+ Eta);
+print("ANOVA F = "+ ANOVAF);
 
 
