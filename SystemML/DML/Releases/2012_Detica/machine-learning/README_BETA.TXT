@@ -21,7 +21,6 @@ Content
 2. USE SystemML
 3. DATA IN HDFS
 
-
 1. FILES/DIRECTORY
 ******************
 
@@ -39,7 +38,7 @@ DMLScripts/                    // Directory with DML examples
   PageRank.dml                 // PageRank
   rand.dml                     // Random Matrix Generation
   SeqMiner.dml				   // Sequence Miner
-sytem.xml, SystemML-config.xml // configuration files
+SystemML-config.xml            // configuration files
 SystemML.jar                   // jar file for hadoop to execute
 
 2. USE SystemML
@@ -56,9 +55,8 @@ SystemML assumes data files in HDFS. Use "hadoop fs" commands to ls/mv/cp/rm  ..
 
 $ hadoop fs    // display help
 
-$ hadoop fs -ls
+$ hadoop fs -ls 
 drwxr-xr-x   - dmluser1 supergroup          0 2010-10-18 11:13 /user/dmluser1/A.data
-
 
 $ hadoop fs -copyToLocal A.data .
 $ hadoop fs -copyFromLocal A.data .
