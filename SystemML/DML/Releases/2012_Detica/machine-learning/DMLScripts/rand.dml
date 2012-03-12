@@ -1,2 +1,5 @@
-A=Rand(rows=5, cols=55);
-write(A, "A.data", format="text");
+# Generate a matrix based on given rows, cols and output file
+# How to invoke this script?
+# hadoop jar SystemML.jar -f rand.dml -args <m> <n> <outputFile>
+A=Rand(rows=$1, cols=$2);
+write(A, $3, format="text");

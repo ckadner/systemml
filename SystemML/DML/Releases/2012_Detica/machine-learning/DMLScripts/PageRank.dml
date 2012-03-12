@@ -1,11 +1,18 @@
-G = read("in/g", rows=1000, cols=1000, format="text");
-# dense
-p = read("in/p", rows=1000, cols=1, format="text");
-e = read("in/e", rows=1000, cols=1, format="text");
-u = read("in/u", rows=1, cols=1000, format="text");
+# Note this script is externalized to customers, please do not change w/o consulting component owner.
+# How to invoke this dml script PageRank.dml?
+# Assume PAGE_RANK_HOME is set to the home of the dml script
+# Assume input and output directories are on hdfs as INPUT_DIR and OUTPUT_DIR
+# Assume rows = 1000 and cols = 1000 for g,  rows = 1000 and cols = 1 for p, rows = 1000 and cols = 1 for e, rows = 1 and cols = 1000 for u,
+# Assume alpha = 0.85, max_iteration = 3
+# hadoop jar SystemML.jar -f $PAGE_RANK_HOME/PageRank.dml -args "$INPUT_DIR/g" "$INPUT_DIR/p" "$INPUT_DIR/e" "$INPUT_DIR/u" 1000 1000 0.85 3 "$OUPUT_DIR/w" 
 
-alpha = 0.85;
-max_iteration = 3;
+G = read($1, rows=$5, cols=$6, format="text");
+# dense
+p = read($2, rows=$5, cols=1, format="text");
+e = read($3, rows=$5, cols=1, format="text");
+u = read($4, rows=1, cols=$6, format="text");
+alpha = $7;
+max_iteration = $8;
 i = 0;
 
 while(i < max_iteration) {
@@ -13,4 +20,4 @@ while(i < max_iteration) {
 	i = i + 1;
 }
 
-write(p, "out/p", format="text");
+write(p, $9, format="text");
