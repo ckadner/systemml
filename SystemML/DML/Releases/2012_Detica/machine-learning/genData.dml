@@ -1,0 +1,102 @@
+# for Categorical.dml
+vector = Rand(rows=10000, cols=1, min=1, max=10, sparsity=1.0);
+vector = round(vector);
+write(vector, "./data/C/in/vector", format="text");
+
+# for Scale.dml
+vector = Rand(rows=10000, cols=1, min=0, max=100, sparsity=0.5);
+prob = Rand(rows=5, cols=1, min=0, max=1, sparsity=1.0);
+write(vector, "./data/S/in/vector", format="text");
+write(prob, "./data/S/in/prob", format="text");
+
+# for CategoricalCategorical.dml 
+A = Rand(rows=10000, cols=1, min=1, max=100, sparsity=1.0);
+B = Rand(rows=10000, cols=1, min=1, max=150, sparsity=1.0);
+A = round(A);
+B = round(B);
+write(A, "./data/CC/in/A", format="text");
+write(B, "./data/CC/in/B", format="text");
+
+# for ScaleScale.dml
+X = Rand(rows=100000,cols=1,min=0,max=10000,sparsity=0.1);
+Y = Rand(rows=100000,cols=1,min=0,max=10000,sparsity=0.1);
+write(X, "./data/SS/in/X", format="text");
+write(Y, "./data/SS/in/Y", format="text");
+
+# ScaleCategorical.dml
+A = Rand(rows=10000,cols=1,min=1,max=100,sparsity=1.0);
+Y = Rand(rows=10000,cols=1,min=0,max=250,sparsity=0.1);
+A = round(A);
+write(A, "./data/SC/in/A", format="text");
+write(B, "./data/SC/in/Y", format="text");
+
+# for OrdinalOrdinal.dml
+A = Rand(rows=10000,cols=1,min=1,max=100,sparsity=1.0);
+B = Rand(rows=10000,cols=1,min=1,max=200,sparsity=1.0);
+A = round(A);
+B = round(B);
+write(A, "./data/OO/in/A", format="text");
+write(B, "./data/OO/in/B", format="text");
+
+# for GNMF.dml
+v = Rand(rows=2000,cols=1500,min=1,max=5,sparsity=0.2);
+w = Rand(rows=2000,cols=50,min=0,max=1,sparsity=1.0);
+h = Rand(rows=50,cols=1500,min=0,max=1,sparsity=1.0);
+write(v, "./data/GNMF/in/v", format="text");
+write(w, "./data/GNMF/in/w", format="text");
+write(h, "./data/GNMF/in/h", format="text");
+
+# for HITS.dml
+G = Rand(rows=1000,cols=1000,min=0,max=1,sparsity=1.0);
+write(G, "./data/HITS/in/G");
+
+# for kMeans.dml
+M = Rand(rows=100,cols=10,min=-1,max=1,sparsity=0.05);
+write(M, "./data/KMEANS/in/M", format="text");
+
+# L2SVM.dml
+X = Rand(rows=1000,cols=100,min=0,max=1,sparsity=0.01);
+Y = Rand(rows=1000,cols=1,min=-1,max=1,sparsity=1.0);
+Y = round(Y);
+Y = 2*Y-1;
+write(X, "./data/L2SVM/in/X", format="text");
+write(Y, "./data/L2SVM/in/Y", format="text");
+
+# for LinearLogReg.dml
+X = Rand(rows=100,cols=50,min=1,max=10,sparsity=1.0);
+y = Rand(rows=100,cols=1,min=0.01,max=1,sparsity=1.0);
+Xt = Rand(rows=25,cols=50,min=1,max=10,sparsity=1.0);
+yt = Rand(rows=25,cols=1,min=0.01,max=1,sparsity=1.0);
+write(X, "./data/LLR/in/X", format="text");
+write(Xt, "./data/LLR/in/Xt", format="text");
+write(y, "./data/LLR/in/y", format="text");
+write(yt, "./data/LLR/in/yt", format="text");
+
+# for LinearRegresssion.dml
+v = Rand(rows=50,cols=30,min=0,max=1,sparsity=0.01);
+y = Rand(rows=50,cols=1,min=1,max=10,sparsity=1.0);
+write(v, "./data/LR/in/v", format="text");
+write(y, "./data/LR/in/y", format="text");
+
+# for Outlier.dml
+M = Rand(rows=100,cols=10,min=-1,max=1,sparsity=0.05);
+write(M, "./data/OUTLIER/in/M", format="text");
+
+# for PageRank.dml
+g = Rand(rows=1000,cols=1000,min=1,max=1,sparsity=0.000374962);
+p = Rand(rows=1000,cols=1,min=1,max=1,sparsity=1.0);
+e = Rand(rows=1000,cols=1,min=1,max=1,sparsity=1.0);
+u = Rand(rows=1,cols=1000,min=1,max=1,sparsity=1.0);
+write(g, "./data/PR/in/g", format="text");
+write(p, "./data/PR/in/p", format="text");
+write(e, "./data/PR/in/e", format="text");
+write(u, "./data/PR/in/u", format="text");
+
+# for SeqMiner.dml
+M = Rand(rows=5,cols=10,min=-1,max=5,sparsity=1.0);
+M = round(M);
+write(M, "./data/SM/in/M", format="text");
+
+
+
+

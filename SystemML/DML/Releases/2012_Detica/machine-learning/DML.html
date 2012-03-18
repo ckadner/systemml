@@ -1,1391 +1,2271 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html><head>
-<meta http-equiv="CONTENT-TYPE" content="text/html; charset=windows-1252"><title>DML</title>
-
-<meta name="GENERATOR" content="OpenOffice.org 3.2 (Win32)">
-<meta name="CREATED" content="0;0">
-<meta name="CHANGEDBY" content=" ">
-<meta name="CHANGED" content="20110519;19170600">
-<meta name="Originator" content="Microsoft Word 10">
-<meta name="ProgId" content="Word.Document">
-<!--[if gte mso 9]><xml> <o:DocumentProperties> <o:Author>IBM_USER</o:Author> <o:LastAuthor>IBM_USER</o:LastAuthor> <o:Revision>63</o:Revision> <o:TotalTime>147</o:TotalTime> <o:Created>2010-09-28T21:37:00Z</o:Created> <o:LastSaved>2010-09-29T00:04:00Z</o:LastSaved> <o:Pages>1</o:Pages> <o:Words>1822</o:Words> <o:Characters>10387</o:Characters> <o:Company>IBM</o:Company> <o:Lines>86</o:Lines> <o:Paragraphs>24</o:Paragraphs> <o:CharactersWithSpaces>12185</o:CharactersWithSpaces> <o:Version>10.6858</o:Version> </o:DocumentProperties> </xml><![endif]--><!--[if gte mso 9]><xml> <w:WordDocument> <w:GrammarState>Clean</w:GrammarState> <w:Compatibility> <w:UseFELayout/> </w:Compatibility> <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel> </w:WordDocument> </xml><![endif]--><!--[if !mso]><object classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object> <style> st1\:*{behavior:url(#ieooui) } </style> <![endif]--><!--[if gte mso 10]> <style> /* Style Definitions */ table.MsoNormalTable {mso-style-name:"Table Normal"; mso-tstyle-rowband-size:0; mso-tstyle-colband-size:0; mso-style-noshow:yes; mso-style-parent:""; mso-padding-alt:0in 5.4pt 0in 5.4pt; mso-para-margin:0in; mso-para-margin-bottom:.0001pt; mso-pagination:widow-orphan; font-size:10.0pt; font-family:"Times New Roman";} </style> <![endif]--><!--[if gte mso 9]><xml> <o:shapedefaults v:ext="edit" spidmax="2050"/> </xml><![endif]--><!--[if gte mso 9]><xml> <o:shapelayout v:ext="edit"> <o:idmap v:ext="edit" data="1"/> </o:shapelayout></xml><![endif]-->
-<style type="text/css">
-<!--
-H1 { color: #000000 }
-P { color: #000000 }
-PRE { color: #000000 }
-PRE.cjk { font-family: "NSimSun", monospace }
-H2 { color: #000000 }
-H2.cjk { font-family: "SimSun" }
-H2.ctl { font-family: "Mangal" }
-A:link { color: #0000ff }
-A:visited { color: #0000ff }
--->
-</style>
-</head>
-<body style="direction: ltr; color: rgb(0, 0, 0);" lang="en-US" link="#0000ff" vlink="#0000ff">
-<pre class="western" style="margin-bottom: 0.2in; text-align: center;"><font size="6"><b>An Introduction To DML</b></font></pre>
-<p class="msonormal"><a name="mozTocId182601"></a>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-May 19,
-2011</p>
-<ol>
-<li>
-<p style="margin-bottom: 0in;"><a name="mozToc"></a><!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6--><a href="#mozTocId452942">General</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId452943">Data Types and Variables</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId600673">Statements </a> </p>
-<ol>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId63369">InputOutput Statement</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId2532">Assignment Statement </a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId187579">While Statement</a></p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId187579">Rand Statement</a> </p>
-</li>
-</ol>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId399290">Expressions</a> </p>
-<ol>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId526747">Operators</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId926860">Builtin Functions</a> </p>
-</li>
-</ol>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId490093">Future Language Constructs</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId490094">Example Scripts</a> </p>
-<ol>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId959105">Gaussian Non-Negative Matrix
-Factorization (GNMF)</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId419387">PageRank</a> </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><a href="#mozTocId258037">LinearRegression</a> </p>
-</li>
-<li>
-<p><a href="#mozTocId569387">Descriptive
-Statistics</a> </p>
-</li>
-</ol>
-</li>
-</ol>
-<ol>
-<h1><a name="mozTocId452942"></a><!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->General</h1>
-<p class="msonormal">DML is case sensitive. <br>
-We use uppercase variables (e.g., X, Y) to denote matrices and
-lowercase variables (e.g., m, n) to denote scalars.</p>
-<h1><a name="mozTocId452943"></a>Data Types
-and Variables</h1>
-<p class="msonormal">DML supports two data types :
-matrices and scalars. Scalar data types supported are integer, double,
-string and logical. The cells in a matrix are of type double. </p>
-<p class="msonormal">&nbsp;</p>
-<p class="msonormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-# Variable i is of type integer</p>
-<p class="msonormal"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; i = 0;</i> </p>
-<p class="msonormal">&nbsp;</p>
-<p class="msonormal">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; #
-Variable V is of type Matrix with cells of type double (default)</p>
-<p class="msonormal"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; V = read
-("in/v", rows=10, cols=8, format="text");</i> </p>
-<p class="msonormal">&nbsp;</p>
-<h1><a name="mozTocId600673"></a>Statements </h1>
-<p class="msonormal">A DML program consists of a
-sequence of statements, with the default computation semantics being
-sequential evaluation of the individual statements. The statements
-supported currently in DML are InputOutput, Assignment, While, If, and
-Rand statements.&nbsp; </p>
-<ol>
-<h2 class="western"><a name="mozTocId63369"></a>InputOutput
-Statement</h2>
-</ol>
-<p class="msonormal" style="margin-bottom: 0.17in;">Input
-and Output statements are provided for respectively reading and writing data, from and to files. The files are not managed in memory but
-kept in HDFS and are processed by Hadoop. InputOutput statements can be used to read or write matrices as well as scalar values from or to HDFS files. 
-</p>
-<p class="msonormal" style="margin-bottom: 0.17in;">
-  <p>
-    <b>Syntax for Input Statement:</b>
-        <p>
-        <i>V = read("inputfile", data_type="dt", value_type="vt", rows=R, cols=C, rows_per_block=RPB, cols_per_block=CPB, nnzs=NZ, format="fmt")</i>
-        </p>
-  </p>
-
-      <table border="1" cellpadding="3" cellspacing="2">
-      <tr>
-          <th> Name of parameter </th> 
-          <th width="600"> Description </th> 
-          <th> Value Type </th> 
-          <th> Permissible Values </th> 
-          <th> Optional? </th> 
-          <th> Default Value </th>
-        </font>
-      </tr>
-      <tr>
-          <td> Input File </td> 
-          <td> HDFS file whose contents have to be read or loaded into the variable <i>V</i> </td> 
-          <td> String </td> 
-          <td> &nbsp; </td> 
-          <td> No </td> 
-          <td> &nbsp; </td>
-      </tr>
-      <tr>
-          <td> data_type </td> 
-          <td> Indicates the type of the data that is to be read</td> 
-          <td> String </td> 
-          <td> matrix, scalar </td> 
-          <td> Yes </td> 
-          <td> matrix </td>
-      </tr>
-      <tr>
-          <td> value_type </td> 
-          <td> Indicates the value type of the data that is to be read</td> 
-          <td> String </td> 
-          <td> double, int, string, boolean </td> 
-          <td> Yes </td> 
-          <td> double </td>
-      </tr>
-      <tr>
-          <td colspan="6" cellpadding="6">
-          <i><font color="blue">Following parameters are valid only when data_type="matrix".</font></i>
-          </td>
-      </tr>
-      <tr>
-          <td> rows </td> 
-          <td> Number of rows in the input matrix.</td> 
-          <td> Integer </td> 
-          <td> &nbsp; </td> 
-          <td> No </td> 
-          <td> &nbsp; </td>
-      </tr>
-      <tr>
-          <td> cols </td> 
-          <td> Number of columns in the input matrix.</td> 
-          <td> Integer </td> 
-          <td> &nbsp; </td> 
-          <td> No </td> 
-          <td> &nbsp; </td>
-      </tr>
-      <tr>
-          <td> rows_per_block, cols_per_block </td> 
-          <td> Valid only when the input matrix is in blocked format. 
-               They can be used to read the <i>binary</i> matrices produced by SystemML. 
-               They indicate the dimensions of the blocked representation.</td> 
-          <td> Integer </td> 
-          <td> &nbsp; </td> 
-          <td> Yes </td> 
-          <td> 1 </td>
-      </tr>
-      <tr>
-          <td> nnzs </td> 
-          <td> Number of non-zeros in the matrix. </td> 
-          <td> Integer </td> 
-          <td> &nbsp; </td> 
-          <td> Yes </td> 
-          <td> rows*cols </td>
-      </tr>
-      <tr>
-          <td> format </td> 
-          <td> T he input file format. </td> 
-          <td> String </td> 
-          <td> text, binary</td> 
-          <td> Yes </td> 
-          <td> text </td>
-      </tr>
-      </table>
-
-  <p class="msonormal">
-    Few examples of Input Statements:
-    <ul>
-        <li> V = read("in/file", rows=5, cols=5) &rarr; loads a 5x5 matrix from HDFS file "in/file".
-        <li> V = read("in/file", data_type="matrix", value_type="double", rows=5, cols=5, format="text") &rarr; equivalent to above.
-        <li> V = read("in/file", data_type="matrix", rows=5, cols=5, format="text") &rarr; equivalent to above.
-        <li> V = read("in/file", value_type="double", rows=5, cols=5) &rarr; equivalent to above.
-        <li> x = read("in/scalar_i", data_type="scalar", value_type="int") &rarr; reads an integer value from HDFS file "in/scalar_i".
-        <li> y = read("in/scalar_b", data_type="scalar", value_type="boolean") &rarr; reads a boolean value from HDFS file "in/scalar_b".
-        <li> z = read("in/scalar_s", data_type="scalar", value_type="string") &rarr; reads a string from HDFS file "in/scalar_s".
-        <li> w = read("in/scalar_s", data_type="scalar", value_type="double") &rarr; reads a double value from HDFS file "in/scalar_d".
-        <li> w = read("in/scalar_s", data_type="scalar") &rarr; equivalent to above.
-    </ul>
-  </p>
-
-  <p>
-    <b>Syntax for Output Statement:</b>
-        <p>
-        <i>write(identifier, "outputfile", format="fmt")</i>
-        </p>
-  </p>
-
-  <table border="1" cellpadding="3" cellspacing="2">
-  <tr>
-      <th> Name of parameter </th> 
-      <th width="600"> Description </th> 
-      <th> Optional? </th> 
-      <th> Default Value </th>
-    </font>
-  </tr>
-  <tr>
-      <td> Identifier </td> 
-      <td> A variable in DML whose data is to be written to HDFS. It can either be a scalar or a matrix. </td> 
-      <td> No </td> 
-      <td> &nbsp; </td>
-  </tr>
-  <tr>
-      <td> Output File </td> 
-      <td> The name of output HDFS file. Contents of the identifier are written to this file. </td> 
-      <td> No </td> 
-      <td> &nbsp; </td>
-  </tr>
-  <tr>
-      <td> format </td> 
-      <td> It is valid only when the <i>identifier</i> is of type matrix. It indicates the output file format. Permissible values are <i>text, binary</i>. </td> 
-      <td> Yes </td> 
-      <td> text </td>
-  </tr>
-  </table>
-  <p>
-  Note that the output statement can handle any DML variable, irrespective of its data type and value type.
-  </p>
-  <p class="msonormal">
-    Few examples of Output Statements:
-    <ul>
-        <li> write(V, "out/file") &rarr; writes the contents of variable <i>V</i> to HDFS file "out/file", in text format.
-        <li> write(V, "out/file", format="text") &rarr; equivalent to above.
-        <li> write(V, "out/file", format="binary") &rarr; writes the contents of variable <i>V</i> to HDFS file "out/file", in <i>binary blocked</i> format. Note that this format is <i>internal</i> to SystemML, and hence they can only be read via an appropriate DML Input statement.
-        <li> write(x, "out/scalar") &rarr; writes the contents of variable <i>x</i> to HDFS file "out/scalar".
-    </ul>
-  </p>
-
-<p> <b>A note on file format for matrices</b> </p>
-<p class="msonormal">SystemML supports a sparse text
-format on disk. The cell values are stored in <i>(row column
-value)</i>-format with the row and column indices being 1-based.
-The following example shows a sample matrix file, which can be loaded with the statement: <i>V=read("in/fileV", rows=9, cols=8, format="text")</i>. </p>
-<p class="msonormal" style="margin-bottom: 0.17in;">
-<u>in/fileV:</u><br>
-<i>1 1 4<br>
-3 4 10<br>
-5 6 7<br>
-9 8 20</i></p>
-<p> <b>Additional notes on InputOutput Statements</b> </p>
-<p>
-  <ul>
-    <li> The <i>binary</i> format can only be read and written by SystemML. 
-         DML scripts with read and write statements can be executed to perform format conversions.
-    <li> Current SystemML supports ONLY matrices whose value_type is equal to "double". Additional value types for matrices (int,string, and boolean) will be supported in the future release.
-  </ul>
-</p>
-
-<p class="msonormal">&nbsp;&nbsp;&nbsp; <br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
-<ol>
-<h2 class="western"><a name="mozTocId2532"></a>Assignment
-Statement </h2>
-</ol>
-<p class="msonormal">An assignment statement consists of
-an expression, the result of which is assigned to a variable. The
-variable gets the appropriate type (matrix or scalar) depending on the
-type of the variable output by the expression. <br>
-<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;<i>max_iteration = 3;</i></p>
-<p class="msonormal">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <i>V = W %*%
-H</i>;<br>
-&nbsp;</p>
-<p class="msonormal"><i>max_iteration</i> is
-of type integer; <i>V</i> is of type matrix with the value
-type of the V cells being derived from W and H.<br>
-&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
-<p class="msonormal">The operators allowed in
-expressions in an assignment statement are described below under <a href="#Expressions">Expressions</a> . </p>
-<ol>
-<h2 class="western"><a name="mozTocId626926"></a>While
-Statement</h2>
-</ol>
-<p class="msonormal">&nbsp; One control structure
-supported in DML is the While statement. The predicates in a While
-statement consist of operations on scalar variables and literals as
-shown below. <br>
-<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span style="font-family: Courier New;" lang="pl-PL">&nbsp;<i>while(
-(i &lt; 20) &amp; (!converge) ) {</i></span></p>
-<p style="font-family: Courier New;" class="msonormal">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<span lang="pl-PL"><i>H = H * (t(W) %*% V) / ( t(W) %*% W
-%*% H);<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;i = i + 1;</i></span></p>
-<p style="font-family: Courier New;" class="msonormal"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;}</i></p>
-<p class="msonormal" style="margin-bottom: 0.17in;"><br>
-The body of a while statement may contain any sequence of Assignment,
-InputOutput, While, If, and Rand statements. Thus, DML supports nested
-control structures </p>
-<ol>
-<h2 class="western"><a name="mozTocId6269261"></a>If
-Statement</h2>
-</ol>
-<p class="msonormal">&nbsp; Another control
-structure supported in DML is the If statement. The predicates in an If
-statement consist of operations on scalar variables and literals as
-shown below. <br>
-<br>
-</p>
-<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <i style="font-family: Courier New,Courier,monospace;">if( i
-&lt; 20 ) {</i> </span><br style="font-family: Courier New,Courier,monospace;">
-<span style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; <i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; converge = false</i> </span><br style="font-family: Courier New,Courier,monospace;">
-<i style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } <br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; else { </i>
-<ol style="font-family: Courier New,Courier,monospace;">
-<i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; converge
-= true;</i>
-</ol>
-<i style="font-family: Courier New,Courier,monospace;">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i>
-<p class="msonormal"></p>
-<p class="msonormal">Conceptually, the If statement has
-two bodies: the if body (evaluated if the predicate evaluates to true)
-and the optional else body (evaluated otherwise). The body of the if
-statement may contain any sequence of Assignment, InputOutput, While,
-If, and Rand statements. Thus, DML supports nested control structures,
-such as in the following example:</p>
-</ol>
-<ol>
-<p style="margin-bottom: 0in;">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<span style="font-family: Courier New,Courier,monospace;" lang="pl-PL">&nbsp;&nbsp;
-<i>while( !converge ) {</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; <span lang="pl-PL"><i>&nbsp;H = H * (t(W) %*% V) / (
-t(W) %*% W %*% H);<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp; &nbsp;W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp; &nbsp;i = i + 1;</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; zerror =
-z - H %*% W;</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if
-(zerror &lt; maxError){</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp; &nbsp;converge = true;</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; else {</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp; &nbsp;converge = false;</i></span></p>
-<p style="font-family: Courier New,Courier,monospace;" class="msonormal"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; }</i></span></p>
-<p class="msonormal" style="margin-bottom: 0.17in;"><span lang="pl-PL"><i>&nbsp;&nbsp;&nbsp; </i></span><br>
-<br>
-<br>
-</p>
-</ol>
-<ol>
-<ol>
-<h2 class="western"><a name="mozTocId187579"></a>Rand
-Statement</h2>
-</ol>
-<p class="msonormal">&nbsp;The Rand statement is
-used to generate a random mxn matrix. </p>
-</ol>
-<p class="msonormal"><br>
-<br>
-</p>
-<p style="margin-left: 0.83in; margin-bottom: 0in;"><i>X&nbsp;
-=
-Rand(rows = 10, cols = 20, min = 0, max = 1, pdf = "uniform",
-sparsity=0.2);</i></p>
-<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
-<p class="msonormal" style="margin-left: 0.42in;">generates
-a 10 x 20
-matrix, where each cell value is chosen uniformly at random between 0
-and 1. Currently, the only pdf supported is uniform; additional
-distributions would be added in future DML releases. <br>
-The
-parameter <i>sparsity</i> takes a value between 0 and 1,
-and it
-denotes the fraction of non-zero cells in the matrix. In the current
-example, <i>approximately</i> 20% of cells in the
-generated matrix
-will have a non-zero value. </p>
-<ol>
-<h1><a name="mozTocId399290"></a><a name="Expressions"></a>Expressions</h1>
-<p class="msonormal">Expressions in DML apply an
-operation, such as matrix multiplication, over one or more input
-operands. The operations in DML are divided into operators such as <i>matrix
-multiplication</i> and builtin functions such as <i>diag</i>
-and <i>transpose</i>.</p>
-<ul type="disc">
-<h2 class="western"><a name="mozTocId526747"></a>Operators</h2>
-</ul>
-<p class="msonormal">In addition to linear algebra
-operations such as matrix multiplication, matrices can also be used in
-arithmetic, relational and boolean expressions. In these cases, the
-operations are performed element by element. For instance, </p>
-<p class="msonormal"><i>A = B * C;</i></p>
-<p class="msonormal">is evaluated by multiplying each
-cell in B with the corresponding cell in C. Note that the dimensions of
-the input matrices need to match based on the operator semantics;
-otherwise an exception will be raised at compile time. When one of the
-operands is a matrix and the other operand is a scalar, the operation
-is performed elementwise on the matrix using the scalar operand. For
-example </p>
-<p class="msonormal">&nbsp;<i>A = B * 20;</i></p>
-<p class="msonormal" style="margin-bottom: 0.17in;">&nbsp;is
-evaluated by multiplying every cell in B by the scalar value 20.<br>
-<br>
-The basic operators supported in a DML expression are shown below. </p>
-<table border="1" cellpadding="0" cellspacing="2">
-<tbody>
-<tr>
-<td valign="top">
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Operator</b></p>
-</td>
-<td valign="top">
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Example</b></p>
-</td>
-<td valign="top">
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Input
-Type</b></p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Output
-Type</b></p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Arithmetic ( + ,
-- , *, / )</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X + Y</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">If one of the
-operands is a matrix, output is matrix; otherwise it is scalar</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix
-Multiplication</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X %*% Y</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Power</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X ^ y</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X can be matrix
-or scalar<br>
-y is a scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Same as X</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Relational
-(&lt;&nbsp; &gt;&nbsp; == != &lt;=&nbsp;
-&gt;= )</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X&nbsp;
-&lt;= Y</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Boolean (
-&amp;&nbsp; |&nbsp; !)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X &amp; Y<br>
-!X</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-</tr>
-<tr>
-<td colspan="4">
-<p class="msonormal" style="border: medium none ; padding: 0in;" align="center">
-<b><br>
-DML Operators</b></p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="msonormal">&nbsp;
-&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
-<ul type="disc">
-<h2 class="western"><a name="mozTocId926860"></a>Builtin
-Functions</h2>
-</ul>
-<p class="msonormal">&nbsp; The builtin functions
-supported in DML can be broadly classified as follows.</p>
-<ul type="disc">
-<li>
-<p style="margin-bottom: 0in;"><b>Linear
-algebra </b><span style="font-weight: normal;">:</span>
-Functions applying linear algebra operations on matrices such as <i>transpose</i>,
-<i>diag</i> and <i>trace</i>. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><b>Matrix
-Aggregation </b><span style="font-weight: normal;">:</span>
-Functions performing aggregation operations on matrices, such as <i>sum</i>,
-<i>prod</i>, <i>avg</i>, <i>min</i>
-and <i>max</i>. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><b>Matrix
-Partial Aggregation </b><span style="font-weight: normal;">:</span>
-Functions aggregating matrices along a single dimension such as <i>rowSums</i>
-and <i>colSums</i>. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><b>Matrix
-Dimensionality </b><span style="font-weight: normal;">:</span>
-Functions to compute dimensionality of a matrix, such as <i>length</i>,
-<i>nRow </i>and <i>nCol</i>. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><b>Comparison</b>
-: Functions comparing two operands; for matrices the functions
-supported are <i>pmin</i> and <i>pmax</i> and
-for scalars the corresponding functions are <i>min </i>and
-<i>max</i> respecively. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;"><b>Mathematical</b>
-: Mathematical and trigonometric functions, such as <i>sqrt</i>,
-<i>log</i>, <i>abs</i>, <i>sin</i>,
-<i>cos</i> and <i>tan</i>. These
-functions can be applied on matrices or scalars.&nbsp; </p>
-</li>
-<li>
-<p><b>Cast</b> : Functions to cast objects from
-one type to another. E.g., <i>castAsScalar</i>. </p>
-</li>
-</ul>
-<p class="msonormal" style="margin-bottom: 0.17in;">The
-table below lists the functions currently supported in DML along with a
-description of the input and output types for each of them. For
-example, consider the following expressions. </p>
-<p class="msonormal"><i>s = sum(A);</i><br>
-<i>B = rowSums(A);</i><br>
-<i>C = colSums(A);<br>
-D = rowSums(C); </i><br>
-diff = s - castAsScalar(D);</p>
-<p class="msonormal" style="margin-bottom: 0.17in;"><br>
-The builtin function <i>sum</i> operates on a matrix (say <i>A</i>
-of dimensionality <i>mxn</i>) and returns a scalar value
-corresponding to the sum of all values in the matrix. The builtin
-functions <i>rowSum</i>s and <i>colSums</i>,
-on the other hand, aggregate values on a per-row and per-column basis
-respectively. They output matrices of dimensionality <i>mx1</i>
-and <i>1xn</i> respectively. Therefore, <i>B</i>
-is a <i>mx1</i> matrix and <i>C</i> is a <i>1xn</i>
-matrix. Applying <i>rowSums</i> on matrix <i>C</i>,
-we obtain matrix <i>D</i> as a <i>1x1</i>
-matrix. In DML, a <i>1x1</i> matrix is different from a
-scalar; to treat <i>D</i> as a scalar, an explicit <i>castAsScalar</i>
-operation is invoked in the final statement. The difference between <i>s</i>
-and <i>castAsScalar(D)</i> should be 0.</p>
-<table border="1" cellpadding="0" cellspacing="2" width="100%">
-<tbody>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Builtin
-Function</b></p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Example</b></p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Input
-Types</b></p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Output
-Types</b></p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;"><b>Comments</b></p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Trans (t)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">t(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Return transpose
-of a matrix</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">diag</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">diag(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">If input is a
-vector (i.e., 1xn or nx1 matrix), create a (nxn) matrix where the
-diagonal is the input matrix.<br>
-Otherwise, create a column vector (nx1) from the diagonal of the input
-matrix.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">sum</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">sum(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the sum
-of all the element values in the matrix</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">min/max for
-Matrices</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">min(X)<br>
-max(Y)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
-minimum/maximum element value in the entire matrix</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">rowSums/rowMeans/rowMaxs/rowMins</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">rowSums(X) <br>
-rowMeans(X) <br>
-rowMaxs(X) <br>
-rowMins(X) </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Row-wise
-computations -- for each row, compute the sum/mean/max/min of all
-element values</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">colSums/colMeans/colMaxs/colMins</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">colSums(X) <br>
-colMeans(X) <br>
-colMaxs(X) <br>
-colMins(X) </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Row-wise
-computations -- for each column, compute the sum/mean/max/min of all
-element values</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">max/max for
-scalars</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">min(x,y)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
-minimum/maximum amongst the given scalar values</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">pmin / pmax</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">pmin(X,Y) <br>
-pmax(X,y)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X is a Matrix,
-the second input can be a Matrix or a Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute
-cell-wise minimum/maximum. If the second input is a scalar then it is
-compared against all cells in the first input.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">ppred</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">ppred(X,Y,"&lt;")
-<br>
-ppred(X,y,"&lt;")</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X is a Matrix,
-the second input can be a Matrix or a Scalar, the third input is an
-operator</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">The operator
-specified in the third input is applied to all cells in X and Y
-matrices. If the second input is a scalar then it is used against all
-cells in the first input.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">avg</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">avg(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
-average value of all elements in the matrix</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">prod</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">prod(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the
-product of all the element values in the matrix.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Trace</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">trace(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Compute the sum
-of elements on the main diagonal for a given square matrix.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Trigonometric
-(sin, cos, tan)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">sin(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Same as input</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Apply the
-trigonometric function on the input (element wise if the input is a
-matrix)</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Dimensionality
-(nrow, ncol, length)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">nrow(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">nrow, ncol and
-length compute the number of rows, number of columns and number of
-cells in the matrix respectively.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Mathematical
-(log, abs, sqrt, round, exp)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-sqrt(X)<br>
-log(X)<br>
-log(X,y) <br>
-round(X) <br>
-exp(X) </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix or Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Same as input</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Apply the
-mathematical function on the input (element wise if the input is a
-matrix)</p>
-</td>
-</tr>
-
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Mathematical
-(probabilities)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-cumulativeProbability(...)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Same as input</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">
-For a random variable X from a given distribution, this function computes P(X < x) where "x" is the quantile at which the cumulative probability is computed. <br>
-Currently, probabilities can be computed for <i>Normal, Exponential, Chi-square, F, and t</i> distributions. Various distribution parameters (e.g., mean, standard deviation, degrees of freedom) are provided as <i>name=value</i> pairs, as shown below: <br><br>
-
-q = cumulativeProbability(target=x, dist="normal", mean=1.2, sd=2.5) <br>
-q = cumulativeProbability(target=x, dist="exp", mean=1.2) <br>
-q = cumulativeProbability(target=x, dist="chisq", df=20) <br>
-q = cumulativeProbability(target=x, dist="f", df1=10, df2=20) <br>
-q = cumulativeProbability(target=x, dist="t", df=10) <br><br>
-
-The distribution parameters are mandatory except when <i>dist="normal"</i>, in which case a <i>standard normal distribution</i> is assumed where <i>mean=1.0</i> and <i>sd=0.0</i>.
-</p>
-</td>
-</tr>
-
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">castAsScalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">castAsScalar(X)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">A 1x1 matrix is
-cast as a scalar</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">print</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">print(x)<br>
-print("...", x)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Not Applicable</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Prints the value
-of a scalar variable <i>x</i>. This builtin takes an
-optional string parameter.</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Contingency Tables</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">F = ctable(A,B) <br>
-F = ctable(A,B,C) </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">1-D Matrices</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Computes the
-contingency table between two vectors A and B. The resulting table <i>F</i>
-consists of <i>max(A)</i> rows and <i>max(B)</i>
-columns. <br>
-More precisely, F[i,j] = |{ k | A[k] = i and B[k] = j, 1 &#8804; k &#8804; n }|,
-where A and B are two <i>n-dimensional</i> vectors. <br>
-In an alternative form, it takes an optional third parameter C which is
-a vector that has same dimensions as that of A and B. <br>
-In this context, F[i,j] = &#8721;<sub>k</sub>C[k], where A[k] = i
-and B[k] = j (1 &#8804; k &#8804; n). </p>
-</td>
-</tr>
-
-
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Grouped Aggregates</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">A = groupedAggregate(target=Y, groups=G, fn="...") <br>
-A = groupedAggregate(target=Y, weights=W, groups=G, fn="...") </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">1-D Matrices</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">1-D Matrix</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Splits the data in target matrix Y into subsets (or groups) as specified by G, and applies the function <b>fn</b> on each subset/group. The length of resulting 1-D matrix is equal to the number of groups in G. Both Y and G must be one-dimensional matrices with matching dimensions. One can also optionally specify <b>weights</b> for each value in Y using another one-dimensional matrix W. Parameters are specified as <i>name=value</i> pairs. Valid values for function <b>fn</b> are <i>count, sum, mean, variance, centralmoment</i>. When <i><b>fn</b>=centralmoment</i>, the order <i>must</i> be specified using another parameter called <b>order</b> -- acceptable values for <b>order</b> are 2, 3, and 4. Following are some of the example invocations of this builtin function:<br><br>
-
-q = groupedAggregate(target=Y, groups=G, fn="count") <br>
-q = groupedAggregate(target=Y, groups=G, fn="sum") <br>
-q = groupedAggregate(target=Y, groups=G, fn="mean") <br>
-q = groupedAggregate(target=Y, groups=G, fn="variance") <br>
-q = groupedAggregate(target=Y, groups=G, fn="centralmoment", order=2) <br>
-q = groupedAggregate(target=Y, groups=G, fn="centralmoment", order=3) <br>
-q = groupedAggregate(target=Y, groups=G, fn="centralmoment", order=4) <br><br>
-
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="count") <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="sum") <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="mean") <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="variance") <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="centralmoment", order=2) <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="centralmoment", order=3) <br>
-q = groupedAggregate(target=Y, weights=W, groups=G, fn="centralmoment", order=4) <br><br>
-
-</p>
-</td>
-</tr>
-
-
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Simple Quantile</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-quantile(X, p) <br>
-quantile(X, W, p)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X and W are
-column matrices (vectors) of the same size <br>
-W contains the weights for data in X <br>
-p is a scalar (0&lt;p&lt;1) that specifies the quantile to be
-computed </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">The p-quantile
-for a random variable X is the value x such that Pr[X&lt;x]
-&lt;= p and Pr[X&lt;= x] &gt;= p <br>
-let n=nrow(X), i=ceiling(p*n), quantile() will return X[i] </p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Quantile</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-quantile(X, P) <br>
-quantile(X, W, P)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X, W are column
-matrices (vectors) of the same size <br>
-W contains the weights for data in X <br>
-P is a column matrix (vector) that specifies quantiles to be computed </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">A column matrix
-with the same size as P</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">This function
-returns a column matrix that contains all the quantiles required in P</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Inter Quartile
-Mean</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-interQuartileMean(X)<br>
-interQuartileMean(X, W)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X, W are column
-matrices (vectors) of the same size <br>
-W contains the weights for data in X </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">This function
-returns the mean of all x in X such that x&gt;quantile(X, 0.25) and
-x&lt;=quantile(X, 0.75)</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Central Moment</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-centralMoment(X, p)<br>
-centralMoment(X, W, p)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X, W are column
-matrices (vectors) of the same size <br>
-W contains the weights for data in X <br>
-p is a scalar (1&lt;p&lt;5) that specifies the order of the central moment</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">This function
-returns the pth central moment of input X <br>
-right now only support upto 4th central moment</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">Co-Variance</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;" lang="fr-FR">
-cov(X, Y)<br>
-cov(X, Y, W)</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">X, Y, W are column
-matrices (vectors) of the same size <br>
-W contains the weights for data in X and Y </p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">scalar</p>
-</td>
-<td>
-<p class="msonormal" style="border: medium none ; padding: 0in;">This function
-returns the co-variance of input X and Y</p>
-</td>
-</tr>
-<tr>
-<td colspan="5">
-<p class="msonormal" style="border: medium none ; padding: 0in;" align="center">
-<b><br>
-DML Builtin functions</b></p>
-</td>
-</tr>
-</tbody>
-</table>
-<h1><a name="mozTocId490093"></a>Future
-Language Constructs</h1>
-<p class="msonormal" style="margin-bottom: 0.17in;">SystemML
-and DML are under active development. Adding additional constructs and
-features is mainly driven by requirements. We currently intend to add
-the following constructs to DML:</p>
-<ul type="disc">
-<li>
-<p style="margin-bottom: 0in;">for statement control
-structure </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">support for functions</p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">cross-validation
-statement </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">constructors for
-matrices (e.g., create a mxn matrix with all cells having the value c)</p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">integration with
-libraries such as LAPACK. </p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">index-based
-operations (e.g., A[1,5] = B[1,5] * 5 )</p>
-</li>
-<li>
-<p style="margin-bottom: 0in;">specialized functions
-such as Unique() and sparse() for contingency table computation </p>
-</li>
-<li>
-<p>support for additional value types for matrices (int,
-string and logical) </p>
-</li>
-</ul>
-<h1><a name="mozTocId490094"></a>Example
-Scripts</h1>
-<ul type="disc">
-<h2 class="western"><a name="mozTocId959105"></a><u>Gaussian
-Non-Negative Matrix Factorization (GNMF)</u></h2>
-</ul>
-<p class="msonormal">&nbsp;</p>
-<p class="msonormal"><i>V = read("in/v", rows=10,
-cols=8, format="text");</i></p>
-<p class="msonormal"><i>W = read("in/w", rows=10,
-cols=5, format="text");</i></p>
-<p class="msonormal"><i>H = read("in/h", rows=5,
-cols=8, format="text");<br>
-max_iteration = 3;<br>
-i = 0;<br>
-while(i &lt; max_iteration) {</i></p>
-<p class="msonormal" lang="pl-PL"><i>H = H
-* (t(W) %*% V) / ( t(W) %*% W %*% H);<br>
-W = W * (V %*% t(H) / (W %*% H %*% t(H));<br>
-i = i + 1;</i></p>
-<p class="msonormal"><i>}</i></p>
-<p class="msonormal">&nbsp;</p>
-<p class="msonormal"><i>write(W, "out/w",
-format="text");<br>
-write(H, "out/h", format="text");</i></p>
-<p class="msonormal">&nbsp;</p>
-<ul type="disc">
-<h2 class="western"><a name="mozTocId419387"></a><u>PageRank</u></h2>
-</ul>
-<p class="msonormal"><i>G = read("in/g",
-rows=1000, cols=1000, format="text");<br>
-# dense<br>
-p = read("in/p", rows=1000, cols=1, format="text");<br>
-e = read("in/e", rows=1000, cols=1, format="text");<br>
-u = read("in/u", rows=1, cols=1000, format="text");<br>
-alpha = 0.85;<br>
-max_iteration = 3;<br>
-i = 0;<br>
-<br>
-while(i &lt; max_iteration) {<br>
-&nbsp;&nbsp;&nbsp; p = alpha * (G %*% p) + (1 - alpha) * (e
-%*% u %*% p);<br>
-&nbsp;&nbsp;&nbsp; i = i + 1;<br>
-}<br>
-<br>
-write(p, "out/p", format="text");</i></p>
-<p class="msonormal">&nbsp;</p>
-<ul type="disc">
-<h2 class="western"><a name="mozTocId258037"></a><u>LinearRegression</u></h2>
-</ul>
-<p class="msonormal">&nbsp;</p>
-<p class="msonormal"><i>V = read("in/v",
-rows=10000, cols=500, format="text");<br>
-y = read("in/y", rows=10000, cols=1, format="text");<br>
-lambda = 0.000001;<br>
-r = -(t(V) %*% y);<br>
-p = -r;<br>
-norm_r2 = sum(r * r);<br>
-w = 0;<br>
-<br>
-max_iteration = 3;<br>
-i = 0;<br>
-while(i &lt; max_iteration) {<br>
-&nbsp;&nbsp;&nbsp; q = ((t(V) %*% (V %*% p)) + lambda * p);<br>
-&nbsp;&nbsp;&nbsp; alpha = norm_r2 / castAsScalar(t(p) %*%
-q);<br>
-&nbsp;&nbsp;&nbsp; w = w + alpha * p;<br>
-&nbsp;&nbsp;&nbsp; old_norm_r2 = norm_r2;<br>
-&nbsp;&nbsp;&nbsp; r = r + alpha * q;<br>
-&nbsp;&nbsp;&nbsp; norm_r2 = sum(r * r);<br>
-&nbsp;&nbsp;&nbsp; beta = norm_r2 / old_norm_r2;<br>
-&nbsp;&nbsp;&nbsp; p = -r + beta * p;<br>
-&nbsp;&nbsp;&nbsp; i = i + 1;<br>
-}<br>
-<br>
-write(w, "out/w", format="text");</i></p>
-<p class="msonormal">&nbsp;</p>
-<p></p>
-</ol>
-</body></html>
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE>DML</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="CREATED" CONTENT="0;0">
+	<META NAME="CHANGEDBY" CONTENT="   ">
+	<META NAME="CHANGED" CONTENT="20120118;20375600">
+	<META NAME="Originator" CONTENT="Microsoft Word 10">
+	<META NAME="ProgId" CONTENT="Word.Document">
+	<META NAME="CHANGEDBY" CONTENT="   ">
+	<META NAME="CHANGEDBY" CONTENT="   ">
+	<META NAME="CHANGEDBY" CONTENT="   ">
+	<META NAME="CHANGEDBY" CONTENT=" ">
+	<!--[if gte mso 9]><xml> <o:DocumentProperties> <o:Author>IBM_USER</o:Author> <o:LastAuthor>IBM_USER</o:LastAuthor> <o:Revision>63</o:Revision> <o:TotalTime>147</o:TotalTime> <o:Created>2010-09-28T21:37:00Z</o:Created> <o:LastSaved>2010-09-29T00:04:00Z</o:LastSaved> <o:Pages>1</o:Pages> <o:Words>1822</o:Words> <o:Characters>10387</o:Characters> <o:Company>IBM</o:Company> <o:Lines>86</o:Lines> <o:Paragraphs>24</o:Paragraphs> <o:CharactersWithSpaces>12185</o:CharactersWithSpaces> <o:Version>10.6858</o:Version> </o:DocumentProperties> </xml><![endif]-->
+	<!--[if gte mso 9]><xml> <w:WordDocument> <w:GrammarState>Clean</w:GrammarState> <w:Compatibility> <w:UseFELayout/> </w:Compatibility> <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel> </w:WordDocument> </xml><![endif]-->
+	<!--[if !mso]><object classid="clsid:38481807-CA0E-42D2-BF39-B33AF135CC4D" id=ieooui></object> <style> st1\:*{behavior:url(#ieooui) } </style> <![endif]-->
+	<!--[if gte mso 10]> <style> /* Style Definitions */ table.MsoNormalTable {mso-style-name:"Table Normal"; mso-tstyle-rowband-size:0; mso-tstyle-colband-size:0; mso-style-noshow:yes; mso-style-parent:""; mso-padding-alt:0in 5.4pt 0in 5.4pt; mso-para-margin:0in; mso-para-margin-bottom:.0001pt; mso-pagination:widow-orphan; font-size:10.0pt; font-family:"Times New Roman";} </style> <![endif]-->
+	<!--[if gte mso 9]><xml> <o:shapedefaults v:ext="edit" spidmax="2050"/> </xml><![endif]-->
+	<!--[if gte mso 9]><xml> <o:shapelayout v:ext="edit"> <o:idmap v:ext="edit" data="1"/> </o:shapelayout></xml><![endif]-->
+	<STYLE TYPE="text/css">
+	<!--
+		P { color: #000000 }
+		TD P { color: #000000 }
+		H1 { color: #000000 }
+		PRE { color: #000000 }
+		PRE.cjk { font-family: "NSimSun", monospace }
+		H2 { color: #000000 }
+		H2.cjk { font-family: "SimSun" }
+		H2.ctl { font-family: "Mangal" }
+		H3 { color: #000000 }
+		H3.western { font-family: "Albany", sans-serif }
+		H3.cjk { font-family: "HG Mincho Light J" }
+		H3.ctl { font-family: "Arial Unicode MS" }
+		A:link { color: #0000ff }
+		A:visited { color: #0000ff }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" VLINK="#0000ff" DIR="LTR">
+<PRE CLASS="western" STYLE="margin-bottom: 0.2in; text-align: center"><FONT SIZE=6><B>DML Syntax Specification</B></FONT></PRE><P>
+<A NAME="mozTocId182601"></A>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; January
+2012</P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in">Comments</P>
+	<LI><P STYLE="margin-bottom: 0in">Data Types and Variables 
+	</P>
+	<LI><P STYLE="margin-bottom: 0in">Statements</P>
+	<OL>
+		<LI><P STYLE="margin-bottom: 0in">File Format and MTD files</P>
+		<LI><P STYLE="margin-bottom: 0in">Read Statement</P>
+		<LI><P STYLE="margin-bottom: 0in">Write Statement</P>
+		<LI><P STYLE="margin-bottom: 0in">Assignment Statement<A HREF="#mozTocId2532">
+		</A>
+		</P>
+		<LI><P STYLE="margin-bottom: 0in">Control Statement</P>
+		<LI><P STYLE="margin-bottom: 0in">User-defined function (UDF)
+		Statements</P>
+	</OL>
+	<LI><P STYLE="margin-bottom: 0in">Expressions</P>
+	<OL>
+		<LI><P STYLE="margin-bottom: 0in">Operators</P>
+		<LI><P STYLE="margin-bottom: 0in">Builtin Functions</P>
+	</OL>
+	<LI><P STYLE="margin-bottom: 0in">Modules</P>
+	<LI><P STYLE="margin-bottom: 0in">Reserved Keywords 
+	</P>
+</OL>
+<OL>
+	<H1>Comments</H1>
+	<P>DML supports two forms of commenting: line and block comments. A
+	line comment is indicated using a hash (#), and everything to the
+	right of the hash is commented out. A block comment is indicated
+	using &ldquo;/*&rdquo; to start the comment block and &ldquo;*/&rdquo;
+	to end it.</P>
+	<P># this is an example of a line comment</P>
+	<P>/* this is an example of a 
+	</P>
+	<OL>
+		<P>multi-line block comment</P>
+	</OL>
+	<P>*/</P>
+	<H1><A NAME="mozTocId452943"></A>Data Types and Variables</H1>
+	<P>DML supports 3 data types: matrices, scalars, objects, and 5
+	value types: double, integer, string, boolean, and object. Matrices
+	only support the double value type (i.e., the cells in a matrix can
+	only be doubles). The data type <B>object</B> refers to any object
+	that is neither a matrix or a scalar (e.g., a binary representation
+	of a decision tree). The data type object can only be used with the
+	value type object.  The value type object can only be used with the
+	data type object. 
+	</P>
+	<P>Each matrix has a specified number of rows and columns. A 1 x 1
+	matrix is not equivalent to a scalar double. DML only supports two
+	dimensional matrices. The first index for both row and columns in a
+	matrix is 1.  For example, a matrix with 10 rows and 10 columns
+	would have rows numbered 1 to 10, and columns numbered 1 to 10.  
+	</P>
+	<P>The elements of the matrix can be accessed by indexing. The
+	indexing must specify both the row and column values, separated by a
+	comma. The row and column values could either be integer values,
+	other scalar integer variables in the DML program, or an expression
+	that evaluates to an integer value. To select the entire row or
+	column of a matrix, a colon is used for the index of the appropriate
+	dimension.</P>
+	<P><B>Examples:</B> 
+	</P>
+	<P><FONT FACE="Courier New, monospace"><I>X[1,4]</I></FONT> # access
+	cell in row 1, column 4 of matrix X</P>
+	<P><FONT FACE="Courier New, monospace"><I>X[i,j] </I></FONT># access
+	cell in row i, column j of X.</P>
+	<P><FONT FACE="Courier New, monospace"><I>X[1,:]</I></FONT>  #
+	access the 1<SUP>st</SUP> row of X</P>
+	<P><FONT FACE="Courier New, monospace"><I>X[:,2]</I></FONT>  #
+	access the 2<SUP>nd</SUP> column of X</P>
+	<P><FONT FACE="Courier New, monospace"><I>X[: , :] </I></FONT>#
+	access all rows and columns of X</P>
+	<P>DML also supports range indexing to access a contiguous block of
+	rows and columns in the matrix. The grammer for row-based indexing
+	is below. The constraint is that lower-row &lt; upper-row, and
+	lower-column &lt; upper-column.</P>
+	<P STYLE="font-weight: normal"><I>[Marix name][lower-row :
+	upper-row],[lower-column : upper-column]</I></P>
+	<P><B>Examples:</B></P>
+	<P><I>X[1:4, 1:4]   </I># access the 4 x 4 submatix comprising
+	columns 1 &ndash; 4 of rows 1 &ndash; 4 of X</P>
+	<P><I>X[1:4, : ]   </I># select the first 4 rows of X 
+	</P>
+</OL>
+<OL START=0>
+	<H1><A NAME="mozTocId600673"></A>Statements 
+	</H1>
+	<P>A DML program consists of a sequence of statements, with the
+	default computation semantics being sequential evaluation of the
+	individual statements. The types of statements supported currently
+	in DML are file input/output (Read, Write), assignment, control
+	structures (While, If, For), and user-defined function statements
+	(UDF declaration, UDF function call). 
+	</P>
+	<P>Similar to R, the use of a semi-colon at the end of a statement
+	is optional.</P>
+	<H2 CLASS="western"><A NAME="mozTocId63369"></A>File format and MTD
+	files 
+	</H2>
+	<P STYLE="margin-bottom: 0.17in">The Read/Write statements support
+	reading / writing all data types (matrices, scalars, objects)
+	from/to files. The files are not managed in memory but kept in HDFS
+	and processed by Hadoop. Associated with each data file is a
+	optional metadata file (MTD) which stores metadata information about
+	the contents of the data file. For data files generated by SystemML,
+	a MTD file will automatically be generated. <B>The name of the MTD
+	file associated with the data file &lt;filename&gt; must be
+	&lt;filename&gt;.mtd.</B>  For example, if SystemML writes out a
+	data file X.mtx to HDFS, the name of the data file will be X.mtx and
+	the generated MTD file will be X.mtx.mtd. A user can specify an MTD
+	file for their own data as well. 
+	</P>
+	<P>SystemML supports a sparse text format on disk for matrices. The
+	cell values are stored in <I>(row column value)</I>-format with the
+	row and column indices being 1-based. The <I>binary</I> format can
+	only be read and written by SystemML. DML scripts with read and
+	write statements can be executed to perform format conversions.</P>
+	<P><B>Examples:</B></P>
+	<P><I># The contents of a matrix file X.mtx in text format with 4
+	non-zero cells. The matrix has 10 rows and 8 columns. </I>
+	</P>
+	<P><I>1 1 4.0<BR>3 4 10.0<BR>5 6 7.0<BR>9 8 20.0</I></P>
+	<P><I># The contents of the MTD file X.mtx.mtd associated with data
+	X.mtx  is:</I></P>
+	<P><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>{ </I></FONT></FONT>
+	</P>
+</OL>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;data_type&quot;:
+&ldquo;matrix&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;rows&quot;:
+10,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;cols&quot;:
+8,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;nnzs&quot;:
+4,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;format&quot;:
+&ldquo;text&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;description&quot;:
+{ &quot;author&quot;: &ldquo;SystemML&rdquo; } </FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><I># The
+contents of the MTD file Y.mtx.mtd associated with a matrix stored in
+DML blocked binary format  in file Y.mtx.  The matrix has 10 rows, 8
+columns, and the block size is 1000 rows by 1000 columns.</I></P>
+<OL START=0>
+	<P><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>{ </I></FONT></FONT>
+	</P>
+</OL>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;data_type&quot;:
+&ldquo;matrix&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;rows&quot;:
+10,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;cols&quot;:
+8,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;nnzs&quot;:
+4,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in">&ldquo;<FONT FACE="Courier New, monospace"><FONT SIZE=2>rows_in_block&rdquo;:
+1000,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in">&ldquo;<FONT FACE="Courier New, monospace"><FONT SIZE=2>cols_in_block&rdquo;:
+1000,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;format&quot;:
+&quot;binary&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>}</I></FONT></FONT></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><I># The
+contents of the MTD file scalar_i.mtd associated with a scalar data
+file scalar_i (which contains the integer scalar value 2)</I></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>	{</I></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;data_type&quot;:
+&ldquo;scalar&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;format&quot;:
+&quot;text&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>	}</I></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in">The MTD file
+contains a single JSON object with the following possible fields as
+shown in Table 1 below. Some fields are valid for only certain data
+types and certain file formats, as indicated in Table 1. The optional
+fields do not need to be specified. If an optional field has a
+default value and is valid for a data type,  then it must be
+specified if the default value is incorrect.  For example, if  format
+= binary, then format must be specified for all data types. SystemML
+will generate value for these fields for data the system produces,
+but a user specifying the MTD file is not required to specify values
+for optional fields.</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=51*>
+	<COL WIDTH=51*>
+	<COL WIDTH=51*>
+	<COL WIDTH=51*>
+	<COL WIDTH=51*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P><B>Parameter Name</B></P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><B>Description</B></P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><B>Optional</B></P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><B>Permissible values</B></P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><B>Data type valid for</B></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>data_type</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Indicated the data type of the data</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Yes. 
+			</P>
+			<P>Default value is matrix if not specified.</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>matrix, scalar, object (Not case-sensitive). Must be object
+			when value_type = object.</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix, Scalar, Object</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>value_type</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Indicates the value type of data</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Yes. 
+			</P>
+			<P> Default value is double if not specified</P>
+			<P><BR>
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>double, int, string, boolean, object (Not case-sensitive). 
+			</P>
+			<P>Must be object with data_type = object.</P>
+			<P>Must be double when data_type = matrix</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix, Scalar, Object</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>rows</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Number rows in matrix</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><SPAN STYLE="font-weight: normal">No.</SPAN></P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Any integer &gt; 0</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>cols</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Number columns in matrix</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P><SPAN STYLE="font-weight: normal">No.</SPAN>  
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Any integer &gt; 0</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>rows_in_block, cols_in_block</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Valid only when the matrix is in SystemML binary blocked
+			format. Indicate dimensions of blocked representation 
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>No. Only valid if matrix in binary blocked format. 
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Any integer &gt; 0. Must be the actual dimensions of binary
+			blocked representation</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Marix in SystemML blocked binary format. Valid only when
+			format=&rdquo;binary&rdquo;</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>nnzs</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Number of non-zero values. 
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Yes</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Any integer &gt; 0</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>format</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>The data file format.  
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Yes.</P>
+			<P>Default value is text. 
+			</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>binary, text (Not case-sensitive)</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix, Scalar, Object</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=20%>
+			<P>description</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Description of the data. This field is optional.</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Yes</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Any valid JSON string</P>
+		</TD>
+		<TD WIDTH=20%>
+			<P>Matrix, Scalar, Object</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=5 WIDTH=100% VALIGN=TOP>
+			<P ALIGN=CENTER><B>Table 1: Fields stored in MTD file.</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<H2 CLASS="western" STYLE="margin-left: 0.49in">Read Statement 
+</H2>
+<OL START=0>
+	<P STYLE="margin-bottom: 0.17in">The read statement is used to read
+	in all data types (matrix, scalar, object) from data files for use
+	in SystemML. The syntax of a read statement is as follows:</P>
+	<P><I>read(&ldquo;inputfile&rdquo;, [list of parameters])</I></P>
+	<P STYLE="font-style: normal">where inputfile is the path to the
+	data file in HDFS. The list of parameters are the same as given in
+	Table 1. For the read statement, the user has the option of
+	specifying each parameter value either in the MTD file,  the read
+	statement, or in both locations. <B>However, parameter values
+	specified in both the read statement and MTD file must have the same
+	value. Also, if a scalar value is being read, then format cannot be specified. </B> The read
+	statement in SystemML is parameterized as follows during
+	compilation.  
+	</P>
+	<OL>
+		<LI><P STYLE="font-style: normal">Default values are assigned to
+		parameters with default values.</P>
+		<LI><P STYLE="font-style: normal">Parameters provided in the read
+		statement either fill in values or override defaults. Cann</P>
+		<LI><P STYLE="font-style: normal"> SystemML will look for the MTD
+		file<B> at compile time</B> in the specified location (same path as
+		data file, filename for MTD file is same name as data file with
+		&rdquo;.mtd&rdquo; appended).  
+		</P>
+		<LI><P STYLE="font-style: normal">If all non-optional parameters
+		are specified or conflicting values are detected, then an exception
+		is thrown.</P>
+		<P STYLE="font-style: normal"></P>
+	</OL>
+</OL>
+<P STYLE="margin-left: 0.49in; font-style: normal"><B>Examples:</B></P>
+<P STYLE="margin-left: 0.98in; font-style: normal"># read a matrix
+data file from HDFS with path &ldquo;in/v&rdquo;.  The default
+data_type value of matrix and default value_type of double are used. 
+</P>
+<P STYLE="margin-left: 0.98in"><FONT FACE="Courier New, monospace"><I>V
+= read (&quot;in/v&quot;, rows=10, cols=8, format=&quot;text&quot;); </I></FONT>
+</P>
+<OL START=0>
+	<P># read a matrix data file from HDFS with an MTD file available
+	(MTD file path: in/data.mtd)</P>
+	<P><FONT FACE="Courier New, monospace"><I>V = read(&ldquo;in/data&rdquo;);</I></FONT></P>
+	<P># read a scalar integer value from HDFS file &ldquo;in/scalar_i&rdquo;</P>
+	<P><FONT FACE="Courier New, monospace"><I>V =
+	read(&ldquo;in/scalar_i&rdquo;,data_type=&rdquo;scalar&rdquo;,
+	value_type=&rdquo;int&rdquo;);</I></FONT></P>
+	<P></P>
+	<OL>
+		<H2 CLASS="western">Write Statement</H2>
+	</OL>
+	<P STYLE="margin-bottom: 0.17in">The write statement is used to
+	persist scalar and matrix data from SystemML to files in HDFS.
+	<B>SystemML only supports writing files to HDFS.</B> The syntax of a
+	write statement is as follows. The parameters are described in Table
+	2. SytstemML will generate a MTD file for the files the write
+	statement generates.</P>
+	<P><FONT FACE="Courier New, monospace"><I>write(identifier,
+	&ldquo;outputfile&rdquo;, format = &ldquo;fmt&rdquo;)</I></FONT></P>
+</OL>
+<DL>
+	<DD>
+	<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<TR VALIGN=TOP>
+			<TD WIDTH=25%>
+				<P><B>Parameter name</B></P>
+			</TD>
+			<TD WIDTH=25%>
+				<P><B>Description</B></P>
+			</TD>
+			<TD WIDTH=25%>
+				<P><B>Optional</B></P>
+			</TD>
+			<TD WIDTH=25%>
+				<P><B>Permissible values</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=25%>
+				<P>identifer</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>A variable in DML whose data is to be written to HDFS. Can be
+				any data type: matrix, scalar, object</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>No</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>Any non-keyword string</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=25%>
+				<P>outputfile</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>The name of output HDFS file. Contents of identifier are
+				written to this file.</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>No</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>Any valid filename 
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=25%>
+				<P>format</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>Valid for all three data types.</P>
+				<P>Object can only take value binary.</P>
+				<P> Indicates the output file format.</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>Yes. 
+				</P>
+				<P>If not specified, default value is text</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P>text, binary</P>
+				<P>Constraints:</P>
+				<P>When datatype is matrix, can either be text or binary.</P>
+				<P>When datatype is scalar, can only be text</P>
+				<P>When datatype is object, can only be binary.</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=4 WIDTH=100% VALIGN=TOP>
+				<P ALIGN=CENTER><B>Table 2: Write Statement parameters</B></P>
+			</TD>
+		</TR>
+	</TABLE>
+</DL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<OL START=0>
+	<P STYLE="margin-bottom: 0in; font-style: normal"><B>Examples:</B></P>
+	<P STYLE="margin-bottom: 0in; font-style: normal"></P>
+	<OL>
+		<P STYLE="font-style: normal"># write the contents of variable V to
+		HDFS file &ldquo;out/file&rdquo;, in text format.  Create MTD file
+		out/file.mtd</P>
+		<OL>
+			<P><FONT FACE="Courier New, monospace"><I>write(V, &quot;out/file&quot;);</I>
+			</FONT>
+			</P>
+			<P><FONT FACE="Courier New, monospace"><SPAN STYLE="font-style: normal">out/file.mtd:</SPAN></FONT></P>
+			<P><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>{ </I></FONT></FONT>
+			</P>
+		</OL>
+	</OL>
+</OL>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;data_type&quot;:
+&ldquo;matrix&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;rows&quot;:
+10,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;cols&quot;:
+8,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;nnzs&quot;:
+4,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;format&quot;:
+&quot;text&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<OL START=0>
+	<P STYLE="margin-bottom: 0in"></P>
+	<OL>
+		<OL>
+			<P STYLE="margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>}</I></FONT></FONT></P>
+			<P></P>
+		</OL>
+		<P># write the contents of variable V to HDFS file&rdquo;out/file&rdquo;
+		in SystemML binary blocked format (with block size 1000 x 1000),
+		and create<SPAN STYLE="font-style: normal"> MTD file out/file.mtd.</SPAN></P>
+		<OL>
+			<P><FONT FACE="Courier New, monospace"><I>write(V, &ldquo;out/file&rdquo;,
+			format=&rdquo;binary&rdquo;);</I></FONT></P>
+			<P><FONT FACE="Courier New, monospace"><SPAN STYLE="font-style: normal">out/file.mtd:</SPAN></FONT></P>
+			<P><FONT FACE="Courier New, monospace"><FONT SIZE=2><I>{ </I></FONT></FONT>
+			</P>
+		</OL>
+	</OL>
+</OL>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;data_type&quot;:
+&ldquo;matrix&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;rows&quot;:
+10,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;cols&quot;:
+8,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;nnzs&quot;:
+4,</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>		&ldquo;rows_in_block&rdquo;:
+1000,</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>		&ldquo;cols_in_block&rdquo;:
+1000,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;format&quot;:
+&quot;binary&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<OL START=0>
+	<P STYLE="margin-bottom: 0in"></P>
+	<OL>
+		<OL>
+			<P STYLE="margin-bottom: 0in"><FONT FACE="Courier New, monospace"><I><FONT SIZE=2>}</FONT></I></FONT></P>
+			<P STYLE="margin-bottom: 0in"></P>
+		</OL>
+		<P># write a scalar integer value to HDFS file &ldquo;out/scalar_i&rdquo;</P>
+		<OL>
+			<P><FONT FACE="Courier New, monospace"><I>write(x,
+			&ldquo;out/scalar_i&rdquo;);</I></FONT></P>
+		</OL>
+	</OL>
+</OL>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT SIZE=2 STYLE="font-size: 10pt"><I>{</I></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;data_type&quot;:
+&ldquo;scalar&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;value_type&quot;:
+&ldquo;double&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;format&quot;:
+&quot;text&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt"><I>}</I></FONT></FONT></P>
+<P><BR><BR>
+</P>
+<OL START=0>
+	<OL START=0>
+		<P># write an object (e.g., a decision tree) value from HDFS file
+		&ldquo;out/scalar_i&rdquo;</P>
+		<OL>
+			<P><FONT FACE="Courier New, monospace"><I>write(x,
+			&ldquo;out/scalar_i&rdquo;);</I></FONT></P>
+		</OL>
+	</OL>
+</OL>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT SIZE=2 STYLE="font-size: 10pt"><I>{</I></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;data_type&quot;:
+&ldquo;object&rdquo;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;value_type&quot;:
+&ldquo;object&rdquo;, </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;format&quot;:
+&quot;binary&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 1.97in; margin-bottom: 0in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt">&quot;description&quot;:
+{ &quot;author&quot;: &quot;SystemML&quot; } </FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2 STYLE="font-size: 10pt"><I>}</I></FONT></FONT></P>
+<P><BR><BR>
+</P>
+<OL START=0>
+	<OL>
+		<H2 CLASS="western"><A NAME="mozTocId2532"></A>Assignment Statement
+				</H2>
+	</OL>
+	<P>An assignment statement consists of an expression, the result of
+	which is assigned to a variable. The variable gets the appropriate
+	data type (matrix or scalar) and value type (double, int, string,
+	boolean) depending on the type of the variable output by the
+	expression. 
+	</P>
+	<P><B>Examples:</B></P>
+	<P><SPAN STYLE="font-style: normal"># max_iteration is of type
+	integer</SPAN><BR><FONT FACE="Courier New, monospace"><I>max_iteration
+	= 3;</I></FONT></P>
+	<P STYLE="font-style: normal"># V has data type matrix and value
+	type double. 
+	</P>
+	<P><FONT FACE="Courier New, monospace"><I>V = W %*% H;</I></FONT></P>
+	<P>The operators allowed in expressions in an assignment statement
+	are described below under <A HREF="#Expressions">Expressions</A>. 
+	</P>
+	<OL>
+		<H2 CLASS="western">Control Statements</H2>
+	</OL>
+</OL>
+<P STYLE="margin-left: 0.49in">DML currently supports 3 control
+statements: while, if, and for. 
+</P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in"><A NAME="mozTocId626926"></A>
+While Statement</H3>
+<OL>
+	<P>The syntax for a while statement is as follows.</P>
+	<P>while (predicate){</P>
+	<OL>
+		<P>statement1</P>
+		<P>statement2</P>
+		<P>...</P>
+	</OL>
+	<P>}</P>
+	<P>The statements in the while statement body are evaluated
+	repeatedly until the predicate evaluates to true. The while
+	statement body must be surrounded by braces, even if the body only
+	has a single statement. 
+	</P>
+	<P>The predicate in the while statement consist of operations on
+	scalar variables and literals. The body of a while statement may
+	contain any sequence of Read/Write, Assignment, Control structures
+	(while, if, for), and UDF function statements. Thus, DML supports
+	nested control structures. <BR><BR><BR>
+	</P>
+	<P><B>Example: </B>
+	</P>
+	<OL>
+		<P LANG="pl-PL"><FONT FACE="Courier New"><I>while( (i &lt; 20) &amp;
+		(!converge) ) {</I></FONT></P>
+		<OL>
+			<P LANG="pl-PL"><FONT FACE="Courier New"><I>H = H * (t(W) %*% V) /
+			( t(W) %*% W %*% H);<BR>W = W * (V %*% t(H) / (W %*% H %*%
+			t(H));<BR>i = i + 1;</I></FONT></P>
+		</OL>
+		<P><FONT FACE="Courier New"><I>}</I></FONT></P>
+	</OL>
+	<P STYLE="margin-bottom: 0.17in"><BR><BR><BR>
+	</P>
+</OL>
+<H3 CLASS="western" STYLE="margin-left: 0.49in"><A NAME="mozTocId6269261"></A>
+If Statement</H3>
+<OL START=0>
+	<P>The syntax for an if statement is as follows.</P>
+</OL>
+<P STYLE="margin-left: 0.98in">if (predicate){</P>
+<P STYLE="margin-left: 1.48in">statement1</P>
+<P STYLE="margin-left: 1.48in">statement2</P>
+<P STYLE="margin-left: 1.48in">&hellip;...</P>
+<P STYLE="margin-left: 0.98in">[else {</P>
+<P STYLE="margin-left: 1.48in">statement1</P>
+<P STYLE="margin-left: 1.48in">statement2</P>
+<P STYLE="margin-left: 1.48in">&hellip;....</P>
+<P STYLE="margin-left: 0.98in">}]?</P>
+<P STYLE="margin-left: 0.49in">Conceptually, the If statement has two
+bodies: the if body (evaluated if the predicate evaluates to true)
+and the optional else body (evaluated otherwise). Both the statements
+in the if body and else body must be surrounded by braces, even if
+the body only has a single statement. The if body and else body may
+contain any sequence of Read/Write, Assignment, Control structures
+(while, if, else), and UDF function statements. Thus, DML supports
+nested control structures, such as in the second example below.</P>
+<OL START=0>
+	<P><B>Examples:</B></P>
+	<P STYLE="font-style: normal"><FONT FACE="Times New Roman, serif">#
+	example of if statement</FONT></P>
+</OL>
+<P STYLE="margin-left: 0.98in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>if(
+i &lt; 20 ) { </I></FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>converge
+= false;</I></FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>}
+</I></FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.98in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>else
+{ </I></FONT></FONT>
+</P>
+<P STYLE="margin-left: 1.48in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>converge
+= true; </I></FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.98in; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT FACE="Courier New, monospace"><I>}
+</I></FONT></FONT>
+</P>
+<P STYLE="margin-left: 0.98in"># example of nested control structures</P>
+<P LANG="pl-PL" STYLE="margin-left: 0.98in"><FONT FACE="Courier New, monospace"><I>while(
+!converge ) {</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>H
+= H * (t(W) %*% V) / ( t(W) %*% W %*% H);<BR>W = W * (V %*% t(H) / (W
+%*% H %*% t(H));<BR>i = i + 1;</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>zerror
+= z - H %*% W;</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>if
+(zerror &lt; maxError){ </I></FONT>
+</P>
+<P LANG="pl-PL" STYLE="margin-left: 1.97in"><FONT FACE="Courier New, monospace"><I>converge
+= true; </I></FONT>
+</P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>}</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>else
+{</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.97in"><FONT FACE="Courier New, monospace"><I>converge
+= false;</I></FONT></P>
+<P LANG="pl-PL" STYLE="margin-left: 1.48in"><FONT FACE="Courier New, monospace"><I>}</I></FONT></P>
+<OL>
+	<OL>
+		<P><FONT FACE="Courier New, monospace"><SPAN LANG="pl-PL"><I>}</I></SPAN></FONT><BR><BR><BR>
+		</P>
+	</OL>
+</OL>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">For Statement</H3>
+<OL START=0>
+	<P>The syntax for a for statement is as follows.</P>
+	<P>for (var in [lower]:[upper]){</P>
+	<OL>
+		<P>statement1</P>
+		<P>statement2</P>
+		<P>&hellip;...</P>
+	</OL>
+</OL>
+<P STYLE="margin-left: 0.98in">} 
+</P>
+<P STYLE="margin-left: 0.49in"><B>var</B> is an integer scalar
+variable. <B>lower</B> and <B>upper</B> are integers, and
+[l<B>ower]:[upper]</B> define a sequence of numbers{ lower, lower +
+1, lower + 2, &hellip; , upper &ndash; 1, }.  For each element in the
+sequence, var is assigned the value, and statements in the for loop
+body are executed.</P>
+<P STYLE="margin-left: 0.49in">The for loop body may contain any
+sequence of Read/Write, Assignment, Control structures (while, if,
+else), and UDF function statements. Thus, DML supports nested control
+structures. The statements in the for statement body must be
+surrounded by braces, even if the body only has a single statement. 
+</P>
+<OL START=0>
+	<P STYLE="font-style: normal"><FONT FACE="Times New Roman, serif"><B>Example:</B></FONT></P>
+	<OL>
+		<P STYLE="font-style: normal"><FONT FACE="Times New Roman, serif">#
+		example for statement</FONT></P>
+		<P><FONT FACE="Courier New, Courier, monospace"><I>A = 5;</I></FONT></P>
+		<P><I><FONT FACE="Courier New, Courier, monospace">for( i in 1:20)
+		{</FONT> </I>
+		</P>
+		<OL>
+			<P><FONT FACE="Courier New, Courier, monospace"><I>A = A + 1;</I></FONT></P>
+		</OL>
+		<P><FONT FACE="Courier New, Courier, monospace"><I>} <BR></I></FONT><BR><BR>
+		</P>
+	</OL>
+	<H2 CLASS="western" STYLE="font-style: normal"><FONT FACE="Times New Roman, serif">User-defined
+	Function (UDF) Statements</FONT></H2>
+</OL>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in">There are two
+DML statements that address declaring and calling user-defined
+functions. A <B>UDF function declaration statement</B> provides the
+function signature, which defines the formal parameters used to call
+the function and return values for the function. The <B>function
+definition</B> specifies the function implementation, and can either
+be native DML code or external packages / libraries. If the UDF is
+implemented in DML, then the DML for both UDF declaration and
+definition occur together. A <B>UDF function call statement </B>is
+used to invoke the function within a DML script.</P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">Function declaration
+statement 
+</H3>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in">The syntax for
+the UDF function declaration for DML-bodied functions is given as
+follows. The function definition is regular DML code, which is stored
+as a list of statements in the function body. The explination of the
+parameters is given in Table 3. The statements that can be placed
+inside a UDF defintion include control structures, assigment
+statements, buildin functions, and UDF function calls. However, a UDF
+function declaration statement cannot be placed inside another UDF
+function declaration statement. The variables specified in the return
+clause will be returned, and no explicit return statement within the
+function body is required.</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>functionName
+= function([ &lt;DataType&gt;? &lt;ValueType&gt; &lt;var&gt;, ]* )
+return ([ &lt;DataType&gt;? &lt;ValueType&gt; &lt;var&gt;,]*)</I></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>{</I></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><I># function
+body definition in DML</I></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in; line-height: 100%">
+<I>statement1</I></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in; line-height: 100%">
+<I>statement2</I></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><I>.... </I>
+</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>}</I></P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in">The syntax for
+the UDF function declaration for functions defined in external
+pacakages / libraries is given as follows. The parameters are
+explained in Table 3. The main difference is that a user must specify
+the appropriate collection of userParam=value pairs (i.e., parameter
+name, followed by a '=', followed by value) for the given external
+pacakage.</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><I>functionName</I>
+= externalFunction(<I>[&lt;DataType&gt;? &lt;ValueType&gt; &lt;var&gt;,
+]* ) return ([ &lt;DataType&gt;? &lt;ValueType&gt; &lt;var&gt;,]*)
+implemented in ([userParam=value]*)</I></P>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<COL WIDTH=64*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P><B>Parameter name</B></P>
+		</TD>
+		<TD WIDTH=25%>
+			<P><B>Description</B></P>
+		</TD>
+		<TD WIDTH=25%>
+			<P><B>Optional</B></P>
+		</TD>
+		<TD WIDTH=25%>
+			<P><B>Permissible values</B></P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>functionName</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Name of the function.</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>No</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Any non-keyword string</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>DataType</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>The data type of the identifier for a formal parameter or
+			return value.</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>If value is scalar or object, then DataType is optional.</P>
+			<P>If value is matrix, then must be specified</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>matrix, scalar, object (capitalization does not matter)</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>ValueType</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>The value type of the identifier for a formal parameter or
+			return value.</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>No. The value type object can only use used with data type
+			object.</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>double, integer, string, boolean, object 
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>var</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>The identifier for a formal parameter or return value.</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>No</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Any non-keyword sting</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=25%>
+			<P>userParam=value</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>User-defined parameter to invoke the package. 
+			</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Yes</P>
+		</TD>
+		<TD WIDTH=25%>
+			<P>Any non-keyword string</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=4 WIDTH=100% VALIGN=TOP>
+			<P ALIGN=CENTER><B>Table 3: Parameters for UDF Function Definition
+			Statements</B></P>
+		</TD>
+	</TR>
+</TABLE>
+<P STYLE="margin-bottom: 0.17in"><BR><BR>
+</P>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0.17in"><B>Examples:</B></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"># example of a
+UDF which is defined in DML</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>mean
+= function (matrix[double] A) return (double m) {</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>m
+= sum(A)/nrow(A)</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"># example of a
+UDF defined in DML with multiple return values</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>minMax
+= function( matrix[double] M) return (double minVal, double maxVal){</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>minVal
+= min(M);</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>maxVal
+= max(M);</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"><FONT FACE="Courier New, monospace"><FONT SIZE=2>}</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in"># example of an
+external UDF</P>
+<P STYLE="margin-left: 0.98in; margin-bottom: 0.17in; font-style: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>kmeans =
+externalFunction(matrix[double] D, int k) return (matrix C, object
+centroids) implemented in (className=com.ibm.nimbledriver,
+configFile=kmeans.config.xml)</FONT></FONT></P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">UDF Function Call
+Statement 
+</H3>
+<P STYLE="margin-left: 0.49in">A UDF is invoked within a DML script
+using a Function Call Statement. The function call statement
+specifies the function identifier, variable identifiers for calling
+parameters, and the variables to be populated by the returned values
+from the function. DML supports functions which return multiple
+values. The syntax for function calls is as follows.</P>
+<P STYLE="margin-left: 0.49in; font-weight: normal"><I>returnVal =
+functionName(param1, param2, &hellip;.)</I></P>
+<P STYLE="margin-left: 0.49in; font-weight: normal"><I>[returnVal1,
+returnVal2, ...] = functionName(param1, param2, &hellip;.)</I></P>
+<P STYLE="margin-left: 0.49in; font-style: normal"><B>Example:</B></P>
+<P STYLE="margin-left: 0.49in; font-style: normal; font-weight: normal">
+# DML script with a function call</P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>B = zeros(10,10);</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>C = zeros(100,100);</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>D = addEach(1, C);</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>index = 0</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>while (index &lt; 5)
+{</FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; font-style: normal"><FONT FACE="Courier New, monospace"><FONT SIZE=2><B>[minD,
+maxD] = minMax(D)</B></FONT></FONT></P>
+<P STYLE="margin-left: 1.48in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>index = index + 1</FONT></FONT></P>
+<P STYLE="margin-left: 0.98in; font-style: normal; font-weight: normal">
+<FONT FACE="Courier New, monospace"><FONT SIZE=2>}</FONT></FONT></P>
+<OL>
+	<H1><A NAME="mozTocId399290"></A><A NAME="Expressions"></A>Expressions</H1>
+	<P>Expressions in DML apply an operation, such as matrix
+	multiplication, over one or more input operands. The operations in
+	DML are divided into operators such as <I>matrix multiplication</I>
+	and builtin functions such as <I>diag</I> and <I>transpose</I>.</P>
+	<H2 CLASS="western"><A NAME="mozTocId526747"></A>Operators</H2>
+	<P>In addition to linear algebra operations such as matrix
+	multiplication, matrices can also be used in arithmetic, relational
+	and boolean expressions. In these cases, the operations are
+	performed element by element. For instance, 
+	</P>
+	<P><FONT FACE="Courier New, monospace"><I>A = B * C;</I></FONT></P>
+	<P>is evaluated by multiplying each cell in B with the corresponding
+	cell in C. Note that the dimensions of the input matrices need to
+	match based on the operator semantics; otherwise an exception will
+	be raised at compile time. When one of the operands is a matrix and
+	the other operand is a scalar, the operation is performed
+	elementwise on the matrix using the scalar operand. For example 
+	</P>
+	<P>&nbsp;<FONT FACE="Courier New, monospace"><I>A = B * 20;</I></FONT></P>
+	<P STYLE="margin-bottom: 0.17in">&nbsp;is evaluated by multiplying
+	every cell in B by the scalar value 20.<BR><BR>The basic operators
+	supported in a DML expression are shown below. 
+	</P>
+	<TABLE BORDER=1 CELLPADDING=0 CELLSPACING=2>
+		<TR>
+			<TD VALIGN=TOP>
+				<P STYLE="border: none; padding: 0in"><B>Operator</B></P>
+			</TD>
+			<TD VALIGN=TOP>
+				<P STYLE="border: none; padding: 0in"><B>Example</B></P>
+			</TD>
+			<TD VALIGN=TOP>
+				<P STYLE="border: none; padding: 0in"><B>Input Type</B></P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in"><B>Output Type</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Arithmetic ( + , - , *, / )</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X + Y</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Matrix or Scalar</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">If one of the operands is a
+				matrix, output is matrix; otherwise it is scalar</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Matrix Multiplication</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X %*% Y</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Power</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X ^ y</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X can be matrix or scalar<BR>y
+				is a scalar</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Same as X</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Relational (&lt;, &gt; , ==
+				, !, = , &lt;= , &gt;= )</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X&nbsp; &lt;= Y</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Boolean ( &amp;, | , !)</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">X &amp; Y<BR>!X</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=4>
+				<P ALIGN=CENTER STYLE="border: none; padding: 0in"><B><BR>Table
+				4: DML Operators</B></P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P>&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; 
+	</P>
+	<UL TYPE=DISC>
+		<H2 CLASS="western"><A NAME="mozTocId926860"></A>Builtin Functions</H2>
+	</UL>
+	<P>&nbsp; The builtin functions supported in DML can be broadly
+	classified as follows.</P>
+</OL>
+<OL>
+	<UL TYPE=DISC>
+		<LI><P STYLE="margin-bottom: 0in"><B>Linear algebra </B><SPAN STYLE="font-weight: normal">:</SPAN>
+		Functions applying linear algebra operations on matrices such as
+		<I>transpose</I>, <I>diag</I> and <I>trace</I>. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><B>Matrix Aggregation </B><SPAN STYLE="font-weight: normal">:</SPAN>
+		Functions performing aggregation operations on matrices, such as
+		<I>sum</I>, <I>prod</I>, <I>avg</I>, <I>min</I> and <I>max</I>. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><B>Matrix Partial Aggregation </B><SPAN STYLE="font-weight: normal">:</SPAN>
+		Functions aggregating matrices along a single dimension such as
+		<I>rowSums</I> and <I>colSums</I>. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><B>Matrix Dimensionality </B><SPAN STYLE="font-weight: normal">:</SPAN>
+		Functions to compute dimensionality of a matrix, such as <I>length</I>,
+		<I>nRow </I>and <I>nCol</I>. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><B>Comparison</B> : Functions
+		comparing two operands; for matrices the functions supported are
+		<I>pmin</I> and <I>pmax</I> and for scalars the corresponding
+		functions are <I>min </I>and <I>max</I> respecively. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><B>Mathematical</B> :
+		Mathematical and trigonometric functions, such as <I>sqrt</I>, <I>log</I>,
+		<I>abs</I>, <I>sin</I>, <I>cos</I> and <I>tan</I>. These functions
+		can be applied on matrices or scalars.&nbsp; 
+		</P>
+		<LI><P><B>Cast</B> : Functions to cast objects from one type to
+		another. E.g., <I>castAsScalar</I>. 
+		</P>
+	</UL>
+	<P STYLE="margin-bottom: 0.17in">The table below lists the functions
+	currently supported in DML along with a description of the input and
+	output types for each of them. For example, consider the following
+	expressions. 
+	</P>
+	<P><I>s = sum(A);</I><BR><I>B = rowSums(A);</I><BR><I>C =
+	colSums(A);<BR>D = rowSums(C); </I><BR>diff = s - castAsScalar(D);</P>
+	<P STYLE="margin-bottom: 0.17in"><BR>The builtin function <I>sum</I>
+	operates on a matrix (say <I>A</I> of dimensionality <I>m x n</I>)
+	and returns a scalar value corresponding to the sum of all values in
+	the matrix. The builtin functions <I>rowSum</I>s and <I>colSums</I>,
+	on the other hand, aggregate values on a per-row and per-column
+	basis respectively. They output matrices of dimensionality <I>mx1</I>
+	and <I>1xn</I> respectively. Therefore, <I>B</I> is a <I>mx1</I>
+	matrix and <I>C</I> is a <I>1xn</I> matrix. Applying <I>rowSums</I>
+	on matrix <I>C</I>, we obtain matrix <I>D</I> as a <I>1x1</I>
+	matrix. In DML, a <I>1x1</I> matrix is different from a scalar; to
+	treat <I>D</I> as a scalar, an explicit <I>castAsScalar</I>
+	operation is invoked in the final statement. The difference between
+	<I>s</I> and <I>castAsScalar(D)</I> should be 0.</P>
+</OL>
+<DL>
+	<DD>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=2 CELLSPACING=3>
+		<COL WIDTH=44*>
+		<COL WIDTH=49*>
+		<COL WIDTH=48*>
+		<COL WIDTH=36*>
+		<COL WIDTH=79*>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in"><B>Builtin Function</B></P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in"><B>Example</B></P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in"><B>Input Types</B></P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in"><B>Output Types</B></P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in"><B>Comments</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Rand</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in"><I>X&nbsp; = Rand(rows =
+				10, cols = 20, min = 0, max = 1, pdf = &quot;uniform&quot;,
+				sparsity=0.2);</I></P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">N/A</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Generates a random matrix.
+				This example generates a 10 x 20 matrix, where each cell value is
+				chosen uniformly at random between 0 and 1. Currently, the only
+				pdf supported is uniform</P>
+				<P STYLE="border: none; padding: 0in">The parameter <I>sparsity</I>
+				takes a value between 0 and 1, and it denotes the fraction of
+				non-zero cells in the matrix. In the current example,
+				<I>approximately</I> 20% of cells in the generated matrix will
+				have a non-zero value. 
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">T (matrix transpose)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">t(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Return transpose of a
+				matrix</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">diag</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">diag(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix 
+				</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">If input is a vector (i.e.,
+				1xn or nx1 matrix), create a (n x n) matrix where the diagonal is
+				the input matrix.<BR>Otherwise, create a column vector (n x 1)
+				from the diagonal of the input matrix.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">sum</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">sum(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the sum of all the
+				element values in the matrix</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">min/max for Matrices</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">min(X)<BR>max(Y)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the minimum/maximum
+				element value in the entire matrix</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">rowSums/rowMeans/rowMaxs/rowMins</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">rowSums(X) <BR>rowMeans(X)
+				<BR>rowMaxs(X) <BR>rowMins(X) 
+				</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Row-wise computations --
+				for each row, compute the sum/mean/max/min of all element values</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">colSums/colMeans/colMaxs/colMins</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">colSums(X) <BR>colMeans(X)
+				<BR>colMaxs(X) <BR>colMins(X) 
+				</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Row-wise computations --
+				for each column, compute the sum/mean/max/min of all element
+				values</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">max/max for scalars</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">min(x,y)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the minimum/maximum
+				amongst the given scalar values</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">pmin / pmax</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">pmin(X,Y) <BR>pmax(X,y)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">X is a Matrix, the second
+				input can be a Matrix or a Scalar</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute cell-wise
+				minimum/maximum. If the second input is a scalar then it is
+				compared against all cells in the first input.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">ppred</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">ppred(X,Y,&quot;&lt;&quot;)
+				<BR>ppred(X,y,&quot;&lt;&quot;)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">X is a Matrix, the second
+				input can be a Matrix or a Scalar, the third input is an operator</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">The operator specified in
+				the third input is applied to all cells in X and Y matrices. If
+				the second input is a scalar then it is used against all cells in
+				the first input.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">avg</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">avg(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the average value
+				of all elements in the matrix</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">prod</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">prod(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the product of all
+				the element values in the matrix.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Trace</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">trace(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Compute the sum of elements
+				on the main diagonal for a given square matrix.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Trigonometric (sin, cos,
+				tan)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">sin(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix or Scalar</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Same as input</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Apply the trigonometric
+				function on the input (element wise if the input is a matrix)</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Dimensionality (nrow, ncol,
+				length)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">nrow(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">nrow, ncol and length
+				compute the number of rows, number of columns and number of cells
+				in the matrix respectively.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Mathematical (log, abs,
+				sqrt, round)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P LANG="fr-FR" STYLE="border: none; padding: 0in">sqrt(X)<BR>log(X)<BR>log(X,y)
+				<BR>round(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix or Scalar</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Same as input</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Apply the mathematical
+				function on the input (element wise if the input is a matrix)</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">castAsScalar</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">castAsScalar(X)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">A 1x1 matrix is cast as a
+				scalar</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">print</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">print(&ldquo;hello&rdquo;)<BR>print(&ldquo;hello&rdquo;
+				+ &ldquo;world&rdquo;)<BR>print(&quot;val of x is &quot; + x )</P>
+				<P STYLE="border: none; padding: 0in"><BR>
+				</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Not Applicable</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Prints the value of a
+				scalar variable <I>x</I>. This builtin takes an optional string
+				parameter.</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">ctable</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">F = ctable(A,B) <BR>F =
+				ctable(A,B,C) 
+				</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">Vectors</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Matrix</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">Computes the contingency
+				table between two vectors A and B. The resulting table <I>F</I>
+				consists of <I>max(A)</I> rows and <I>max(B)</I> columns. <BR>More
+				precisely, F[i,j] = |{ k | A[k] = i and B[k] = j, 1 &le; k &le; n
+				}|, where A and B are two <I>n-dimensional</I> vectors. <BR>In an
+				alternative form, it takes an optional third parameter C which is
+				a vector that has same dimensions as that of A and B. <BR>In this
+				context, F[i,j] = &sum;<SUB>k</SUB>C[k], where A[k] = i and B[k]
+				= j (1 &le; k &le; n). 
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Simple Quantile</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P LANG="fr-FR" STYLE="border: none; padding: 0in">quantile(X, p)
+				<BR>quantile(X, W, p)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">X and W are column matrices
+				(vectors) of the same size <BR>W contains the weights for data in
+				X <BR>p is a scalar (0&lt;p&lt;1) that specifies the quantile to
+				be computed 
+				</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">Scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">The p-quantile for a random
+				variable X is the value x such that Pr[X&lt;x] &lt;= p and Pr[X&lt;=
+				x] &gt;= p <BR>let n=nrow(X), i=ceiling(p*n), quantile() will
+				return X[i] 
+				</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Quantile</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P LANG="fr-FR" STYLE="border: none; padding: 0in">quantile(X, P)
+				<BR>quantile(X, W, P)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">X, W are column matrices
+				(vectors) of the same size <BR>W contains the weights for data in
+				X <BR>P is a column matrix (vector) that specifies quantiles to
+				be computed 
+				</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">A column matrix with the
+				same size as P</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">This function returns a
+				column matrix that contains all the quantiles required in P</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=17%>
+				<P STYLE="border: none; padding: 0in">Inter Quartile Mean</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P LANG="fr-FR" STYLE="border: none; padding: 0in">interQuartileMean(X)<BR>interQuartileMean(X,
+				W)</P>
+			</TD>
+			<TD WIDTH=19%>
+				<P STYLE="border: none; padding: 0in">X, W are column matrices
+				(vectors) of the same size <BR>W contains the weights for data in
+				X 
+				</P>
+			</TD>
+			<TD WIDTH=14%>
+				<P STYLE="border: none; padding: 0in">scalar</P>
+			</TD>
+			<TD WIDTH=31%>
+				<P STYLE="border: none; padding: 0in">This function returns the
+				mean of all x in X such that x&gt;quantile(X, 0.25) and
+				x&lt;=quantile(X, 0.75)</P>
+			</TD>
+		</TR>
+		<TR>
+			<TD COLSPAN=5 WIDTH=100%>
+				<P ALIGN=CENTER STYLE="border: none; padding: 0in"><B><BR>Table
+				5: DML Builtin functions</B></P>
+			</TD>
+		</TR>
+	</TABLE>
+</DL>
+<P><BR><BR>
+</P>
+<H1 STYLE="margin-left: 0.49in">Modules</H1>
+<P STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>DML
+modules allow users to package related DML functions so that they are
+easily re-usable by others. A DML module is implemented in a single
+DML file which contains a collection of UDF Function Declaration
+statements. The features that DML's modules enable include:</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<UL>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000"><U>Namespaces</U></FONT>:
+	functions defined in a module are placed in their own <FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">namespace</SPAN></FONT>
+	to avoid name clashes</FONT></FONT></P>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><U>Packages</U>:
+	organize modules using directories.</FONT></FONT></P>
+</UL>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">Search Path</H3>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>The
+module search path is a string containing file system paths that are
+delimited by &quot;:&quot;. The way to specify the search path to the
+DML interpreter is as follows.</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=2><FONT COLOR="#000000"><SPAN STYLE="text-decoration: none"><FONT SIZE=3>dml</FONT></SPAN></FONT><FONT SIZE=3>-path
+&quot;projects/DML/myModules:scratch/myOtherModules&quot;</FONT></FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>The
+module search path is used to look up module and package files during
+import. </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">Import</H3>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Several
+options are available when importing a module to control how the
+module's variables interact with the current <FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">namespace</SPAN></FONT>.
+The current <FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">namespace</SPAN></FONT>
+is defined to be the <FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">namespace</SPAN></FONT>
+of the script that issuing the import call (e.g., a script or the
+interpreter).</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=3><FONT FACE="Times New Roman, serif">#
+will import functions defined in simple1.</FONT><FONT COLOR="#000000"><SPAN STYLE="text-decoration: none"><FONT FACE="Times New Roman, serif">dml</FONT></SPAN></FONT>
+<FONT FACE="Times New Roman, serif">into new </FONT><FONT COLOR="#000000"><SPAN STYLE="text-decoration: none"><FONT FACE="Times New Roman, serif">namespace</FONT></SPAN></FONT></FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=3>import
+simple1;</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3># reference
+functions as</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3>simple1::<FONT COLOR="#000000">foo</FONT>()</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3><FONT FACE="Times New Roman, serif">#
+promote only function </FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif">foo</FONT></FONT>
+<FONT FACE="Times New Roman, serif">into current </FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif">namespace</FONT></FONT></FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3>import simple1
+(<FONT COLOR="#000000">foo</FONT>);</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3><FONT FACE="Times New Roman, serif">#
+promotes all functions declared in simple1 into current </FONT><FONT COLOR="#000000"><FONT FACE="Times New Roman, serif">namespace</FONT></FONT></FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3>import simple1 (*);</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3># alias for simple1</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3>import simple1 as x;</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Courier New, monospace"><FONT SIZE=3>x::<FONT COLOR="#000000">foo</FONT>();</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>In
+addition, the import can specify a module that is contained within
+packages. </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>Suppose
+that simple1 is nested in the package test, e.g.,
+/home/<FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">joeuser</SPAN></FONT>/modules/test/simple1.
+Then the import would look like this:</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><FONT FACE="Courier New, monospace"><FONT SIZE=3>import
+test::simple1;</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">Packages</H3>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">DML</FONT>
+packages correspond to directories (similar to package design in
+<FONT COLOR="#000000">Python</FONT>). </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>A package can
+include other packages and modules. </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>For example,
+consider the following directory layout: </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><I>/home/<FONT COLOR="#000000">joeuser</FONT>/modules/p1/simple1.<FONT COLOR="#000000">dml</FONT>
+</I></FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><I>/home/<FONT COLOR="#000000">joeuser</FONT>/modules/p1/p2/simple2.<FONT COLOR="#000000">dml</FONT>
+</I></FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><I>/home/<FONT COLOR="#000000">joeuser</FONT>/modules/p3.<FONT COLOR="#000000">dml</FONT>
+</I></FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><I>/home/<FONT COLOR="#000000">joeuser</FONT>/modules/p3/simple3.<FONT COLOR="#000000">dml</FONT></I></FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>Four modules are
+defined in three packages (i.e., each of the 4 DML files defines a
+module) . The p1 package includes a module (p1::simple1) and a
+package that includes a module (p1::p2::simple2). </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<H3 CLASS="western" STYLE="margin-left: 0.49in">Syntax</H3>
+<P ALIGN=LEFT STYLE="margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT COLOR="#000000">dml</FONT>-path
+'<FONT COLOR="#000000">&lt;pathset&gt;</FONT>' </FONT></FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-left: 0.49in; margin-bottom: 0in; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>import &lt;module-name&gt;
+[ ( [ &lt;var-list&gt; | *] ) ] [ as &lt;alias&gt; ]</FONT></FONT></P>
+<P><BR><BR>
+</P>
+<P><BR><BR>
+</P>
+<H1>Reserved Keywords</H1>
+<TABLE WIDTH=703 BORDER=1 BORDERCOLOR="#000000" CELLPADDING=4 CELLSPACING=0>
+	<COL WIDTH=146>
+	<COL WIDTH=173>
+	<COL WIDTH=144>
+	<COL WIDTH=206>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>if</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>function</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>cos</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>rowMaxs</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>else</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>externalFunction</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>sin</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>colMaxs</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>for</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>implemented</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>tan</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>rowMeans</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>while</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>in</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>diag</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>colMeans</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146 SDVAL="1" SDNUM="1033;0;BOOLEAN">
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>TRUE</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>return</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>exp</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>trace</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146 SDVAL="0" SDNUM="1033;0;BOOLEAN">
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>FALSE</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>use</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>abs</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>avg</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>null</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>crossval</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>min</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>Rand</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>t
+			(matrix transpose)</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>ensemble</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>max</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>quantile</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>castAsScalar</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>partition</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>pmin</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>interQuantile</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>import
+			</FONT></FONT>
+			</P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>aggregate</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>pmax</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>interQuartileMean</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2><FONT COLOR="#000000">dml</FONT>-path
+			</FONT></FONT>
+			</P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>train</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>log</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>ctable</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>as</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>test</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>length</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>spearman</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>on</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>build</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>ncol</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>round</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>range</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>groupedAggregate</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>nrow</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>centralMoment</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>prod</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>ppred</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>sqrt</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>cov</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>rowSums</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>rowMins</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>sum</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>cumulativeProbability</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD WIDTH=146>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>colSums</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=173>
+			<P ALIGN=CENTER STYLE="margin-bottom: 0in; text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>colMins</FONT></FONT></P>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+		<TD WIDTH=144>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><FONT FACE="Courier New, monospace"><FONT SIZE=2>mean</FONT></FONT></P>
+		</TD>
+		<TD WIDTH=206>
+			<P ALIGN=CENTER STYLE="text-decoration: none"><BR>
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<P><BR><BR>
+</P>
+</BODY>
+</HTML>
