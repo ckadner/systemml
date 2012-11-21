@@ -1,0 +1,20 @@
+Timing from Ingo Felger running on the BMW cluster in Munich
+============================================================
+
+The timings of the various steps (roughly):
+
+fold creation  175min
+fold condense 6.5-11min each
+both for the M variant. times for the P variant are lost, but naturally have
+been way shorter
+
+Unfortunately the following times have been only output to the console, not to
+the logs (an error in the output redirection of my time-it script function),
+so the figures here are extrapolated from log & file time stamps. Read: rough
+estimates.
+
+cr8traintest	20min
+splitXY			15min
+LLRparameters		5min?
+LLRtrain		80min
+LLRscore		10min

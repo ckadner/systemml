@@ -1,0 +1,82 @@
+################################################################################
+#
+# IBM Confidential
+#
+# OCO Source Materials
+#
+# (C) Copyright IBM Corp. 2009, 2010, 2011
+#
+# The source code for this program is not published or
+#
+# otherwise divested of its trade secrets, irrespective of
+#
+# what has been deposited with the U.S. Copyright Office.
+#
+################################################################################
+
+# This script performs scoring on the test sets using the previously computed
+# models (w vectors) for each parameter setting c and w. The core of scoring
+# is a matrix multiplication of the test set with the model (w) that is
+# transformed into a probability. We compute precision and recall using the
+# label vector of the test set. We try different thresholds in increments to
+# determine tp (true positives), fp (false positives), tn (true negatives),
+# and fn (false negatives). We store the probability vectors for each model.
+
+Xt = read($1);
+yt = read($2);
+W  = read($3);
+params = read($4);
+numModels = nrow(params);
+newD = $5;
+
+N = nrow(Xt);
+PROB = Rand(rows=numModels,cols=N,min=0,max=0);
+
+# for each model (parameter setting c/w)
+for( i in 1:numModels )
+{
+   regul = castAsScalar( params[i,1] );
+   wt = castAsScalar( params[i,2] );
+   
+   print("SCORE model regul="+regul+", wt="+wt);
+   
+   w = t(W[i,]);
+   
+   # score and compute probability
+   ot = Xt %*% w;
+   prob = 1.0/(1.0 + exp( -ot ));
+   PROB[i,] = t(prob);
+   
+   # compute precision recall
+   
+   yt_pos = ppred(yt, 1.0, "==");
+   yt_neg = ppred(yt, -1.0, "==");
+   
+   thresh=0.0;
+
+   # try different thresholds in increments
+
+   while(thresh <= 1) 
+   {
+       pred_pos = ppred(prob, thresh, ">=");
+       pred_neg = ppred(prob, thresh, "<");
+   
+       tp = sum( yt_pos * pred_pos );
+       fp = sum( yt_neg * pred_pos );
+       tn = sum( yt_neg * pred_neg );
+       fn = sum( yt_pos * pred_neg );
+   
+       prec = tp/(tp+fp)*100.0;
+       rec = tp/(tp+fn)*100.0;
+   
+       print("TH " + thresh + " " + tp + " " + fp + " " + tn + " " + fn + " " + prec + " " + rec);
+   
+       if(thresh >= 0.8) {
+           thresh = thresh+0.01;
+       } else {
+           thresh = thresh+0.1;
+       }
+   }
+
+}
+write(PROB, $6); 

@@ -1,0 +1,33 @@
+#################################################################################
+#
+# IBM Confidential
+#
+# OCO Source Materials
+#
+# (C) Copyright IBM Corp. 2009, 2010, 2011
+#
+# The source code for this program is not published or
+#
+# otherwise divested of its trade secrets, irrespective of
+#
+# what has been deposited with the U.S. Copyright Office.
+#
+#################################################################################
+
+#
+# Given a matrix, e.g. ...Train1.mtx, split off the 1 column (label) and write
+# out as ...X and ...Y matrix.
+#
+XY = read($1 + ".mtx");
+
+n = ncol(XY);
+
+# Y copies the 1st column, X copies columns 2 to the end.
+
+X = XY[,2:n];
+Y = XY[,1];
+
+# write out X and Y.
+
+write (X, $1 + "_X.mtx", format = "binary");
+write (Y, $1 + "_y.mtx", format = "binary");

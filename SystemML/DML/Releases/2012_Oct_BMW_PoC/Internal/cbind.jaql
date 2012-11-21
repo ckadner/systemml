@@ -1,0 +1,15 @@
+X =  "bmw/features22953.mtx";
+Y =  "bmw/features22953_y.mtx";
+
+tempX =  "tmp/tempX.mtx";
+
+XY =  "bmw/features22954.mtx";
+
+
+vY     = read( del( Y    , {header:false, delimiter: " ", schema:schema[long,long,double]}));
+
+read( del( X, {header:false, delimiter: " ", schema:schema[long,long,double]}))
+-> transform [$[0], $[1] + 1, $[2]]
+-> union (vY)
+-> write( del( XY, {header:false, delimiter: " ", schema:schema[long,long,double]}));
+

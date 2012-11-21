@@ -1,0 +1,85 @@
+################################################################################
+#
+# IBM Confidential
+#
+# OCO Source Materials
+#
+# (C) Copyright IBM Corp. 2009, 2010, 2011
+#
+# The source code for this program is not published or
+#
+# otherwise divested of its trade secrets, irrespective of
+#
+# what has been deposited with the U.S. Copyright Office.
+#
+################################################################################
+
+
+# Build train/test datasets from folds
+# Test  = m1F1 union p1F1
+# Train = m1F2 union p1F2 union m1F3 union p1F3 union m1F4 union p1F4
+
+m1F1 = read( $1);
+p1F1 = read( $2);
+m1F2 = read( $3);
+p1F2 = read( $4);
+m1F3 = read( $5);
+p1F3 = read( $6);
+m1F4 = read( $7);
+p1F4 = read( $8);
+
+m = ncol( m1F1);
+
+# Test
+
+# create empty matrix, and copy in m1F1 matrix first, and p1F1 matrix afterwards.
+
+Test = Rand (rows=$9, cols = m, min = 0, max = 0, pdf = "uniform");
+Test[ 1:nrow( m1F1)     , ] = m1F1;
+Test[ nrow( m1F1) + 1 : , ] = p1F1;
+
+# trim matrix
+TestM  = Test[1 : 1 + nrow( m1F1) + nrow( p1F1), ];
+
+# Train
+
+# create empty matrix, and subsequently copy in matrices m1F2, p1F2, m1F3,
+# p1F3, m1F4, and p1F4 using matrix range indexing.
+
+Train = Rand (rows=$10, cols = m, min = 0, max = 0, pdf = "uniform");
+n2 = 0;
+
+n1 = n2 + 1; 
+n2 = n1 + nrow( m1F2) - 1;
+Train[ n1:n2, ] = m1F2;
+
+n1 = n2 + 1; 
+n2 = n1 + nrow( p1F2) - 1;
+Train [n1:n2, ] = p1F2;
+
+n1 = n2 + 1;
+n2 = n1 + nrow( m1F3) - 1;
+Train[ n1:n2, ] = m1F3;
+
+n1 = n2 + 1;
+n2 = n1 + nrow( p1F3) - 1;
+Train [n1:n2, ] = p1F3;
+
+n1 = n2 + 1;
+n2 = n1 + nrow( m1F4) - 1;
+Train[ n1:n2, ] = m1F4;
+
+n1 = n2 + 1;
+n2 = n1 + nrow( p1F4) - 1;
+Train [n1:n2, ] = p1F4;
+
+# trim matrix
+TrainM = Train[1 : n2 + nrow( p1F4), ];
+
+# Write Test and Train
+
+write( TestM , $11, format = "binary");
+write( TrainM, $12, format = "binary");
+
+
+

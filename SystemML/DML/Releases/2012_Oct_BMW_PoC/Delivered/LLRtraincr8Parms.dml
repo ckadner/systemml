@@ -1,0 +1,47 @@
+################################################################################
+#
+# IBM Confidential
+#
+# OCO Source Materials
+#
+# (C) Copyright IBM Corp. 2009, 2010, 2011
+#
+# The source code for this program is not published or
+#
+# otherwise divested of its trade secrets, irrespective of
+#
+# what has been deposited with the U.S. Copyright Office.
+#
+################################################################################
+
+# This script generates combinations of regularizer (C) and wt (W) that are used in LLRtrain
+# The values are stored in a 2 column matrix.
+
+# gen model parameters 
+numC = 3;
+numW = 20;
+numModels = 60;
+params = Rand( rows=numModels, cols=2, min=0, max=0 ) 
+dummy = Rand( rows=1, cols=1, min=1, max=1 );
+
+# use numW values for W: 0.05, 0.1, 0.15, 0.2, 0.25, ... 1.0 
+for( i in 1:numW )
+{
+  c = 0.0001;
+
+  # use numC values for C: 0.001, 0.01, and 0.1
+  for( j in 1:numC )
+  {
+     k = (i-1)*numC + j;
+     c = c * 10;
+     params[k,1] = dummy*c;
+     params[k,2] = dummy*0.05 * i;
+     print("c["+k+"]=" + c);
+     print("w["+k+"]=" + (0.05*i));
+  }  
+}
+
+# write out parameter combinations for C and W.
+
+write(params, $1, format="text");
+

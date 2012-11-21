@@ -1,0 +1,8 @@
+solve = externalFunction(Matrix[Double] a, Matrix[Double] b)  return(Matrix[Double] c)
+  implemented in (classname="com.ibm.bi.dml.packagesupport.LinearSolverWrapperCP",exectype="mem")   
+
+A = Rand( rows=4, cols=4, min=1, max=10 );
+B = Rand( rows=4, cols=1, min=1, max=20 );
+x = solve( A, B );
+
+write( x, "tmp/x", format="text");

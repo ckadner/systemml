@@ -1,0 +1,28 @@
+#
+# Given an input matrix M, filter "0" rows, write smaller ("remapped") matrix.
+#
+
+M = read( $1 + ".mtx");
+
+n = nrow( M);
+m = ncol( M);
+
+# initialize empty matrix
+
+R = Rand (rows=n, cols = m, min = 0, max = 0, pdf = "uniform");
+r = 1;
+
+for ( i in 1:n) {
+  print("row i " + i);
+  m = castAsScalar( M[ i,1]);
+  if ( m != 0) {
+    R[ r,] = M[ i,];
+    r = r + 1;     
+  }
+}
+
+print("row r " + (r-1));
+
+RR = R[ 1:(r-1), ];
+
+write(  RR, $1 + ".rmp.mtx", format = "text");
