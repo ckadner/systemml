@@ -10,7 +10,7 @@
 
 is_GROUP_4_ENABLED = 1;   #   = 1 or 0
 num_known_terms = 5;      # The number of   known   term reports, feel free to change
-num_predicted_terms = 2;  # The number of predicted term reports, feel free to change
+num_predicted_terms = 1;  # The number of predicted term reports, feel free to change
 
 num_terms = num_known_terms + num_predicted_terms;
 num_attrs = 19;  
