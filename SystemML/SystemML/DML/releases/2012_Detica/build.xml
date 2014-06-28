@@ -31,7 +31,7 @@
 		<pathelement location="${junit.antlibpathname}" />
 	</path>
 	<path id="BASE.classpath">
-		<pathelement location="lib/commons-cli-2.0-SNAPSHOT.jar" />
+		<pathelement location="lib/commons-cli-3.0-SNAPSHOT.jar" />
 		<pathelement location="lib/commons-logging-1.0.4.jar" />
 		<pathelement location="lib/commons-httpclient-3.0.1.jar" />             
 		<pathelement location="lib/commons-math-2.2.jar" />   <!-- for math computations -->
