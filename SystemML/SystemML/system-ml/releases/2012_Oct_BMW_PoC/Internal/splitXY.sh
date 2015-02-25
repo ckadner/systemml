@@ -1,8 +1,0 @@
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Train1"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Train2"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Train3"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Train4"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Test1"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Test2"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Test3"
-hadoop jar ./SystemML.jar -f splitXY.dml -config=./SystemML-config.xml -args "$1.Test4"
