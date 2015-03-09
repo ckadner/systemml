@@ -25,7 +25,7 @@
 	</parent>
 
   <modules>
-    <module>DML</module>
+    <module>system-ml</module>
 		<module>systemml-installer</module>
    </modules>
 
