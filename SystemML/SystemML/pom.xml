@@ -20,8 +20,8 @@
 
 	<parent>
 		<groupId>com.ibm.biginsights</groupId>
-		<artifactId>java-parent</artifactId>
-		<version>2.0.1</version>
+		<artifactId>java-rpm-parent</artifactId>
+		<version>2.0.5</version>
 	</parent>
 
   <modules>
