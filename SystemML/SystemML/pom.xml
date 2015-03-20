@@ -27,7 +27,7 @@
   <modules>
     <module>system-ml</module>
 		<module>systemml-installer</module>
-		<module>systemml-inmemory</module>
+		
   </modules>
 
   <build>
