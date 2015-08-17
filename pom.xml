@@ -26,8 +26,6 @@
 
   <modules>
     <module>system-ml</module>
-		<module>systemml-installer</module>
-		
   </modules>
 
   <build>
