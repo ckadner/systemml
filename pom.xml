@@ -18,12 +18,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ibm.biginsights</groupId>
+  <groupId>com.ibm.systemml</groupId>
   <version>5.2-SNAPSHOT</version>
-  <artifactId>systemml-reactor</artifactId>
+  <artifactId>systemml-parent</artifactId>
   <packaging>pom</packaging>
 
-  <name>IBM BigInsights SystemML</name>
+  <name>IBM SystemML</name>
 
 	<parent>
 		<groupId>org.apache</groupId>
@@ -51,4 +51,3 @@
   </build>
 
 </project>
-
