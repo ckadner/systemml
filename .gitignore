@@ -1,4 +1,11 @@
+.DS_Store
+.classpath
+.project
+.settings
+.idea/
+.idea_modules/
 target/
+/bin/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
