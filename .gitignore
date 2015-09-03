@@ -1,9 +1,18 @@
+# Mac
 .DS_Store
+
+# Eclipse
 .classpath
 .project
-.settings
+.settings/
+
+# Intellij
 .idea/
 .idea_modules/
+*.iml
+*.iws
+
+# Build artifacts
 target/
 /bin/
 pom.xml.tag
