@@ -89,10 +89,11 @@ CLASSPATH=${CLASSPATH}:${SYSTEM_ML_JAR};
 
 
 # invoke the jar with options and arguments
-java -Xmx8g -Xms4g -Xmn1g -cp ${CLASSPATH} \
+java -Xmx8g -Xms4g -Xmn1g \
+     -cp ${CLASSPATH} \
      -Duser.dir=${USER_DIR} \
      com.ibm.bi.dml.api.DMLScript \
-     -f ${SCRIPT_FILE} -exec singlenode \
+     -f ${SCRIPT_FILE} \
+     -exec singlenode \
      -config=${PROJECT_ROOT_PATH}/conf/SystemML-config.xml \
      $@
-
