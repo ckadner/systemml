@@ -32,11 +32,9 @@ fi
 # find the systemML root path which contains the bin folder and the system-ml folder
 PROJECT_ROOT_PATH=$( cd $(dirname $0)/.. ; pwd -P )
 
-echo "project root: $PROJECT_ROOT_PATH"
-
+USER_DIR=$PWD
 
 # if the present working directory is the project root, use the temp folder as user.dir
-USER_DIR=$PWD
 if [[ $USER_DIR = $PROJECT_ROOT_PATH ]]
 then
   USER_DIR=${PROJECT_ROOT_PATH}/temp
@@ -49,6 +47,15 @@ if [ ! -f ${PROJECT_ROOT_PATH}/conf/SystemML-config.xml ]
 then
   cp ${PROJECT_ROOT_PATH}/conf/SystemML-config.xml.template \
      ${PROJECT_ROOT_PATH}/conf/SystemML-config.xml
+  echo "created ${PROJECT_ROOT_PATH}/conf/SystemML-config.xml"
+fi
+
+# if the log4j.properties do not exis, create them from the template
+if [ ! -f ${PROJECT_ROOT_PATH}/conf/log4j.properties ]
+then
+  cp ${PROJECT_ROOT_PATH}/conf/log4j.properties.template \
+     ${PROJECT_ROOT_PATH}/conf/log4j.properties
+  echo "created ${PROJECT_ROOT_PATH}/conf/log4j.properties"
 fi
 
 
@@ -56,7 +63,7 @@ fi
 SCRIPT_FILE=$1
 shift
 
-# if the script file path was ommited, try to complete the script path
+# if the script file path was omitted, try to complete the script path
 if [ ! -f $SCRIPT_FILE ]
 then
   SCRIPT_FILE_NAME=$(basename $SCRIPT_FILE)
