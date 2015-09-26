@@ -1,10 +1,27 @@
 @ECHO OFF
+::-------------------------------------------------------------
+::
+:: (C) Copyright IBM Corp. 2010, 2015
+::
+:: Licensed under the Apache License, Version 2.0 (the "License");
+:: you may not use this file except in compliance with the License.
+:: You may obtain a copy of the License at
+::
+::     http://www.apache.org/licenses/LICENSE-2.0
+::
+:: Unless required by applicable law or agreed to in writing, software
+:: distributed under the License is distributed on an "AS IS" BASIS,
+:: WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+:: See the License for the specific language governing permissions and
+:: limitations under the License.
+::
+::-------------------------------------------------------------
 
 echo ================================================================================
 
-IF "%~1" == ""  GOTO Err
+IF "%~1" == ""      GOTO Err
 IF "%~1" == "-help" GOTO Msg
-IF "%~1" == "-h" GOTO Msg
+IF "%~1" == "-h"    GOTO Msg
 
 setLocal EnableDelayedExpansion
 
@@ -18,15 +35,15 @@ SET BUILD_DIR=%PROJECT_ROOT_DIR%\system-ml\target
 SET HADOOP_LIB_DIR=%BUILD_DIR%\lib
 SET DML_SCRIPT_CLASS=%BUILD_DIR%\classes\com\ibm\bi\dml\api\DMLScript.class
 
-SET BUILD_ERR_MSG=You must build the project before running this script."
-SET BUILD_DIR_ERR_MSG=Could not find target directory "%BUILD_DIR%". %BUILD_ERR_MSG%"
-SET HADOOP_LIB_ERR_MSG=Could not find required libraries "%HADOOP_LIB_DIR%\*". %BUILD_ERR_MSG%"
-SET DML_SCRIPT_ERR_MSG=Could not find "%DML_SCRIPT_CLASS%". %BUILD_ERR_MSG%"
+SET BUILD_ERR_MSG=You must build the project before running this script.
+SET BUILD_DIR_ERR_MSG=Could not find target directory "%BUILD_DIR%". %BUILD_ERR_MSG%
+SET HADOOP_LIB_ERR_MSG=Could not find required libraries "%HADOOP_LIB_DIR%\*". %BUILD_ERR_MSG%
+SET DML_SCRIPT_ERR_MSG=Could not find "%DML_SCRIPT_CLASS%". %BUILD_ERR_MSG%
 
 :: check if the project had been built and the jar files exist
-IF NOT EXIST "%BUILD_DIR%"        ( echo "%BUILD_DIR_ERR_MSG%"  & GOTO End )
-IF NOT EXIST "%HADOOP_LIB_DIR%"   ( echo "%HADOOP_LIB_ERR_MSG%" & GOTO End )
-IF NOT EXIST "%DML_SCRIPT_CLASS%" ( echo "%DML_SCRIPT_ERR_MSG%" & GOTO End )
+IF NOT EXIST "%BUILD_DIR%"        ( echo %BUILD_DIR_ERR_MSG%  & GOTO ExitErr )
+IF NOT EXIST "%HADOOP_LIB_DIR%"   ( echo %HADOOP_LIB_ERR_MSG% & GOTO ExitErr )
+IF NOT EXIST "%DML_SCRIPT_CLASS%" ( echo %DML_SCRIPT_ERR_MSG% & GOTO ExitErr )
 
 
 :: if the present working directory is the project root or the bin folder, then use the temp folder as user.dir
@@ -104,13 +121,14 @@ set CMD=java -Xmx4g -Xms2g -Xmn400m ^
 %CMD%
 
 :: if there was an error, display the full java command (in case some of the variable substitutions broke it)
-if errorlevel 1 (
-  echo Failed to run SystemML. Exit code: %ERRORLEVEL%
-  set LF=^
+IF  ERRORLEVEL 1 (
+  ECHO Failed to run SystemML. Exit code: %ERRORLEVEL%
+  SET LF=^
 
 
   :: keep empty lines above for the line breaks
-  echo %CMD:      =!LF!     %
+  ECHO %CMD:      =!LF!     %
+  EXIT /B %ERRORLEVEL%
 )
 GOTO End
 
@@ -121,5 +139,10 @@ GOTO Msg
 :Msg
 ECHO Usage: runStandaloneSystemML.bat ^<dml-filename^> [arguments] [-help]
 ECHO Script internally invokes 'java -Xmx4g -Xms4g -Xmn400m -jar jSystemML.jar -f ^<dml-filename^> -exec singlenode -config=SystemML-config.xml [Optional-Arguments]'
+GOTO ExitErr
+
+:ExitErr
+EXIT /B 1
 
 :End
+EXIT /B 0
