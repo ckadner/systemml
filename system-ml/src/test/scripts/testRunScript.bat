@@ -33,7 +33,9 @@ SET RUN_SCRIPT=runStandaloneSystemML.bat
 
 :: the DML script with arguments we use to test the run script
 SET DML_SCRIPT=genLinearRegressionData.dml
-SET DML_ARGS=-nvargs numSamples=1000 numFeatures=50 maxFeatureValue=5 maxWeight=5 addNoise=FALSE b=0 sparsity=0.7 output=linRegData.csv format=csv perc=0.5
+SET DML_SCRIPT_PATH=system-ml\scripts\datagen
+SET DML_OUTPUT=linRegData.csv
+SET DML_ARGS=-nvargs numSamples=1000 numFeatures=50 maxFeatureValue=5 maxWeight=5 addNoise=FALSE b=0 sparsity=0.7 output=%DML_OUTPUT% format=csv perc=0.5
 SET DML_SCRIPT_WITH_ARGS=%DML_SCRIPT% %DML_ARGS%
 
 SET USER_DIR=%CD%
@@ -53,7 +55,9 @@ IF NOT EXIST "%PROJECT_ROOT_DIR%\bin\%RUN_SCRIPT%" (
   GOTO End
 )
 
-SET TEST_LOG="%PROJECT_ROOT_DIR%\Temp\test_runScript_%date:/=-%-%time::=-%.log"
+SET DATE_TIME=%date:/=-%-%time::=-%
+SET DATE_TIME=%DATE_TIME: =-%
+SET TEST_LOG="%PROJECT_ROOT_DIR%\Temp\test_runScript_%DATE_TIME%.log"
 
 :: test setup
 
@@ -65,29 +69,34 @@ IF NOT EXIST "%PROJECT_ROOT_DIR%\Temp" mkdir "%PROJECT_ROOT_DIR%\Temp"
 
 :: start the test cases
 
+echo Writing test log to file %TEST_LOG%.
 
 :: invoke the run script from the project root directory
 
 SET CURRENT_TEST=Test_root_1
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
     cd "%PROJECT_ROOT_DIR%"
-    call bin\%RUN_SCRIPT% system-ml\scripts\datagen\%DML_SCRIPT_WITH_ARGS% >> %TEST_LOG% 2>&1
-    IF ERRORLEVEL 1                    SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    del /F /Q "%DML_OUTPUT%"                                       >  nul        2>&1
+    del /F /Q "temp\%DML_OUTPUT%"                                  >  nul        2>&1
+    call bin\%RUN_SCRIPT% %DML_SCRIPT_PATH%\%DML_SCRIPT_WITH_ARGS% >> %TEST_LOG% 2>&1
+    IF ERRORLEVEL 1                  SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 SET CURRENT_TEST=Test_root_2
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
     cd "%PROJECT_ROOT_DIR%"
+    del /F /Q "%DML_OUTPUT%"                      >  nul        2>&1
+    del /F /Q "temp\%DML_OUTPUT%"                 >  nul        2>&1
     call bin\%RUN_SCRIPT% %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG% 2>&1
-    IF ERRORLEVEL 1                    SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1                  SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
@@ -96,25 +105,29 @@ SET CURRENT_TEST=Test_root_2
 SET CURRENT_TEST=Test_bin_1
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
     cd "%PROJECT_ROOT_DIR%\bin"
-    call %RUN_SCRIPT% ..\system-ml\scripts\datagen\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                       SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "..\temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    del /F /Q "%DML_OUTPUT%"                                       >  nul         2>&1
+    del /F /Q "..\temp\%DML_OUTPUT%"                               >  nul         2>&1
+    call %RUN_SCRIPT% ..\%DML_SCRIPT_PATH%\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
+    IF ERRORLEVEL 1                     SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
 SET CURRENT_TEST=Test_bin_2
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
     cd "%PROJECT_ROOT_DIR%\bin"
     echo Working directory: %CD%              >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                  >  nul         2>&1
+    del /F /Q "..\temp\%DML_OUTPUT%"          >  nul         2>&1
     call %RUN_SCRIPT% %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                       SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "..\temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1                     SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
@@ -126,21 +139,23 @@ SET CURRENT_TEST=Test_out_1
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
     cd "%TEMP%"
-    echo Working directory: %CD%  >> %TEST_LOG%
-    call "%PROJECT_ROOT_DIR%\bin\%RUN_SCRIPT%" "%PROJECT_ROOT_DIR%\system-ml\scripts\datagen\%DML_SCRIPT%" %DML_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1               SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    echo Working directory: %CD%       >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"           >  nul 2>&1
+    call "%PROJECT_ROOT_DIR%\bin\%RUN_SCRIPT%" "%PROJECT_ROOT_DIR%\%DML_SCRIPT_PATH%\%DML_SCRIPT%" %DML_ARGS%  >> %TEST_LOG%  2>&1
+    IF ERRORLEVEL 1             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 SET CURRENT_TEST=Test_out_2
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                                 >> %TEST_LOG%
     cd "%TEMP%"
-    echo Working directory: %CD%  >> %TEST_LOG%
+    echo Working directory: %CD%                                       >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                                           >  nul         2>&1
     call "%PROJECT_ROOT_DIR%\bin\%RUN_SCRIPT%" %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1               SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
@@ -163,13 +178,15 @@ robocopy "%PROJECT_ROOT_DIR%" "%SPACE_DIR%" /S /nfl /ndl /xf *.java Test*.* /xd 
 SET CURRENT_TEST=Test_space_root_1
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                              >> %TEST_LOG%
     cd "%SPACE_DIR%"
-    echo Working directory: %CD%                                            >> %TEST_LOG%
-    call bin\%RUN_SCRIPT% system-ml\scripts\datagen\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                    SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    echo Working directory: %CD%                                    >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                                        >  nul         2>&1
+    del /F /Q "temp\%DML_OUTPUT%"                                   >  nul         2>&1
+    call bin\%RUN_SCRIPT% %DML_SCRIPT_PATH%\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
+    IF ERRORLEVEL 1                  SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 SET CURRENT_TEST=Test_space_root_2
@@ -178,10 +195,12 @@ SET CURRENT_TEST=Test_space_root_2
     echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
     cd "%SPACE_DIR%"
     echo Working directory: %CD%                  >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                      >  nul         2>&1
+    del /F /Q "temp\%DML_OUTPUT%"                 >  nul         2>&1
     call bin\%RUN_SCRIPT% %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                    SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1                  SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                            IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"          SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-project-root & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
@@ -190,29 +209,30 @@ SET CURRENT_TEST=Test_space_root_2
 SET CURRENT_TEST=Test_space_bin_1
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
     cd "%SPACE_DIR%\bin"
-    echo Working directory: %CD%                                           >> %TEST_LOG%
-    call %RUN_SCRIPT% ..\system-ml\scripts\datagen\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                       SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "..\temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    echo Working directory: %CD%                                   >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                                       >  nul         2>&1
+    del /F /Q "..\temp\%DML_OUTPUT%"                               >  nul         2>&1
+    call %RUN_SCRIPT% ..\%DML_SCRIPT_PATH%\%DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
+    IF ERRORLEVEL 1                     SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 SET CURRENT_TEST=Test_space_bin_2
 (
     echo Running test "%CURRENT_TEST%"
-    echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
     cd "%SPACE_DIR%\bin"
     echo Working directory: %CD%              >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                  >  nul         2>&1
+    del /F /Q "..\temp\%DML_OUTPUT%"          >  nul         2>&1
     call %RUN_SCRIPT% %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1                       SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF EXIST "linRegData.csv"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "..\temp\linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1                     SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                          IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF EXIST "%DML_OUTPUT%"             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-outputdata-in-bin-folder & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
-
-
-
 
 
 :: invoke the run script from a working directory outside of the project root
@@ -223,20 +243,22 @@ SET CURRENT_TEST=Test_space_out_1
     echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
     cd "%TEMP%"
     echo Working directory: %CD%       >> %TEST_LOG%
-    call "%SPACE_DIR%\bin\%RUN_SCRIPT%" "%SPACE_DIR%\system-ml\scripts\datagen\%DML_SCRIPT%" %DML_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1               SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    del /F /Q "%DML_OUTPUT%"           >  nul 2>&1
+    call "%SPACE_DIR%\bin\%RUN_SCRIPT%" "%SPACE_DIR%\%DML_SCRIPT_PATH%\%DML_SCRIPT%" %DML_ARGS%  >> %TEST_LOG%  2>&1
+    IF ERRORLEVEL 1             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 SET CURRENT_TEST=Test_space_out_2
 (
     echo Running test "%CURRENT_TEST%":
-    echo Running test "%CURRENT_TEST%"  >> %TEST_LOG%
+    echo Running test "%CURRENT_TEST%"                          >> %TEST_LOG%
     cd "%TEMP%"
-    echo Working directory: %CD%        >> %TEST_LOG%
+    echo Working directory: %CD%                                >> %TEST_LOG%
+    del /F /Q "%DML_OUTPUT%"                                    >  nul         2>&1
     call "%SPACE_DIR%\bin\%RUN_SCRIPT%" %DML_SCRIPT_WITH_ARGS%  >> %TEST_LOG%  2>&1
-    IF ERRORLEVEL 1               SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
-    IF NOT EXIST "linRegData.csv" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF ERRORLEVEL 1             SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST% &                    IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
+    IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
 
@@ -269,3 +291,4 @@ GOTO End
 
 
 :End
+echo Test log was written to file %TEST_LOG%.
