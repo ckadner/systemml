@@ -46,7 +46,7 @@ SET TEST_SCRIPT_PATH=%TEST_SCRIPT_PATH:~0,-1%
 SET PROJECT_ROOT_DIR=!TEST_SCRIPT_PATH:%TEST_SCRIPT_REL_DIR%=!
 SET PROJECT_ROOT_DIR=%PROJECT_ROOT_DIR:~0,-1%
 
-If "%TEST_SCRIPT_PATH%"=="%PROJECT_ROOT_DIR%" (
+IF "%TEST_SCRIPT_PATH%"=="%PROJECT_ROOT_DIR%" (
     echo This test script "%~nx0" is expected to be located in folder "%TEST_SCRIPT_REL_DIR%" under the project root.
     echo Please update "%0" and correctly set the variable "TEST_SCRIPT_REL_DIR".
 )
@@ -73,7 +73,7 @@ echo Writing test log to file %TEST_LOG%.
 
 :: invoke the run script from the project root directory
 
-SET CURRENT_TEST=Test_root_1
+SET CURRENT_TEST=Test_root__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
@@ -86,7 +86,7 @@ SET CURRENT_TEST=Test_root_1
     IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_root_2
+SET CURRENT_TEST=Test_root__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
@@ -102,7 +102,7 @@ SET CURRENT_TEST=Test_root_2
 
 :: invoke the run script from the bin directory
 
-SET CURRENT_TEST=Test_bin_1
+SET CURRENT_TEST=Test_bin__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
@@ -116,7 +116,7 @@ SET CURRENT_TEST=Test_bin_1
 )
 
 
-SET CURRENT_TEST=Test_bin_2
+SET CURRENT_TEST=Test_bin__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
@@ -134,7 +134,7 @@ SET CURRENT_TEST=Test_bin_2
 
 :: invoke the run script from a working directory outside of the project root
 
-SET CURRENT_TEST=Test_out_1
+SET CURRENT_TEST=Test_out__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
@@ -146,7 +146,7 @@ SET CURRENT_TEST=Test_out_1
     IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_out_2
+SET CURRENT_TEST=Test_out__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                                 >> %TEST_LOG%
@@ -175,7 +175,7 @@ robocopy "%PROJECT_ROOT_DIR%" "%SPACE_DIR%" /S /nfl /ndl /xf *.java Test*.* /xd 
 
 :: invoke the run script from the project root directory
 
-SET CURRENT_TEST=Test_space_root_1
+SET CURRENT_TEST=Test_space_root__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                              >> %TEST_LOG%
@@ -189,7 +189,7 @@ SET CURRENT_TEST=Test_space_root_1
     IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_root_2
+SET CURRENT_TEST=Test_space_root__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
@@ -206,7 +206,7 @@ SET CURRENT_TEST=Test_space_root_2
 
 :: invoke the run script from the bin directory
 
-SET CURRENT_TEST=Test_space_bin_1
+SET CURRENT_TEST=Test_space_bin__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                             >> %TEST_LOG%
@@ -220,7 +220,7 @@ SET CURRENT_TEST=Test_space_bin_1
     IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_bin_2
+SET CURRENT_TEST=Test_space_bin__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
@@ -237,7 +237,7 @@ SET CURRENT_TEST=Test_space_bin_2
 
 :: invoke the run script from a working directory outside of the project root
 
-SET CURRENT_TEST=Test_space_out_1
+SET CURRENT_TEST=Test_space_out__DML_script_with_path
 (
     echo Running test "%CURRENT_TEST%":
     echo Running test "%CURRENT_TEST%" >> %TEST_LOG%
@@ -249,7 +249,7 @@ SET CURRENT_TEST=Test_space_out_1
     IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_out_2
+SET CURRENT_TEST=Test_space_out__DML_script_file_name_only
 (
     echo Running test "%CURRENT_TEST%":
     echo Running test "%CURRENT_TEST%"                          >> %TEST_LOG%
