@@ -29,7 +29,7 @@ SET CONTINUE_ON_ERROR=true
 SET TEST_SCRIPT_REL_DIR=system-ml\src\test\scripts
 
 :: expecting the run script to be in directory %PROJECT_ROOT_DIR%\bin
-SET RUN_SCRIPT=runStandaloneSystemML.bat
+SET RUN_SCRIPT=systemml.bat
 
 :: the DML script with arguments we use to test the run script
 SET DML_SCRIPT=genLinearRegressionData.dml
