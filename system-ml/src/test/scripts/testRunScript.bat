@@ -20,7 +20,7 @@
 setLocal EnableDelayedExpansion
 
 :: directory to write test case specific data
-SET TEMP=\Temp\systemml_test
+SET TEMP=\temp\systemml_test
 
 :: should this test suite continue after encountering an error? true false
 SET CONTINUE_ON_ERROR=true
@@ -63,8 +63,8 @@ SET TEST_LOG="%PROJECT_ROOT_DIR%\Temp\test_runScript_%DATE_TIME%.log"
 
 SET FAILED_TESTS=
 
-IF NOT EXIST "%TEMP%" mkdir %TEMP%
-IF NOT EXIST "%PROJECT_ROOT_DIR%\Temp" mkdir "%PROJECT_ROOT_DIR%\Temp"
+IF NOT EXIST "%TEMP%" mkdir "%TEMP%"
+IF NOT EXIST "%PROJECT_ROOT_DIR%\temp" mkdir "%PROJECT_ROOT_DIR%\temp"
 
 
 :: start the test cases

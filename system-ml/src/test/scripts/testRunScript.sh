@@ -18,7 +18,7 @@
 #-------------------------------------------------------------
 
 # directory to write test case temporary files
-TEMP=~/Temp/systemml_test
+TEMP=~/temp/systemml_test
 
 # should this test suite continue after encountering an error? true false
 CONTINUE_ON_ERROR=true
@@ -43,7 +43,7 @@ PROJECT_ROOT_DIR="${TEST_SCRIPT_PATH/\/$TEST_SCRIPT_REL_DIR/}"
 
 # generate the test log file name
 DATE_TIME="$(date +"%Y-%m-%d-%H-%M-%S")"
-TEST_LOG="${PROJECT_ROOT_DIR}/Temp/test_runScript_${DATE_TIME}.log"
+TEST_LOG="${PROJECT_ROOT_DIR}/temp/test_runScript_${DATE_TIME}.log"
 
 
 # verify we found the ${PROJECT_ROOT_DIR} and ${RUN_SCRIPT}
@@ -70,8 +70,8 @@ fi
 if [ ! -d "${TEMP}" ] ; then
     mkdir "${TEMP}"
 fi
-if [ ! -d "${PROJECT_ROOT_DIR}/Temp" ] ; then
-    mkdir "${PROJECT_ROOT_DIR}/Temp"
+if [ ! -d "${PROJECT_ROOT_DIR}/temp" ] ; then
+    mkdir "${PROJECT_ROOT_DIR}/temp"
 fi
 
 
