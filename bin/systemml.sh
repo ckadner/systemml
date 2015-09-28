@@ -48,7 +48,7 @@ fi
 
 # find the systemML root path which contains the bin folder and the system-ml folder
 # tolerate path with spaces
-SCRIPT_DIR=$(dirname "$0")
+SCRIPT_DIR=$( dirname "$0" )
 PROJECT_ROOT_DIR=$( cd "${SCRIPT_DIR}/.." ; pwd -P )
 
 USER_DIR=$PWD
