@@ -68,10 +68,10 @@ fi
 
 # test setup, create temp folders
 if [ ! -d "${TEMP}" ] ; then
-    mkdir "${TEMP}"
+    mkdir -p "${TEMP}"
 fi
 if [ ! -d "${PROJECT_ROOT_DIR}/temp" ] ; then
-    mkdir "${PROJECT_ROOT_DIR}/temp"
+    mkdir -p "${PROJECT_ROOT_DIR}/temp"
 fi
 
 
