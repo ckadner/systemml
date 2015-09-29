@@ -39,7 +39,7 @@ DML_SCRIPT_WITH_ARGS="${DML_SCRIPT} ${DML_ARGS}"
 # try to find the project root directory
 USER_DIR="$PWD"
 TEST_SCRIPT_PATH=$( dirname "$0" )
-PROJECT_ROOT_DIR="${TEST_SCRIPT_PATH/\/$TEST_SCRIPT_REL_DIR/}"
+PROJECT_ROOT_DIR=$( cd "${TEST_SCRIPT_PATH/\/$TEST_SCRIPT_REL_DIR/}" ; pwd -P )
 
 # generate the test log file name
 DATE_TIME="$(date +"%Y-%m-%d-%H-%M-%S")"
