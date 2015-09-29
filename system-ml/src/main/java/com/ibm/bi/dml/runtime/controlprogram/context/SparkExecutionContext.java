@@ -37,6 +37,7 @@ import com.ibm.bi.dml.api.DMLScript;
 import com.ibm.bi.dml.api.MLContext;
 import com.ibm.bi.dml.api.MLContextProxy;
 import com.ibm.bi.dml.hops.OptimizerUtils;
+import com.ibm.bi.dml.lops.Checkpoint;
 import com.ibm.bi.dml.runtime.DMLRuntimeException;
 import com.ibm.bi.dml.runtime.DMLUnsupportedOperationException;
 import com.ibm.bi.dml.runtime.controlprogram.Program;
@@ -51,6 +52,7 @@ import com.ibm.bi.dml.runtime.instructions.spark.functions.ComputeNonZerosBlockF
 import com.ibm.bi.dml.runtime.instructions.spark.functions.CopyBinaryCellFunction;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.CopyBlockPairFunction;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.CopyTextInputFunction;
+import com.ibm.bi.dml.runtime.instructions.spark.utils.RDDAggregateUtils;
 import com.ibm.bi.dml.runtime.instructions.spark.utils.SparkUtils;
 import com.ibm.bi.dml.runtime.matrix.data.InputInfo;
 import com.ibm.bi.dml.runtime.matrix.data.MatrixBlock;
@@ -183,7 +185,11 @@ public class SparkExecutionContext extends ExecutionContext
 				_spctx = new JavaSparkContext(conf);
 			}
 			else {
-				_spctx = new JavaSparkContext();
+				SparkConf conf = new SparkConf();
+				//always set unlimited result size (required for cp collect)
+				conf.set("spark.driver.maxResultSize", "0");
+				
+				_spctx = new JavaSparkContext(conf);
 			}
 		}
 			
@@ -551,12 +557,29 @@ public class SparkExecutionContext extends ExecutionContext
 	 * 
 	 * @return
 	 */
-	public static double getConfiguredTotalDataMemory()
+	public static double getConfiguredTotalDataMemory() {
+		return getConfiguredTotalDataMemory(false);
+	}
+	
+	/**
+	 * 
+	 * @param refresh
+	 * @return
+	 */
+	public static double getConfiguredTotalDataMemory(boolean refresh)
 	{
 		if( _memExecutors < 0 || _memRatioData < 0 )
 			analyzeSparkConfiguation();
 		
-		return ( _memExecutors * _memRatioData * _numExecutors );
+		//always get the current num executors on refresh because this might 
+		//change if not all executors are initially allocated and it is plan-relevant
+		if( refresh ) {
+			JavaSparkContext jsc = getSparkContextStatic();
+			int numExec = Math.max(jsc.sc().getExecutorMemoryStatus().size() - 1, 1);
+			return _memExecutors * _memRatioData * numExec; 
+		}
+		else
+			return ( _memExecutors * _memRatioData * _numExecutors );
 	}
 	
 	public static int getNumExecutors()
@@ -567,12 +590,25 @@ public class SparkExecutionContext extends ExecutionContext
 		return _numExecutors;
 	}
 	
-	public static int getDefaultParallelism()
+	public static int getDefaultParallelism() {
+		return getDefaultParallelism(false);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static int getDefaultParallelism(boolean refresh) 
 	{
-		if( _defaultPar < 0 )
+		if( _defaultPar < 0 && !refresh )
 			analyzeSparkConfiguation();
 		
-		return _defaultPar;
+		//always get the current default parallelism on refresh because this might 
+		//change if not all executors are initially allocated and it is plan-relevant
+		if( refresh )
+			return getSparkContextStatic().defaultParallelism();
+		else
+			return _defaultPar;
 	}
 	
 	/**
@@ -600,9 +636,9 @@ public class SparkExecutionContext extends ExecutionContext
 		//get default parallelism (total number of executors and cores)
 		//note: spark context provides this information while conf does not
 		//(for num executors we need to correct for driver and local mode)
-		SparkExecutionContext sec = new SparkExecutionContext(false, null);
-		_numExecutors = Math.max(sec.getSparkContext().sc().getExecutorMemoryStatus().size() - 1, 1);  
-		_defaultPar = sec.getSparkContext().defaultParallelism(); 
+		JavaSparkContext jsc = getSparkContextStatic();
+		_numExecutors = Math.max(jsc.sc().getExecutorMemoryStatus().size() - 1, 1);  
+		_defaultPar = jsc.defaultParallelism(); 
 
 		//note: required time for infrastructure analysis on 5 node cluster: ~5-20ms. 
 	}
@@ -770,6 +806,33 @@ public class SparkExecutionContext extends ExecutionContext
 		if( rvar.getStorageLevel()!=StorageLevel.NONE() ) {
 			rvar.unpersist( ASYNCHRONOUS_VAR_DESTROY );
 		}
+	}
+	
+	/**
+	 * 
+	 * @param var
+	 * @throws DMLRuntimeException 
+	 * @throws DMLUnsupportedOperationException 
+	 */
+	@SuppressWarnings("unchecked")
+	public void repartitionAndCacheMatrixObject( String var ) 
+		throws DMLRuntimeException, DMLUnsupportedOperationException
+	{
+		//get input rdd and default storage level
+		MatrixObject mo = getMatrixObject(var);
+		JavaPairRDD<MatrixIndexes,MatrixBlock> in = (JavaPairRDD<MatrixIndexes, MatrixBlock>) 
+				getRDDHandleForMatrixObject(mo, InputInfo.BinaryBlockInputInfo);
+		
+		//repartition and persist rdd (force creation of shuffled rdd via merge)
+		JavaPairRDD<MatrixIndexes,MatrixBlock> out = RDDAggregateUtils.mergeByKey(in);
+		out.persist( Checkpoint.DEFAULT_STORAGE_LEVEL );
+		
+		//create new rdd handle, in-place of current matrix object
+		RDDObject inro =  mo.getRDDHandle();       //guaranteed to exist (see above)
+		RDDObject outro = new RDDObject(out, var); //create new rdd object
+		outro.setCheckpointRDD(true);              //mark as checkpointed
+		outro.addLineageChild(inro);               //keep lineage to prevent cycles on cleanup
+		mo.setRDDHandle(outro);				       
 	}
 	
 	///////////////////////////////////////////

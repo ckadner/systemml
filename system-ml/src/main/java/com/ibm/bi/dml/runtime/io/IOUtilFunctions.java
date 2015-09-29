@@ -27,15 +27,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.SequenceFile;
+import org.apache.hadoop.mapred.RecordReader;
 
 import com.ibm.bi.dml.runtime.util.UtilFunctions;
 
 public class IOUtilFunctions 
 {
-	@SuppressWarnings("unused")
-	private static final String _COPYRIGHT = "Licensed Materials - Property of IBM\n(C) Copyright IBM Corp. 2010, 2015\n" +
-	                                         "US Government Users Restricted Rights - Use, duplication  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.";
-	
 	private static final Log LOG = LogFactory.getLog(UtilFunctions.class.getName());
 
 	
@@ -130,6 +127,16 @@ public class IOUtilFunctions
 		}
 	}
 
+	public static void closeSilently( RecordReader<?,?> rr ) 
+	{
+		try {
+			if( rr != null )
+				rr.close();
+        } 
+		catch (Exception ex) {
+           LOG.error("Failed to close record reader.", ex);
+		}
+	}
 	
 	/**
 	 * 
@@ -154,6 +161,25 @@ public class IOUtilFunctions
 		if ( !fill && emptyFound) {
 			throw new IOException("Empty fields found in delimited file. "
 			+ "Use \"fill\" option to read delimited files with empty fields:" + ((row!=null)?row:""));
+		}
+	}
+	
+	/**
+	 * 
+	 * @param fname
+	 * @param line
+	 * @param parts
+	 * @param ncol
+	 * @throws IOException 
+	 */
+	public static void checkAndRaiseErrorCSVNumColumns(String fname, String line, String[] parts, long ncol) 
+		throws IOException
+	{
+		int realncol = parts.length;
+		
+		if( realncol != ncol ) {
+			throw new IOException("Invalid number of columns (" + realncol + ", expected=" + ncol + ") "
+					+ "found in delimited file (" + fname + ") for line: " + line);
 		}
 	}
 	

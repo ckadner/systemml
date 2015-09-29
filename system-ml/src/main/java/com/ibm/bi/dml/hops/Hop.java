@@ -38,9 +38,11 @@ import com.ibm.bi.dml.lops.LopProperties.ExecType;
 import com.ibm.bi.dml.parser.Expression.DataType;
 import com.ibm.bi.dml.parser.Expression.ValueType;
 import com.ibm.bi.dml.runtime.controlprogram.LocalVariableMap;
+import com.ibm.bi.dml.runtime.controlprogram.context.SparkExecutionContext;
 import com.ibm.bi.dml.runtime.controlprogram.parfor.ProgramConverter;
 import com.ibm.bi.dml.runtime.controlprogram.parfor.util.IDSequence;
 import com.ibm.bi.dml.runtime.matrix.MatrixCharacteristics;
+import com.ibm.bi.dml.runtime.matrix.data.MatrixBlock;
 import com.ibm.bi.dml.runtime.util.UtilFunctions;
 
 
@@ -93,8 +95,8 @@ public abstract class Hop
 	// Estimated size for the entire operation represented by this Hop
 	// It includes the memory required for all inputs as well as the output 
 	protected double _memEstimate = OptimizerUtils.INVALID_SIZE;
-	
 	protected double _processingMemEstimate = 0;
+	protected double _spBroadcastMemEstimate = 0;
 	
 	// indicates if there are unknowns during compilation 
 	// (in that case re-complication ensures robustness and efficiency)
@@ -345,10 +347,11 @@ public abstract class Hop
 		if( OptimizerUtils.isSparkExecutionMode() 
 			&& getDataType()!=DataType.SCALAR )
 		{
-			//conditional checkpoint based on memory estimate in order to avoid unnecessary 
-			//persist and unpersist calls (4x the memory budget is conservative)
+			//conditional checkpoint based on memory estimate in order to 
+			//(1) avoid unnecessary persist and unpersist calls, and 
+			//(2) avoid unnecessary creation of spark context (incl executors)
 			if(    OptimizerUtils.isHybridExecutionMode() 
-				&& 4*_outputMemEstimate < OptimizerUtils.getLocalMemBudget()
+				&& _outputMemEstimate < OptimizerUtils.getLocalMemBudget()
 				|| _etypeForced == ExecType.CP )
 			{
 				et = ExecType.CP;
@@ -359,24 +362,37 @@ public abstract class Hop
 			}
 		}
 
-		//add reblock lop to output if required
+		//add checkpoint lop to output if required
 		if( _requiresCheckpoint && et != ExecType.CP )
 		{
-			Lop input = getLops();			
-			Lop chkpoint = null;
-			
 			try
 			{
-				chkpoint = new Checkpoint(input, getDataType(), getValueType(),
-						Checkpoint.getDefaultStorageLevelString(), et);
+				//investigate need for serialized storage of large sparse matrices
+				//(compile- instead of runtime-level for better debugging)
+				boolean serializedStorage = false;
+				if( dimsKnown(true) ) {
+					double matrixPSize = OptimizerUtils.estimatePartitionedSizeExactSparsity(_dim1, _dim2, _rows_in_block, _cols_in_block, _nnz);
+					double dataCache = SparkExecutionContext.getConfiguredTotalDataMemory(true);
+					serializedStorage = (MatrixBlock.evalSparseFormatInMemory(_dim1, _dim2, _nnz)
+							             && matrixPSize > dataCache ); //sparse in-memory does not fit in agg mem 
+				}
+				else {
+					setRequiresRecompile();
+				}
+			
+				//construct checkpoint w/ right storage level
+				Lop input = getLops();			
+				Lop chkpoint = new Checkpoint(input, getDataType(), getValueType(), 
+						serializedStorage ? Checkpoint.getSerializeStorageLevelString() :
+								            Checkpoint.getDefaultStorageLevelString() );
+				
+				setOutputDimensions( chkpoint );
+				setLineNumbers( chkpoint );
+				setLops( chkpoint );
 			}
 			catch( LopsException ex ) {
 				throw new HopsException(ex);
 			}
-		
-			setOutputDimensions( chkpoint );
-			setLineNumbers( chkpoint );
-			setLops( chkpoint );
 		}
 		
 	}
@@ -561,6 +577,11 @@ public abstract class Hop
 	public double getIntermediateMemEstimate()
 	{
 		return getIntermediateSize();
+	}
+	
+	public double getSpBroadcastSize()
+	{
+		return _spBroadcastMemEstimate;
 	}
 	
 	/**

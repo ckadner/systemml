@@ -45,7 +45,11 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 {
 	private final static String TEST_NAME1 = "WeightedDivMMLeft";
 	private final static String TEST_NAME2 = "WeightedDivMMRight";
-
+	private final static String TEST_NAME3 = "WeightedDivMMMultBasic";
+	private final static String TEST_NAME4 = "WeightedDivMMMultLeft";
+	private final static String TEST_NAME5 = "WeightedDivMMMultRight";
+	private final static String TEST_NAME6 = "WeightedDivMMMultMinusLeft";
+	private final static String TEST_NAME7 = "WeightedDivMMMultMinusRight";
 	private final static String TEST_DIR = "functions/quaternary/";
 	
 	private final static double eps = 1e-6;
@@ -62,8 +66,15 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 		TestUtils.clearAssertionInformation();
 		addTestConfiguration(TEST_NAME1,new TestConfiguration(TEST_DIR, TEST_NAME1,new String[]{"R"}));
 		addTestConfiguration(TEST_NAME2,new TestConfiguration(TEST_DIR, TEST_NAME2,new String[]{"R"}));
+		addTestConfiguration(TEST_NAME3,new TestConfiguration(TEST_DIR, TEST_NAME3,new String[]{"R"}));
+		addTestConfiguration(TEST_NAME4,new TestConfiguration(TEST_DIR, TEST_NAME4,new String[]{"R"}));
+		addTestConfiguration(TEST_NAME5,new TestConfiguration(TEST_DIR, TEST_NAME5,new String[]{"R"}));
+		addTestConfiguration(TEST_NAME6,new TestConfiguration(TEST_DIR, TEST_NAME6,new String[]{"R"}));
+		addTestConfiguration(TEST_NAME7,new TestConfiguration(TEST_DIR, TEST_NAME7,new String[]{"R"}));
+	
 	}
 
+	//a) testcases for wdivmm w/ DIVIDE LEFT/RIGHT
 	
 	@Test
 	public void testWeightedDivMMLeftDenseCP() 
@@ -160,6 +171,248 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 	{
 		runWeightedDivMMTest(TEST_NAME2, false, true, true, ExecType.SPARK);
 	}
+
+	//b) testcases for wdivmm w/ MULTIPLY BASIC/LEFT/RIGHT
+	
+	@Test
+	public void testWeightedDivMMMultBasicDenseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, false, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicSparseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, true, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftDenseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, false, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftSparseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, true, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightDenseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, false, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightSparseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, true, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftDenseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, false, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftSparseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, true, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightDenseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, false, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightSparseCP() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, true, true, false, ExecType.CP);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicDenseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, false, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicSparseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, true, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicDenseMRRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, false, true, true, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftDenseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, false, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftSparseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, true, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftDenseMRRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, false, true, true, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightDenseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, false, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightSparseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, true, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightDenseMRRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, false, true, true, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftDenseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, false, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftSparseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, true, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftDenseMRRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, false, true, true, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightDenseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, false, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightSparseMR() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, true, true, false, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightDenseMRRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, false, true, true, ExecType.MR);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicDenseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, false, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicSparseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, true, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultBasicDenseSPRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME3, false, true, true, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftDenseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, false, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftSparseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, true, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultLeftDenseSPRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME4, false, true, true, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightDenseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, false, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightSparseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, true, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultRightDenseSPRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME5, false, true, true, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftDenseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, false, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftSparseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, true, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusLeftDenseSPRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME6, false, true, true, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightDenseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, false, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightSparseSP() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, true, true, false, ExecType.SPARK);
+	}
+	
+	@Test
+	public void testWeightedDivMMMultMinusRightDenseSPRep() 
+	{
+		runWeightedDivMMTest(TEST_NAME7, false, true, true, ExecType.SPARK);
+	}
 	
 	/**
 	 * 
@@ -188,7 +441,8 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 	    
 		try
 		{
-			boolean left = testname.equals(TEST_NAME1);
+			boolean basic = testname.equals(TEST_NAME3);
+			boolean left = testname.equals(TEST_NAME1) || testname.equals(TEST_NAME4) || testname.equals(TEST_NAME6);
 			double sparsity = (sparse) ? spSparse : spDense;
 			String TEST_NAME = testname;
 			
@@ -199,7 +453,7 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 			fullDMLScriptName = HOME + TEST_NAME + ".dml";
 			programArgs = new String[]{"-stats", "-explain", "runtime",
 					                   "-args", 
-					                        HOME + INPUT_DIR + "X",
+					                        HOME + INPUT_DIR + "W",
 					                        HOME + INPUT_DIR + "U",
 					                        HOME + INPUT_DIR + "V",
 					                        HOME + OUTPUT_DIR + "R"    };
@@ -210,8 +464,8 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 			loadTestConfiguration(config);
 	
 			//generate actual dataset 
-			double[][] X = getRandomMatrix(rows, cols, 0, 1, sparsity, 7); 
-			writeInputMatrixWithMTD("X", X, true);
+			double[][] W = getRandomMatrix(rows, cols, 0, 1, sparsity, 7); 
+			writeInputMatrixWithMTD("W", W, true);
 			double[][] U = getRandomMatrix(rows, rank, 0, 1, 1.0, 713); 
 			writeInputMatrixWithMTD("U", U, true);
 			double[][] V = getRandomMatrix(cols, rank, 0, 1, 1.0, 812); 
@@ -224,16 +478,15 @@ public class WeightedDivMatrixMultTest extends AutomatedTestBase
 			HashMap<CellIndex, Double> dmlfile = readDMLMatrixFromHDFS("R");
 			HashMap<CellIndex, Double> rfile  = readRMatrixFromFS("R");
 			TestUtils.compareMatrices(dmlfile, rfile, eps, "Stat-DML", "Stat-R");
-			checkDMLMetaDataFile("R", new MatrixCharacteristics(left?cols:rows, rank, 1, 1));
+			checkDMLMetaDataFile("R", new MatrixCharacteristics(left?cols:rows, basic?cols:rank, 1, 1));
 
 			//check statistics for right operator in cp and spark
 			if( instType == ExecType.CP && rewrites ) {
 				Assert.assertTrue("Missing opcode wdivmm", Statistics.getCPHeavyHitterOpCodes().contains(WeightedDivMM.OPCODE_CP));
 			}
 			else if( instType == ExecType.SPARK && rewrites ) {
-				Assert.assertTrue("Missing opcode sp_wdivmm",
-						!rep && Statistics.getCPHeavyHitterOpCodes().contains(Instruction.SP_INST_PREFIX+WeightedDivMM.OPCODE)
-					  || rep && Statistics.getCPHeavyHitterOpCodes().contains(Instruction.SP_INST_PREFIX+WeightedDivMMR.OPCODE) );
+				String opcode = Instruction.SP_INST_PREFIX + ((rep)?WeightedDivMMR.OPCODE:WeightedDivMM.OPCODE);
+				Assert.assertTrue("Missing opcode sp_wdivmm", Statistics.getCPHeavyHitterOpCodes().contains(opcode) );
 			}
 		}
 		finally

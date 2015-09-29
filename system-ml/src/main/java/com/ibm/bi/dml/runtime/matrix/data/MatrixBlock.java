@@ -41,7 +41,6 @@ import com.ibm.bi.dml.hops.OptimizerUtils;
 import com.ibm.bi.dml.lops.MMTSJ.MMTSJType;
 import com.ibm.bi.dml.lops.MapMultChain.ChainType;
 import com.ibm.bi.dml.lops.PartialAggregate.CorrectionLocationType;
-import com.ibm.bi.dml.lops.WeightedDivMM.WDivMMType;
 import com.ibm.bi.dml.lops.WeightedSquaredLoss.WeightsType;
 import com.ibm.bi.dml.parser.DMLTranslator;
 import com.ibm.bi.dml.runtime.DMLRuntimeException;
@@ -61,6 +60,7 @@ import com.ibm.bi.dml.runtime.instructions.cp.CM_COV_Object;
 import com.ibm.bi.dml.runtime.instructions.cp.DoubleObject;
 import com.ibm.bi.dml.runtime.instructions.cp.KahanObject;
 import com.ibm.bi.dml.runtime.instructions.cp.ScalarObject;
+import com.ibm.bi.dml.runtime.matrix.MatrixCharacteristics;
 import com.ibm.bi.dml.runtime.matrix.data.LibMatrixBincell.BinaryAccessType;
 import com.ibm.bi.dml.runtime.matrix.mapred.IndexedMatrixValue;
 import com.ibm.bi.dml.runtime.matrix.mapred.MRJobConfiguration;
@@ -519,6 +519,10 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 		return nonZeros;
 	}
 	
+	public void setNonZeros(long nnz) {
+		nonZeros = nnz;
+	}
+	
 	public boolean isVector() 
 	{
 		return (rlen == 1 || clen == 1);
@@ -918,7 +922,7 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 		//early abort (append guarantees no overwrite)
 		if( v == 0 ) 
 			return;
-		
+		try{
 		if( !sparse ) //DENSE 
 		{
 			//allocate on demand (w/o overwriting nnz)
@@ -938,6 +942,9 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 			//set value and maintain nnz
 			sparseRows[r].append(c, v);
 			nonZeros++;
+		}
+		} catch(ArrayIndexOutOfBoundsException e) {
+			throw e;
 		}
 	}
 	
@@ -5342,15 +5349,30 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 	 * 
 	 * @param ret
 	 * @param rows
+	 * @param select
 	 * @return
 	 * @throws DMLRuntimeException
 	 * @throws DMLUnsupportedOperationException
 	 */
-	public MatrixBlock removeEmptyOperations( MatrixBlock ret, boolean rows )
+	public MatrixBlock removeEmptyOperations( MatrixBlock ret, boolean rows, MatrixBlock select )
 		throws DMLRuntimeException, DMLUnsupportedOperationException 
 	{	
 		MatrixBlock result = checkType(ret);
-		return LibMatrixReorg.rmempty(this, result, rows);
+		return LibMatrixReorg.rmempty(this, result, rows, select);
+	}
+	
+	/**
+	 * 
+	 * @param ret
+	 * @param rows
+	 * @return
+	 * @throws DMLRuntimeException
+	 * @throws DMLUnsupportedOperationException
+	 */
+	public MatrixBlock removeEmptyOperations( MatrixBlock ret, boolean rows)
+		throws DMLRuntimeException, DMLUnsupportedOperationException 
+	{
+		return removeEmptyOperations(ret, rows, null);
 	}
 	
 	/**
@@ -5780,8 +5802,8 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 		else if( qop.wtype2 != null )
 			R.reset(rlen, clen, sparse);
 		else if( qop.wtype3 != null ) {
-			boolean left = (qop.wtype3==WDivMMType.LEFT);
-			R.reset( left?V.rlen:U.rlen, left?V.clen:U.clen, false);
+			MatrixCharacteristics mc = qop.wtype3.computeOutputCharacteristics(X.rlen, X.clen, U.clen);
+			R.reset( (int)mc.getRows(), (int)mc.getCols(), qop.wtype3.isBasic()?X.isInSparseFormat():false);
 		}
 		
 		//core block operation
@@ -5799,6 +5821,7 @@ public class MatrixBlock extends MatrixValue implements Externalizable
 				LibMatrixMult.matrixMultWSigmoid(X, U, V, R, qop.wtype2);
 		}	
 		else if( qop.wtype3 != null ){ //wdivmm
+			//note: for wdivmm-minus X and W interchanged because W always present 
 			if( k > 1 )
 				LibMatrixMult.matrixMultWDivMM(X, U, V, R, qop.wtype3, k);
 			else

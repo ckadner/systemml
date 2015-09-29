@@ -470,6 +470,20 @@ public class Data extends Lop
 				sb.append(delimLop.getStringValue());
 				sb.append(OPERAND_DELIMITOR);
 				sb.append(sparseLop.getBooleanValue());
+				
+				if ( this.getExecType() == ExecType.SPARK ) 
+				{
+					boolean isInputMatrixBlock = true;
+					Lop input = getInputs().get(0);
+					if ( input instanceof ParameterizedBuiltin 
+							&& ((ParameterizedBuiltin)input).getOp() == ParameterizedBuiltin.OperationTypes.TRANSFORM ) {
+						// in the case of transform input, the input will be Text strings insteadof MatrixBlocks 
+						// This information is used to have correct class information while accessing RDDs from the symbol table 
+						isInputMatrixBlock = false;
+					}
+					sb.append(OPERAND_DELIMITOR);
+					sb.append(isInputMatrixBlock);
+				}
 			}
 			
 		}

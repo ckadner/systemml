@@ -31,9 +31,11 @@ import scala.Tuple2;
 
 import com.ibm.bi.dml.lops.Lop;
 import com.ibm.bi.dml.parser.Expression.ValueType;
+import com.ibm.bi.dml.parser.ParameterizedBuiltinFunctionExpression;
 import com.ibm.bi.dml.parser.Statement;
 import com.ibm.bi.dml.runtime.DMLRuntimeException;
 import com.ibm.bi.dml.runtime.DMLUnsupportedOperationException;
+import com.ibm.bi.dml.runtime.controlprogram.caching.MatrixObject;
 import com.ibm.bi.dml.runtime.controlprogram.context.ExecutionContext;
 import com.ibm.bi.dml.runtime.controlprogram.context.SparkExecutionContext;
 import com.ibm.bi.dml.runtime.functionobjects.ParameterizedBuiltin;
@@ -43,14 +45,14 @@ import com.ibm.bi.dml.runtime.instructions.InstructionUtils;
 import com.ibm.bi.dml.runtime.instructions.cp.CPOperand;
 import com.ibm.bi.dml.runtime.instructions.mr.GroupedAggregateInstruction;
 import com.ibm.bi.dml.runtime.instructions.spark.data.PartitionedMatrixBlock;
-import com.ibm.bi.dml.runtime.instructions.spark.functions.PerformGroupByAggInCombiner;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.ExtractGroup;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.ExtractGroupNWeights;
+import com.ibm.bi.dml.runtime.instructions.spark.functions.PerformGroupByAggInCombiner;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.PerformGroupByAggInReducer;
-import com.ibm.bi.dml.runtime.instructions.spark.utils.RDDAggregateUtils;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.ReplicateVectorFunction;
-import com.ibm.bi.dml.runtime.instructions.spark.utils.SparkUtils;
 import com.ibm.bi.dml.runtime.instructions.spark.functions.UnflattenIterablesAfterCogroup;
+import com.ibm.bi.dml.runtime.instructions.spark.utils.RDDAggregateUtils;
+import com.ibm.bi.dml.runtime.instructions.spark.utils.SparkUtils;
 import com.ibm.bi.dml.runtime.matrix.MatrixCharacteristics;
 import com.ibm.bi.dml.runtime.matrix.data.LibMatrixReorg;
 import com.ibm.bi.dml.runtime.matrix.data.MatrixBlock;
@@ -62,6 +64,7 @@ import com.ibm.bi.dml.runtime.matrix.operators.CMOperator;
 import com.ibm.bi.dml.runtime.matrix.operators.CMOperator.AggregateOperationTypes;
 import com.ibm.bi.dml.runtime.matrix.operators.Operator;
 import com.ibm.bi.dml.runtime.matrix.operators.SimpleOperator;
+import com.ibm.bi.dml.runtime.transform.DataTransform;
 import com.ibm.bi.dml.runtime.util.UtilFunctions;
 
 public class ParameterizedBuiltinSPInstruction  extends ComputationSPInstruction 
@@ -82,6 +85,8 @@ public class ParameterizedBuiltinSPInstruction  extends ComputationSPInstruction
 	public int getArity() {
 		return arity;
 	}
+	
+	public HashMap<String,String> getParams() { return params; }
 	
 	public static HashMap<String, String> constructParameterMap(String[] params) {
 		// process all elements in "params" except first(opcode) and last(output)
@@ -141,6 +146,20 @@ public class ParameterizedBuiltinSPInstruction  extends ComputationSPInstruction
 		else if(   opcode.equalsIgnoreCase("replace") ) 
 		{
 			func = ParameterizedBuiltin.getParameterizedBuiltinFnObject(opcode);
+			return new ParameterizedBuiltinSPInstruction(new SimpleOperator(func), paramsMap, out, opcode, str, false);
+		}
+		else if ( opcode.equalsIgnoreCase("transform") ) 
+		{
+			func = ParameterizedBuiltin.getParameterizedBuiltinFnObject(opcode);
+			String specFile = paramsMap.get(ParameterizedBuiltinFunctionExpression.TF_FN_PARAM_TXSPEC);
+			String applyTxPath = paramsMap.get(ParameterizedBuiltinFunctionExpression.TF_FN_PARAM_APPLYMTD);
+			if ( specFile != null && applyTxPath != null)
+				throw new DMLRuntimeException(
+						"Invalid parameters to transform(). Only one of '"
+								+ ParameterizedBuiltinFunctionExpression.TF_FN_PARAM_TXSPEC
+								+ "' or '"
+								+ ParameterizedBuiltinFunctionExpression.TF_FN_PARAM_APPLYMTD
+								+ "' can be specified.");
 			return new ParameterizedBuiltinSPInstruction(new SimpleOperator(func), paramsMap, out, opcode, str, false);
 		}
 		else {
@@ -319,6 +338,18 @@ public class ParameterizedBuiltinSPInstruction  extends ComputationSPInstruction
 			//update output statistics (required for correctness)
 			MatrixCharacteristics mcOut = sec.getMatrixCharacteristics(output.getName());
 			mcOut.set(dirRows?lmaxVal:mcIn.getRows(), dirRows?mcIn.getRows():lmaxVal, (int)brlen, (int)bclen, -1);
+		}
+		else if ( opcode.equalsIgnoreCase("transform") ) 
+		{
+			// perform data transform on Spark
+			try {
+				DataTransform.spDataTransform(
+						this, 
+						new MatrixObject[] { (MatrixObject) sec.getVariable(params.get("target")) }, 
+						new MatrixObject[] { (MatrixObject) sec.getVariable(output.getName()) }, ec);
+			} catch (Exception e) {
+				throw new DMLRuntimeException(e);
+			}
 		}
 	}
 	

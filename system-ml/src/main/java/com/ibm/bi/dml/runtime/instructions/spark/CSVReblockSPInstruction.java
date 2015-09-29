@@ -21,6 +21,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.api.java.JavaPairRDD;
 
+import com.ibm.bi.dml.hops.recompile.Recompiler;
 import com.ibm.bi.dml.parser.Expression.DataType;
 import com.ibm.bi.dml.parser.Expression.ValueType;
 import com.ibm.bi.dml.runtime.DMLRuntimeException;
@@ -40,10 +41,6 @@ import com.ibm.bi.dml.runtime.matrix.data.MatrixIndexes;
 import com.ibm.bi.dml.runtime.matrix.operators.Operator;
 
 public class CSVReblockSPInstruction extends UnarySPInstruction {
-
-	@SuppressWarnings("unused")
-	private static final String _COPYRIGHT = "Licensed Materials - Property of IBM\n(C) Copyright IBM Corp. 2010, 2015\n"
-			+ "US Government Users Restricted Rights - Use, duplication  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.";
 
 	private int brlen;
 	private int bclen;
@@ -115,11 +112,17 @@ public class CSVReblockSPInstruction extends UnarySPInstruction {
 		MatrixCharacteristics mcIn = sec.getMatrixCharacteristics(input1.getName());
 		MatrixCharacteristics mcOut = sec.getMatrixCharacteristics(output.getName());
 		mcOut.set(mcIn.getRows(), mcIn.getCols(), brlen, bclen);
-	
+
+		//check for in-memory reblock (w/ lazy spark context, potential for latency reduction)
+		if( Recompiler.checkCPReblock(sec, input1.getName()) ) {
+			Recompiler.executeInMemoryReblock(sec, input1.getName(), output.getName());
+			return;
+		}
+		
 		//check jdk version (prevent double.parseDouble contention on <jdk8)
 		sec.checkAndRaiseValidationWarningJDKVersion();
-	
-		//check input rdd
+		
+		//get input rdd
 		JavaPairRDD<LongWritable, Text> lines = (JavaPairRDD<LongWritable, Text>) 
 				sec.getRDDHandleForVariable(input1.getName(), iimd.getInputInfo());
 		

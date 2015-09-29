@@ -22,6 +22,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,16 +34,19 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.OutputCollector;
 import org.apache.wink.json4j.JSONArray;
+import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
+
+import scala.Tuple2;
 
 import com.google.common.collect.Ordering;
 import com.ibm.bi.dml.runtime.transform.MVImputeAgent.MVMethod;
 import com.ibm.bi.dml.runtime.util.UtilFunctions;
-import com.ibm.bi.dml.utils.JSONHelper;
 
 public class RecodeAgent extends TransformationAgent {
 	
-	
+	private static final long serialVersionUID = 8213163881283341874L;
+
 	private int[] _rcdList = null;
 	private int[] _mvrcdList = null;
 	private int[] _fullrcdList = null;
@@ -50,43 +54,47 @@ public class RecodeAgent extends TransformationAgent {
 	// HashMap< columnID, HashMap<distinctValue, count> >
 	private HashMap<Integer, HashMap<String, Long>> _rcdMaps  = new HashMap<Integer, HashMap<String, Long>>();
 	
-	RecodeAgent(JSONObject parsedSpec) {
-		Object obj = JSONHelper.get(parsedSpec,TX_METHOD.RECODE.toString());
+	RecodeAgent(JSONObject parsedSpec) throws JSONException {
+		
 		int rcdCount = 0;
-		if(obj == null) {
-		}
-		else {
-			JSONArray attrs = (JSONArray) JSONHelper.get((JSONObject)obj,JSON_ATTRS);
+		
+		if ( parsedSpec.containsKey(TX_METHOD.RECODE.toString())) 
+		{
+			JSONObject obj = (JSONObject) parsedSpec.get(TX_METHOD.RECODE.toString());
+			JSONArray attrs = (JSONArray) obj.get(JSON_ATTRS);
 			
 			_rcdList = new int[attrs.size()];
 			for(int i=0; i < _rcdList.length; i++) 
-				_rcdList[i] = UtilFunctions.toInt( attrs.get(i) );
+				_rcdList[i] = UtilFunctions.toInt(attrs.get(i));
 			rcdCount = _rcdList.length;
 		}
 		
-		obj = JSONHelper.get(parsedSpec,TX_METHOD.MVRCD.toString());
-		if(obj == null) {
-		}
-		else {
-			JSONArray attrs = (JSONArray) JSONHelper.get((JSONObject)obj,JSON_ATTRS);
+		if ( parsedSpec.containsKey(TX_METHOD.MVRCD.toString())) 
+		{
+			JSONObject obj = (JSONObject) parsedSpec.get(TX_METHOD.MVRCD.toString());
+			JSONArray attrs = (JSONArray) obj.get(JSON_ATTRS);
+			
 			_mvrcdList = new int[attrs.size()];
 			for(int i=0; i < _mvrcdList.length; i++) 
-				_mvrcdList[i] = UtilFunctions.toInt( attrs.get(i) );
+				_mvrcdList[i] = UtilFunctions.toInt(attrs.get(i));
 			rcdCount += attrs.size();
 		}
 		
-		_fullrcdList = new int[rcdCount];
-		int idx = -1;
-		if(_rcdList != null)
-			for(int i=0; i < _rcdList.length; i++)
-				_fullrcdList[++idx] = _rcdList[i]; 
-		
-		if(_mvrcdList != null)
-			for(int i=0; i < _mvrcdList.length; i++)
-				_fullrcdList[++idx] = _mvrcdList[i]; 
+		if ( rcdCount > 0 )
+		{
+			_fullrcdList = new int[rcdCount];
+			int idx = -1;
+			if(_rcdList != null)
+				for(int i=0; i < _rcdList.length; i++)
+					_fullrcdList[++idx] = _rcdList[i]; 
+			
+			if(_mvrcdList != null)
+				for(int i=0; i < _mvrcdList.length; i++)
+					_fullrcdList[++idx] = _mvrcdList[i]; 
+		}
 	}
 	
-	void prepare(String[] words) {
+	void prepare(String[] words, TfUtils agents) {
 		if ( _rcdList == null && _mvrcdList == null )
 			return;
 		
@@ -105,8 +113,9 @@ public class RecodeAgent extends TransformationAgent {
 		}
 	}
 	
-	private HashMap<String, Long> handleMVConstant(int colID, MVImputeAgent mvagent, HashMap<String, Long> map)
+	private HashMap<String, Long> handleMVConstant(int colID, TfUtils agents, HashMap<String, Long> map)
 	{
+		MVImputeAgent mvagent = agents.getMVImputeAgent();
 		if ( mvagent.getMethod(colID) == MVMethod.CONSTANT ) 
 		{
 			// check if the "replacement" is part of the map. If not, add it.
@@ -116,7 +125,7 @@ public class RecodeAgent extends TransformationAgent {
 			
 			repValue = UtilFunctions.unquote(repValue);
 			Long count = map.get(repValue);
-			long mvCount = TransformationAgent._numValidRecords - mvagent.getNonMVCount(colID);
+			long mvCount = agents.getValid() - mvagent.getNonMVCount(colID);
 			if(count == null)
 				map.put(repValue, mvCount);
 			else
@@ -133,14 +142,21 @@ public class RecodeAgent extends TransformationAgent {
 	 * @throws IOException
 	 */
 	@Override
-	public void mapOutputTransformationMetadata(OutputCollector<IntWritable, DistinctValue> out, int taskID, TransformationAgent agent) throws IOException {
+	public void mapOutputTransformationMetadata(OutputCollector<IntWritable, DistinctValue> out, int taskID, TfUtils agents) throws IOException {
+		mapOutputHelper(taskID, out, null, agents);
+	}
+	
+	public ArrayList<Tuple2<Integer, DistinctValue>> mapOutputTransformationMetadata(int taskID, ArrayList<Tuple2<Integer, DistinctValue>> list, TfUtils agents) throws IOException {
+		mapOutputHelper(taskID, null, list, agents);
+		return list;
+	}
+	
+	public void mapOutputHelper(int taskID, OutputCollector<IntWritable, DistinctValue> out, ArrayList<Tuple2<Integer, DistinctValue>> list, TfUtils agents) throws IOException {
 		if ( _rcdList == null  && _mvrcdList == null )
 			return;
 		
 		try 
 		{ 
-			MVImputeAgent mvagent = (MVImputeAgent) agent;
-			
 			for(int i=0; i < _fullrcdList.length; i++) 
 			{
 				int colID = _fullrcdList[i];
@@ -148,11 +164,17 @@ public class RecodeAgent extends TransformationAgent {
 				
 				if(map != null) 
 				{
-					map = handleMVConstant(colID, mvagent,  map);
+					map = handleMVConstant(colID, agents,  map);
 					
-					IntWritable iw = new IntWritable(colID);
-					for(String s : map.keySet()) 
-						out.collect(iw, new DistinctValue(s, map.get(s)));
+					if ( out != null ) {
+						IntWritable iw = new IntWritable(colID);
+						for(String s : map.keySet()) 
+							out.collect(iw, new DistinctValue(s, map.get(s)));
+					}
+					else if ( list != null ) {
+						for(String s : map.keySet()) 
+							list.add(new Tuple2<Integer,DistinctValue>(colID, new DistinctValue(s, map.get(s))) );
+					}
 				}
 			}
 		} catch(Exception e) {
@@ -179,9 +201,10 @@ public class RecodeAgent extends TransformationAgent {
 	 * @param mvagent
 	 * @throws IOException
 	 */
-	private void writeMetadata(HashMap<String,Long> map, String outputDir, int colID, FileSystem fs, MVImputeAgent mvagent, boolean fromCP) throws IOException {
+	private void writeMetadata(HashMap<String,Long> map, String outputDir, int colID, FileSystem fs, TfUtils agents, boolean fromCP) throws IOException {
 		// output recode maps and mode
 		
+		MVImputeAgent mvagent = agents.getMVImputeAgent();
 		String mode = null;
 		Long count = null;
 		int rcdIndex = 0, modeIndex = 0;
@@ -190,23 +213,21 @@ public class RecodeAgent extends TransformationAgent {
 		boolean isRecoded = (isRecoded(colID) != -1);
 		boolean isModeImputed = (mvagent.getMethod(colID) == MVMethod.GLOBAL_MODE);
 		
-		Path pt=new Path(outputDir+"/Recode/"+ outputColumnNames[colID-1] + RCD_MAP_FILE_SUFFIX);
+		Path pt=new Path(outputDir+"/Recode/"+ agents.getName(colID) + RCD_MAP_FILE_SUFFIX);
 		BufferedWriter br=null;
 		if(isRecoded)
 			br = new BufferedWriter(new OutputStreamWriter(fs.create(pt,true)));		
 
 		// remove NA strings
-		if ( TransformationAgent.NAstrings != null ) 
-		{
-			for(String naword : TransformationAgent.NAstrings) 
+		if ( agents.getNAStrings() != null)
+			for(String naword : agents.getNAStrings()) 
 				map.remove(naword);
-		}
 		
 		if(fromCP)
-			map = handleMVConstant(colID, mvagent,  map);
+			map = handleMVConstant(colID, agents,  map);
 		
 		if ( map.size() == 0 ) 
-			throw new RuntimeException("Can not proceed since \"" + outputColumnNames[colID-1] + "\" (id=" + colID + ") contains only the missing values, and not a single valid value -- set imputation method to \"constant\".");
+			throw new RuntimeException("Can not proceed since \"" + agents.getName(colID) + "\" (id=" + colID + ") contains only the missing values, and not a single valid value -- set imputation method to \"constant\".");
 		
 		// Order entries by category (string) value
 		Ordering<String> valueComparator = Ordering.natural();
@@ -241,13 +262,13 @@ public class RecodeAgent extends TransformationAgent {
 		if ( isRecoded ) 
 		{
 			// output mode
-			pt=new Path(outputDir+"/Recode/"+ outputColumnNames[colID-1] + MODE_FILE_SUFFIX);
+			pt=new Path(outputDir+"/Recode/"+ agents.getName(colID) + MODE_FILE_SUFFIX);
 			br=new BufferedWriter(new OutputStreamWriter(fs.create(pt,true)));
 			br.write(UtilFunctions.quote(mode) + "," + modeIndex + "," + maxCount );
 			br.close();
 		
 			// output number of distinct values
-			pt=new Path(outputDir+"/Recode/"+ outputColumnNames[colID-1] + NDISTINCT_FILE_SUFFIX);
+			pt=new Path(outputDir+"/Recode/"+ agents.getName(colID) + NDISTINCT_FILE_SUFFIX);
 			br=new BufferedWriter(new OutputStreamWriter(fs.create(pt,true)));
 			br.write(""+map.size());
 			br.close();
@@ -255,7 +276,7 @@ public class RecodeAgent extends TransformationAgent {
 		
 		if (isModeImputed) 
 		{
-			pt=new Path(outputDir+"/Impute/"+ outputColumnNames[colID-1] + MV_FILE_SUFFIX);
+			pt=new Path(outputDir+"/Impute/"+ agents.getName(colID) + MV_FILE_SUFFIX);
 			br=new BufferedWriter(new OutputStreamWriter(fs.create(pt,true)));
 			br.write(colID + "," + UtilFunctions.quote(mode));
 			br.close();
@@ -263,13 +284,13 @@ public class RecodeAgent extends TransformationAgent {
 		
 	}
 	
-	public void outputTransformationMetadata(String outputDir, FileSystem fs, MVImputeAgent mvagent) throws IOException {
+	public void outputTransformationMetadata(String outputDir, FileSystem fs, TfUtils agents) throws IOException {
 		if(_rcdList == null && _mvrcdList == null )
 			return;
 		
 		for(int i=0; i<_fullrcdList.length; i++) {
 			int colID = _fullrcdList[i];
-			writeMetadata(_rcdMaps.get(colID), outputDir, colID, fs, mvagent, true);
+			writeMetadata(_rcdMaps.get(colID), outputDir, colID, fs, agents, true);
 		}
 	}
 	
@@ -281,7 +302,7 @@ public class RecodeAgent extends TransformationAgent {
 	 * @throws IOException 
 	 */
 	@Override
-	public void mergeAndOutputTransformationMetadata(Iterator<DistinctValue> values, String outputDir, int colID, JobConf job, TfAgents agents) throws IOException {
+	public void mergeAndOutputTransformationMetadata(Iterator<DistinctValue> values, String outputDir, int colID, FileSystem fs, TfUtils agents) throws IOException {
 		HashMap<String, Long> map = new HashMap<String,Long>();
 		
 		DistinctValue d = new DistinctValue();
@@ -301,7 +322,7 @@ public class RecodeAgent extends TransformationAgent {
 				map.put(word, val+count);
 		}
 		
-		writeMetadata(map, outputDir, colID, FileSystem.get(job), agents.getMVImputeAgent(), false);
+		writeMetadata(map, outputDir, colID, fs, agents, false);
 	}
 	
 	// ------------------------------------------------------------------------------------------------
@@ -320,7 +341,7 @@ public class RecodeAgent extends TransformationAgent {
 	 * @throws IOException
 	 */
 	@Override
-	public void loadTxMtd(JobConf job, FileSystem fs, Path txMtdDir) throws IOException {
+	public void loadTxMtd(JobConf job, FileSystem fs, Path txMtdDir, TfUtils agents) throws IOException {
 		if ( _rcdList == null )
 			return;
 		
@@ -330,8 +351,8 @@ public class RecodeAgent extends TransformationAgent {
 			for(int i=0; i<_rcdList.length;i++) {
 				int colID = _rcdList[i];
 				
-				Path path = new Path( txMtdDir + "/Recode/" + outputColumnNames[colID-1] + RCD_MAP_FILE_SUFFIX);
-				TransformationAgent.checkValidInputFile(fs, path, true); 
+				Path path = new Path( txMtdDir + "/Recode/" + agents.getName(colID) + RCD_MAP_FILE_SUFFIX);
+				TfUtils.checkValidInputFile(fs, path, true); 
 				
 				HashMap<String,String> map = new HashMap<String,String>();
 				
@@ -370,7 +391,7 @@ public class RecodeAgent extends TransformationAgent {
 	 * @return
 	 */
 	@Override
-	public String[] apply(String[] words) {
+	public String[] apply(String[] words, TfUtils agents) {
 		if ( _rcdList == null )
 			return words;
 		
@@ -400,16 +421,18 @@ public class RecodeAgent extends TransformationAgent {
 		return ( idx >= 0 ? idx : -1);
 	}
 
-	public String[] cp_apply(String[] words) {
+	public String[] cp_apply(String[] words, TfUtils agents) {
 		if ( _rcdList == null )
 			return words;
 		
+		String w = null;
 		for(int i=0; i < _rcdList.length; i++) {
 			int colID = _rcdList[i];
 			try {
-				words[colID-1] = Long.toString(_rcdMaps.get(colID).get(UtilFunctions.unquote(words[colID-1].trim())));
+				w = UtilFunctions.unquote(words[colID-1].trim());
+				words[colID-1] = Long.toString(_rcdMaps.get(colID).get(w));
 			} catch(NullPointerException e) {
-				if(words[colID-1].isEmpty() && MVImputeAgent.isNA("", TransformationAgent.NAstrings) )
+				if(w.isEmpty() && agents.isNA("") )
 					throw new RuntimeException("Empty string (a missing value) in column ID " + colID + " is not handled. Consider adding an imputation method on this column.");		
 				throw new RuntimeException("ColID="+colID + ", word=" + words[colID-1] + ", maps entry not found (map = " + _rcdMaps.get(colID) + ")");
 			}

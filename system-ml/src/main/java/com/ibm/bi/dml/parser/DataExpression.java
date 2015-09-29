@@ -377,6 +377,8 @@ public class DataExpression extends DataIdentifier
 		DataExpression retVal = new DataExpression(_opcode, newVarParams,
 				this.getFilename(), this.getBeginLine(), this.getBeginColumn(), this.getEndLine(), this.getEndColumn());
 		
+		retVal._strInit = this._strInit;
+		
 		return retVal;
 	}
 
@@ -476,22 +478,6 @@ public class DataExpression extends DataIdentifier
 		if (getEndLine() == 0) 		setEndLine(value.getEndLine());
 		if (getEndColumn() == 0) 	setEndColumn(value.getEndColumn());
 		
-		// update values	
-		if (getBeginLine() > value.getBeginLine()){
-			setBeginLine(value.getBeginLine());
-			setBeginColumn(value.getBeginColumn());
-		}
-		else if (getBeginLine() == value.getBeginLine() && getBeginColumn() > value.getBeginColumn()){
-			setBeginColumn(value.getBeginColumn());
-		}
-
-		if (getEndLine() < value.getEndLine()){
-			setEndLine(value.getEndLine());
-			setEndColumn(value.getEndColumn());
-		}
-		else if (getEndLine() == value.getEndLine() && getEndColumn() < value.getEndColumn()){
-			setEndColumn(value.getEndColumn());
-		}		
 	}
 	
 	public void removeVarParam(String name) {

@@ -17,7 +17,7 @@
 #-------------------------------------------------------------
 
 
-V = read($1, rows=$2, cols=$3, format="text");
+V = read($1);
 V1 = removeEmpty(target=V, margin="rows");
 Vp = removeEmpty(target=V1, margin="cols");
-write(Vp, $5, format="text");  
+write(Vp, $3);  

@@ -62,12 +62,8 @@ import com.ibm.bi.dml.runtime.matrix.mapred.MMCJMRReducerWithAggregator;
 
 public class AggBinaryOp extends Hop implements MultiThreadedHop
 {
-
 	public static final double MAPMULT_MEM_MULTIPLIER = 1.0;
 	public static MMultMethod FORCED_MMULT_METHOD = null;
-	
-	private OpOp2 innerOp;
-	private AggOp outerOp;
 
 	public enum MMultMethod { 
 		CPMM,     //cross-product matrix multiplication (mr)
@@ -86,6 +82,11 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 		SINGLE_BLOCK,
 		MULTI_BLOCK,
 	}
+	
+	private OpOp2 innerOp;
+	private AggOp outerOp;
+
+	private MMultMethod _method = null;
 	
 	//hints set by previous to operator selection
 	private boolean _hasLeftPMInput = false; //left input is permutation matrix
@@ -127,6 +128,10 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 		return _maxNumThreads;
 	}
 	
+	public MMultMethod getMMultMethod(){
+		return _method;
+	}
+	
 	/**
 	 * NOTE: overestimated mem in case of transpose-identity matmult, but 3/2 at worst
 	 *       and existing mem estimate advantageous in terms of consistency hops/lops,
@@ -156,11 +161,11 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 			if( et == ExecType.CP ) 
 			{
 				//matrix mult operation selection part 3 (CP type)
-				MMultMethod method = optFindMMultMethodCP ( input1.getDim1(), input1.getDim2(),   
-						                 input2.getDim1(), input2.getDim2(), mmtsj, chain, _hasLeftPMInput );
+				_method = optFindMMultMethodCP ( input1.getDim1(), input1.getDim2(),   
+						      input2.getDim1(), input2.getDim2(), mmtsj, chain, _hasLeftPMInput );
 				
 				//dispatch CP lops construction 
-				switch( method ){
+				switch( _method ){
 					case TSMM: 
 						constructCPLopsTSMM( mmtsj );
 						break;
@@ -174,27 +179,27 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 						constructCPLopsMM();
 						break;
 					default:
-						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + method + ") while constructing CP lops.");
+						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + _method + ") while constructing CP lops.");
 				}
 			}
 			else if( et == ExecType.SPARK ) 
 			{
 				//matrix mult operation selection part 3 (SPARK type)
 				boolean tmmRewrite = input1 instanceof ReorgOp && ((ReorgOp)input1).getOp()==ReOrgOp.TRANSPOSE;
-				MMultMethod method = optFindMMultMethodSpark ( 
+				_method = optFindMMultMethodSpark ( 
 						input1.getDim1(), input1.getDim2(), input1.getRowsInBlock(), input1.getColsInBlock(), input1.getNnz(),   
 						input2.getDim1(), input2.getDim2(), input2.getRowsInBlock(), input2.getColsInBlock(), input2.getNnz(),
 						mmtsj, chain, _hasLeftPMInput, tmmRewrite );
 			
 				//dispatch SPARK lops construction 
-				switch( method )
+				switch( _method )
 				{
 					case TSMM:
 						constructSparkLopsTSMM( mmtsj );
 						break;
 					case MAPMM_L:
 					case MAPMM_R:
-						constructSparkLopsMapMM( method );
+						constructSparkLopsMapMM( _method );
 						break;
 					case MAPMM_CHAIN:
 						constructSparkLopsMapMMChain( chain );
@@ -213,22 +218,22 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 						break;
 						
 					default:
-						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + method + ") while constructing SPARK lops.");	
+						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + _method + ") while constructing SPARK lops.");	
 				}
 			}
 			else if( et == ExecType.MR ) 
 			{
 				//matrix mult operation selection part 3 (MR type)
-				MMultMethod method = optFindMMultMethodMR ( 
+				_method = optFindMMultMethodMR ( 
 							input1.getDim1(), input1.getDim2(), input1.getRowsInBlock(), input1.getColsInBlock(), input1.getNnz(),    
 							input2.getDim1(), input2.getDim2(), input2.getRowsInBlock(), input2.getColsInBlock(), input2.getNnz(),
 							mmtsj, chain, _hasLeftPMInput);
 			
 				//dispatch MR lops construction
-				switch( method ) {
+				switch( _method ) {
 					case MAPMM_L:
 					case MAPMM_R: 	
-						constructMRLopsMapMM(method); 
+						constructMRLopsMapMM( _method ); 
 						break;
 					case MAPMM_CHAIN:	
 						constructMRLopsMapMMChain( chain ); 
@@ -246,7 +251,7 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 						constructMRLopsPMM(); 
 						break;						
 					default:
-						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + method + ") while constructing MR lops.");
+						throw new HopsException(this.printErrorLocation() + "Invalid Matrix Mult Method (" + _method + ") while constructing MR lops.");
 				}
 			}
 		} 
@@ -1645,7 +1650,7 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 	 * @param chainType
 	 * @return
 	 */
-	private static MMultMethod optFindMMultMethodSpark( long m1_rows, long m1_cols, long m1_rpb, long m1_cpb, long m1_nnz, 
+	private MMultMethod optFindMMultMethodSpark( long m1_rows, long m1_cols, long m1_rpb, long m1_cpb, long m1_nnz, 
             long m2_rows, long m2_cols, long m2_rpb, long m2_cpb, long m2_nnz,
             MMTSJType mmtsj, ChainType chainType, boolean leftPMInput, boolean tmmRewrite ) 
 	{	
@@ -1654,6 +1659,10 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 		//required because the max_int byte buffer constraint has been fixed in Spark 1.4 
 		double memBudgetExec = MAPMULT_MEM_MULTIPLIER * SparkExecutionContext.getBroadcastMemoryBudget();		
 		double memBudgetLocal = OptimizerUtils.getLocalMemBudget();
+
+		//reset spark broadcast memory information (for concurrent parfor jobs, awareness of additional 
+		//cp memory requirements on spark rdd operations with broadcasts)
+		_spBroadcastMemEstimate = 0;
 		
 		// Step 0: check for forced mmultmethod
 		if( FORCED_MMULT_METHOD !=null )
@@ -1689,6 +1698,8 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 					&& 2*(OptimizerUtils.estimateSize(m1_rows, m2_cols) 
 					   + OptimizerUtils.estimateSize(m1_cols, m2_cols)) < memBudgetLocal )
 				{
+					_spBroadcastMemEstimate = 2*(OptimizerUtils.estimateSize(m1_rows, m2_cols) 
+							   				   + OptimizerUtils.estimateSize(m1_cols, m2_cols));
 					return MMultMethod.MAPMM_CHAIN;
 				}
 			}
@@ -1702,6 +1713,7 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 			&& 2*OptimizerUtils.estimateSize(m1_rows, 1) < memBudgetLocal
 			&& leftPMInput ) 
 		{
+			_spBroadcastMemEstimate = 2*OptimizerUtils.estimateSize(m1_rows, 1);
 			return MMultMethod.PMM;
 		}
 		
@@ -1723,10 +1735,14 @@ public class AggBinaryOp extends Hop implements MultiThreadedHop
 		{
 			//apply map mult if one side fits in remote task memory 
 			//(if so pick smaller input for distributed cache)
-			if( m1SizeP < m2SizeP && m1_rows>=0 && m1_cols>=0)
+			if( m1SizeP < m2SizeP && m1_rows>=0 && m1_cols>=0) {
+				_spBroadcastMemEstimate = m1Size+m1SizeP;
 				return MMultMethod.MAPMM_L;
-			else
+			}
+			else {
+				_spBroadcastMemEstimate = m2Size+m2SizeP;
 				return MMultMethod.MAPMM_R;
+			}
 		}
 		
 		// Step 5: check for unknowns

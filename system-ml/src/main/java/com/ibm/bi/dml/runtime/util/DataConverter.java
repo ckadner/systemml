@@ -53,10 +53,6 @@ import com.ibm.bi.dml.udf.Matrix;
  */
 public class DataConverter 
 {
-	@SuppressWarnings("unused")
-	private static final String _COPYRIGHT = "Licensed Materials - Property of IBM\n(C) Copyright IBM Corp. 2010, 2015\n" +
-	                                         "US Government Users Restricted Rights - Use, duplication  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.";
-		
 	
 	//////////////
 	// READING and WRITING of matrix blocks to/from HDFS
@@ -343,6 +339,43 @@ public class DataConverter
 	 * @param mb
 	 * @return
 	 */
+	public static boolean [] convertToBooleanVector(MatrixBlock mb)
+	{
+		int rows = mb.getNumRows();
+		int cols = mb.getNumColumns();
+		boolean[] ret = new boolean[rows*cols]; //false-initialized 
+		
+		if( mb.getNonZeros() > 0 )
+		{
+			if( mb.isInSparseFormat() )
+			{
+				SparseRowsIterator iter = mb.getSparseRowsIterator();
+				while( iter.hasNext() )
+				{
+					IJV cell = iter.next();
+					ret[cell.i*rows+cell.j] = (cell.v != 0.0);
+				}
+			}
+			else
+			{
+				if( !mb.isEmptyBlock(false) )
+				{
+					for( int i=0; i<rows; i++ )
+						for( int j=0; j<cols; j++ )
+							ret[i*cols+j] = (mb.getValueDenseUnsafe(i, j) != 0.0);
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	
+	/**
+	 * 
+	 * @param mb
+	 * @return
+	 */
 	public static double[] convertToDoubleVector( MatrixBlock mb )
 	{
 		int rows = mb.getNumRows();
@@ -545,6 +578,63 @@ public class DataConverter
 	public static MatrixBlock convertToMatrixBlock( CTableMap map, int rlen, int clen )
 	{
 		return map.toMatrixBlock(rlen, clen);
+	}
+	
+	/**
+	 * 
+	 * @param mb
+	 * @param colwise
+	 * @return
+	 * @throws DMLRuntimeException 
+	 */
+	public static MatrixBlock[] convertToMatrixBlockPartitions( MatrixBlock mb, boolean colwise ) 
+		throws DMLRuntimeException
+	{
+		MatrixBlock[] ret = null;
+		int rows = mb.getNumRows();
+		int cols = mb.getNumColumns();
+		long nnz = mb.getNonZeros();
+		boolean sparse = mb.isInSparseFormat();
+		double sparsity = ((double)nnz)/(rows*cols);
+		
+		if( colwise ) //COL PARTITIONS
+		{
+			//allocate output partitions
+			ret = new MatrixBlock[ cols ];
+			for( int j=0; j<cols; j++ )
+				ret[j] = new MatrixBlock(rows, 1, false);
+
+			//cache-friendly sequential read/append
+			if( !mb.isEmptyBlock(false) ) {
+				if( sparse ){ //SPARSE
+					SparseRowsIterator iter = mb.getSparseRowsIterator();
+					while( iter.hasNext() ) {
+						IJV cell = iter.next();
+						ret[cell.j].appendValue(cell.i, 0, cell.v);
+					}
+				}
+				else { //DENSE
+					for( int i=0; i<rows; i++ )
+						for( int j=0; j<cols; j++ )
+							ret[j].appendValue(i, 0, mb.getValueDenseUnsafe(i, j));
+				}
+			}
+		}
+		else //ROW PARTITIONS
+		{
+			//allocate output partitions
+			ret = new MatrixBlock[ rows ];
+			for( int i=0; i<rows; i++ )
+				ret[i] = new MatrixBlock(1, cols, sparse, (long)(cols*sparsity));
+
+			//cache-friendly sparse/dense row slicing 
+			if( !mb.isEmptyBlock(false) ) {
+				for( int i=0; i<rows; i++ )
+					mb.sliceOperations(i, i, 0, cols-1, ret[i]);
+			}			
+		}
+		
+		return ret;
 	}
 	
 	/**

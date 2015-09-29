@@ -183,7 +183,7 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 			Broadcast<PartitionedMatrixBlock> bc2 = sec.getBroadcastForVariable( input3.getName() );
 			
 			//partitioning-preserving mappartitions (key access required for broadcast loopkup)
-			boolean noKeyChange = (qop.wtype3 == null); //only wsdivmm changes keys
+			boolean noKeyChange = (qop.wtype3 == null || qop.wtype3.isBasic()); //only wsdivmm changes keys
 			out = in.mapPartitionsToPair(new RDDQuaternaryFunction1(qop, bc1, bc2), noKeyChange);
 			
 			rddVars.add( input1.getName() );
@@ -251,7 +251,7 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 		else //map/redwsigmoid, map/redwdivmm 
 		{
 			//aggregation if required (map/redwdivmm)
-			if( qop.wtype3 != null )
+			if( qop.wtype3 != null && !qop.wtype3.isBasic() )
 				out = RDDAggregateUtils.sumByKeyStable( out );
 				
 			//put output RDD handle into symbol table
@@ -281,15 +281,14 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 		MatrixCharacteristics mcIn3 = sec.getMatrixCharacteristics(input3.getName());
 		MatrixCharacteristics mcOut = sec.getMatrixCharacteristics(output.getName());
 		
-		if( qop.wtype2 != null ) { //wsigmoid
+		if( qop.wtype2 != null ) {
 			//output size determined by main input
 			mcOut.set(mcIn1.getRows(), mcIn1.getCols(), mcIn1.getRowsPerBlock(), mcIn1.getColsPerBlock());
 		}
 		else if(qop.wtype3 != null ) { //wdivmm
-			if( qop.wtype3 == WDivMMType.LEFT )
-				mcOut.set(mcIn3.getRows(), mcIn3.getCols(), mcIn3.getRowsPerBlock(), mcIn3.getColsPerBlock());
-			else
-				mcOut.set(mcIn2.getRows(), mcIn2.getCols(), mcIn3.getRowsPerBlock(), mcIn3.getColsPerBlock());	
+			long rank = qop.wtype3.isLeft() ? mcIn3.getCols() : mcIn2.getCols();
+			MatrixCharacteristics mcTmp = qop.wtype3.computeOutputCharacteristics(mcIn1.getRows(), mcIn1.getCols(), rank);		
+			mcOut.set(mcTmp.getRows(), mcTmp.getCols(), mcIn1.getRowsPerBlock(), mcIn1.getColsPerBlock());		
 		}
 	}
 	
@@ -312,8 +311,8 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 
 		protected MatrixIndexes createOutputIndexes(MatrixIndexes in) 
 		{
-			if( _qop.wtype3 != null ){ //key change 
-				boolean left = ( _qop.wtype3 == WDivMMType.LEFT );
+			if( _qop.wtype3 != null && !_qop.wtype3.isBasic() ){ //key change
+				boolean left = _qop.wtype3.isLeft();
 				return new MatrixIndexes(left?in.getColumnIndex():in.getRowIndex(), 1);
 			}				
 			return in;
@@ -394,7 +393,7 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 			
 			MatrixBlock mbU = (_pmU!=null)?_pmU.value().getMatrixBlock((int)ixIn.getRowIndex(), 1) : blkIn2;
 			MatrixBlock mbV = (_pmV!=null)?_pmV.value().getMatrixBlock((int)ixIn.getColumnIndex(), 1) : blkIn2;
-			MatrixBlock mbW = (_qop.wtype1!=null&&_qop.wtype1!=WeightsType.NONE)? blkIn2 : null;
+			MatrixBlock mbW = (_qop.wtype1!=null&&_qop.wtype1!=WeightsType.NONE) ? blkIn2 : null;
 			
 			//execute core operation
 			blkIn1.quaternaryOperations(_qop, mbU, mbV, mbW, blkOut);
@@ -448,7 +447,7 @@ public class QuaternarySPInstruction extends ComputationSPInstruction
 	 * Note: never called for wsigmoid/wdivmm (only wsloss)
 	 */
 	private static class RDDQuaternaryFunction4 extends RDDQuaternaryBaseFunction //four rdd input
-		implements Function<Tuple2<Tuple2<Tuple2<MatrixBlock,MatrixBlock>,MatrixBlock>,MatrixBlock>, MatrixBlock>
+		implements Function<Tuple2<Tuple2<Tuple2<MatrixBlock,MatrixBlock>,MatrixBlock>,MatrixBlock>,MatrixBlock>
 	{
 		private static final long serialVersionUID = 7328911771600289250L;
 		

@@ -53,16 +53,13 @@ import com.ibm.bi.dml.runtime.matrix.mapred.CSVReblockReducer;
 import com.ibm.bi.dml.runtime.matrix.mapred.MRJobConfiguration;
 import com.ibm.bi.dml.runtime.matrix.mapred.MRJobConfiguration.ConvertTarget;
 import com.ibm.bi.dml.runtime.matrix.mapred.MRJobConfiguration.MatrixChar_N_ReducerGroups;
+import com.ibm.bi.dml.runtime.transform.TfUtils;
 import com.ibm.bi.dml.runtime.util.MapReduceTool;
 
 
 @SuppressWarnings("deprecation")
 public class CSVReblockMR 
 {
-	@SuppressWarnings("unused")
-	private static final String _COPYRIGHT = "Licensed Materials - Property of IBM\n(C) Copyright IBM Corp. 2010, 2015\n" +
-	                                         "US Government Users Restricted Rights - Use, duplication  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.";
-	
 	public static final String NUM_ROWS_IN_MATRIX="num.rows.in.matrix.";
 	public static final String NUM_COLS_IN_MATRIX="num.cols.in.matrix.";
 	public static final String ROWID_FILE_NAME="rowid.file.name";
@@ -287,6 +284,14 @@ public class CSVReblockMR
 			String reblockInstructions, int replication, String[] smallestFiles) 
 	throws Exception
 	{
+		return runAssignRowIDMRJob(inputs, inputInfos, brlens, bclens, reblockInstructions, replication, smallestFiles, false, null, null);
+	}
+
+		
+	public static AssignRowIDMRReturn runAssignRowIDMRJob(String[] inputs, InputInfo[] inputInfos, int[] brlens, int[] bclens, 
+			String reblockInstructions, int replication, String[] smallestFiles, boolean transform, String naStrings, String specFile) 
+	throws Exception
+	{
 		AssignRowIDMRReturn ret=new AssignRowIDMRReturn();
 		JobConf job;
 		job = new JobConf(CSVReblockMR.class);
@@ -323,16 +328,8 @@ public class CSVReblockMR
 		//configure reducer
 		job.setReducerClass(CSVAssignRowIDReducer.class);
 		
-		/*
-		 	job.setBoolean("adaptivemr.map.enable", true);
-			job.setInt("adaptivemr.map.waves", 1);
-		 */
-		
 		//turn off adaptivemr
 		job.setBoolean("adaptivemr.map.enable", false);
-		
-		// By default, the job executes in "cluster" mode.
-		// Determine if we can optimize and run it in "local" mode.
 		
 		//set unique working dir
 		MRJobConfiguration.setUniqueWorkingDir(job);
@@ -343,6 +340,17 @@ public class CSVReblockMR
 		FileOutputFormat.setOutputPath(job, ret.counterFile);
 		job.setOutputKeyClass(ByteWritable.class);
 		job.setOutputValueClass(OffsetCount.class);
+		
+		// setup properties relevant to transform
+		job.setBoolean(MRJobConfiguration.TF_TRANSFORM, transform);
+		if (transform)
+		{
+			if ( naStrings != null)
+				// Adding "dummy" string to handle the case of na_strings = ""
+				job.set(MRJobConfiguration.TF_NA_STRINGS, TfUtils.prepNAStrings(naStrings) );
+			job.set(MRJobConfiguration.TF_SPEC_FILE, specFile);
+		}
+		
 		RunningJob runjob=JobClient.runJob(job);
 		
 		/* Process different counters */
