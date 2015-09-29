@@ -168,7 +168,7 @@ CURRENT_TEST="Test_out__DML_script_with_path"
     echo "Running test ${CURRENT_TEST}"         >> ${TEST_LOG}
     cd "${TEMP}"
     echo "Working directory: $PWD"              >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                       >  nul 2>&1
+    rm -f "${DML_OUTPUT}"                       >  /dev/null   2>&1
     sh "${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}" "${PROJECT_ROOT_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}" ${DML_ARGS}  >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
@@ -315,7 +315,7 @@ CURRENT_TEST="Test_space_out__DML_script_with_path"
     echo "Running test ${CURRENT_TEST}" >> ${TEST_LOG}
     cd "${TEMP}"
     echo "Working directory: $PWD"      >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"               >  nul 2>&1
+    rm -f "${DML_OUTPUT}"               >  /dev/null   2>&1
     sh "${SPACE_DIR}/bin/${RUN_SCRIPT}" "${SPACE_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}" ${DML_ARGS}  >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
