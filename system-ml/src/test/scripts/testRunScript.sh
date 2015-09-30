@@ -85,30 +85,36 @@ echo "Writing test log to file \"${TEST_LOG}\"."; echo "$( date +"%F %T" )" > ${
 CURRENT_TEST="Test_root__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                             >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"     >> ${TEST_LOG}
     cd "${PROJECT_ROOT_DIR}"
-    rm -f "${DML_OUTPUT}"                                           >  /dev/null   2>&1
-    rm -f "temp/${DML_OUTPUT}"                                      >  /dev/null   2>&1
-    sh bin/${RUN_SCRIPT} ${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS} >> ${TEST_LOG} 2>&1
+    echo "Working directory: $PWD"                  >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                           >  /dev/null   2>&1
+    rm -f "temp/${DML_OUTPUT}"                      >  /dev/null   2>&1
+    CMD="./bin/${RUN_SCRIPT} ${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                   >> ${TEST_LOG} 2>&1
+    eval ${CMD}                                     >> ${TEST_LOG} 2>&1
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]
     then
         if [    -f "${DML_OUTPUT}"      ] ; then ERR_MSG="${ERR_MSG}, outputdata in project root" ; EXIT_CODE=1 ; fi
         if [ !  -f "temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;      EXIT_CODE=1 ; fi
     fi
-    if [ $EXIT_CODE -eq 0 ] ; 
-        then printf "success\n"; 
+    if [ $EXIT_CODE -eq 0 ] ;
+        then printf "success\n";
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
-    fi  
+    fi
 )
-CURRENT_TEST="Test_root__DML_script_file_name_only"
+CURRENT_TEST="Test_root__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"           >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"      >> ${TEST_LOG}
     cd "${PROJECT_ROOT_DIR}"
-    rm -f "${DML_OUTPUT}"                         >  /dev/null   2>&1
-    rm -f "temp/${DML_OUTPUT}"                    >  /dev/null   2>&1
-    sh bin/${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG} 2>&1
+    echo "Working directory: $PWD"                   >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                            >  /dev/null   2>&1
+    rm -f "temp/${DML_OUTPUT}"                       >  /dev/null   2>&1
+    CMD="./bin/${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                    >> ${TEST_LOG} 2>&1
+    eval ${CMD}                                      >> ${TEST_LOG} 2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
@@ -125,37 +131,41 @@ CURRENT_TEST="Test_root__DML_script_file_name_only"
 CURRENT_TEST="Test_bin__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                             >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${PROJECT_ROOT_DIR}/bin"
-    echo "Working directory: $PWD"                                  >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                                           >  /dev/null    2>&1
-    rm -f "../temp/${DML_OUTPUT}"                                   >  /dev/null    2>&1
-    sh ${RUN_SCRIPT} ../${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG}  2>&1
+    echo "Working directory: $PWD"                >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null    2>&1
+    rm -f "../temp/${DML_OUTPUT}"                 >  /dev/null    2>&1
+    CMD="./${RUN_SCRIPT} ../${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    sh ${CMD}                                     >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
-        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in project root" ; EXIT_CODE=1 ; fi
-        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;      EXIT_CODE=1 ; fi
+        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in bin folder" ; EXIT_CODE=1 ; fi
+        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;    EXIT_CODE=1 ; fi
     fi
     if [ ${EXIT_CODE} -eq 0 ] ;
         then printf "success\n";
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
     fi
 )
-CURRENT_TEST="Test_bin__DML_script_file_name_only"
+CURRENT_TEST="Test_bin__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"        >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"  >> ${TEST_LOG}
     cd "${PROJECT_ROOT_DIR}/bin"
-    echo "Working directory: $PWD"             >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                      >  /dev/null    2>&1
-    rm -f "../temp/${DML_OUTPUT}"              >  /dev/null    2>&1
-    sh ${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}   >> ${TEST_LOG}  2>&1
+    echo "Working directory: $PWD"               >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                        >  /dev/null    2>&1
+    rm -f "../temp/${DML_OUTPUT}"                >  /dev/null    2>&1
+    CMD="./${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                >> ${TEST_LOG}  2>&1
+    sh ${CMD}                                    >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
-        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in project root" ; EXIT_CODE=1 ; fi
-        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;      EXIT_CODE=1 ; fi
+        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in bin folder" ; EXIT_CODE=1 ; fi
+        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;    EXIT_CODE=1 ; fi
     fi
     if [ ${EXIT_CODE} -eq 0 ] ;
         then printf "success\n";
@@ -167,11 +177,13 @@ CURRENT_TEST="Test_bin__DML_script_file_name_only"
 CURRENT_TEST="Test_out__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"         >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n" >> ${TEST_LOG}
     cd "${TEMP}"
     echo "Working directory: $PWD"              >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                       >  /dev/null   2>&1
-    sh "${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}" "${PROJECT_ROOT_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}" ${DML_ARGS}  >> ${TEST_LOG}  2>&1
+    rm -f "${DML_OUTPUT}"                       >  /dev/null    2>&1
+    CMD="\"${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}\" \"${PROJECT_ROOT_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}\" ${DML_ARGS}"
+    echo "${CMD}"                               >> ${TEST_LOG}  2>&1
+    eval  ${CMD}                                >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
@@ -182,14 +194,16 @@ CURRENT_TEST="Test_out__DML_script_with_path"
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
     fi
 )
-CURRENT_TEST="Test_out__DML_script_file_name_only"
+CURRENT_TEST="Test_out__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                                 >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${TEMP}"
-    echo "Working directory: $PWD"                                      >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                                               >  /dev/null   2>&1
-    sh "${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}" ${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG}  2>&1
+    echo "Working directory: $PWD"                >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null   2>&1
+    CMD="\"${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}\" ${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    eval ${CMD}                                   >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
@@ -230,12 +244,14 @@ printf "done.\n"                                  >> ${TEST_LOG}
 CURRENT_TEST="Test_space_root__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                             >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${SPACE_DIR}"
-    echo "Working directory: $PWD"                                  >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                                           >  /dev/null   2>&1
-    rm -f "temp/${DML_OUTPUT}"                                      >  /dev/null   2>&1
-    sh bin/${RUN_SCRIPT} ${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS} >> ${TEST_LOG} 2>&1
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null   2>&1
+    rm -f "temp/${DML_OUTPUT}"                    >  /dev/null   2>&1
+    CMD="./bin/${RUN_SCRIPT} ${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                 >> ${TEST_LOG} 2>&1
+    sh ${CMD}                                     >> ${TEST_LOG} 2>&1
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]
     then
@@ -247,15 +263,17 @@ CURRENT_TEST="Test_space_root__DML_script_with_path"
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
     fi
 )
-CURRENT_TEST="Test_space_root__DML_script_file_name_only"
+CURRENT_TEST="Test_space_root__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"           >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${SPACE_DIR}"
-    echo "Working directory: $PWD"                >> ${TEST_LOG}
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
     rm -f "${DML_OUTPUT}"                         >  /dev/null   2>&1
     rm -f "temp/${DML_OUTPUT}"                    >  /dev/null   2>&1
-    sh bin/${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG} 2>&1
+    CMD="./bin/${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS} "
+    echo "${CMD}"                                 >> ${TEST_LOG} 2>&1
+    sh ${CMD}                                     >> ${TEST_LOG} 2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
@@ -272,37 +290,41 @@ CURRENT_TEST="Test_space_root__DML_script_file_name_only"
 CURRENT_TEST="Test_space_bin__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                             >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${SPACE_DIR}/bin"
-    echo "Working directory: $PWD"                                  >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                                           >  /dev/null    2>&1
-    rm -f "../temp/${DML_OUTPUT}"                                   >  /dev/null    2>&1
-    sh ${RUN_SCRIPT} ../${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG}  2>&1
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null    2>&1
+    rm -f "../temp/${DML_OUTPUT}"                 >  /dev/null    2>&1
+    CMD="./${RUN_SCRIPT} ../${DML_SCRIPT_PATH}/${DML_SCRIPT_WITH_ARGS} "
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    sh ${CMD}                                     >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
-        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in project root" ; EXIT_CODE=1 ; fi
-        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;      EXIT_CODE=1 ; fi
+        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in bin folder" ; EXIT_CODE=1 ; fi
+        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;    EXIT_CODE=1 ; fi
     fi
     if [ ${EXIT_CODE} -eq 0 ] ;
         then printf "success\n";
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
     fi
 )
-CURRENT_TEST="Test_space_bin__DML_script_file_name_only"
+CURRENT_TEST="Test_space_bin__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"        >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${SPACE_DIR}/bin"
-    echo "Working directory: $PWD"             >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                      >  /dev/null    2>&1
-    rm -f "../temp/${DML_OUTPUT}"              >  /dev/null    2>&1
-    sh ${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS}   >> ${TEST_LOG}  2>&1
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null    2>&1
+    rm -f "../temp/${DML_OUTPUT}"                 >  /dev/null    2>&1
+    CMD="./${RUN_SCRIPT} ${DML_SCRIPT_WITH_ARGS} "
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    sh ${CMD}                                     >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
-        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in project root" ; EXIT_CODE=1 ; fi
-        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;      EXIT_CODE=1 ; fi
+        if [   -f "${DML_OUTPUT}"         ] ; then ERR_MSG="${ERR_MSG}, outputdata in bin folder" ; EXIT_CODE=1 ; fi
+        if [ ! -f "../temp/${DML_OUTPUT}" ] ; then ERR_MSG="${ERR_MSG}, outputdata is missing" ;    EXIT_CODE=1 ; fi
     fi
     if [ ${EXIT_CODE} -eq 0 ] ;
         then printf "success\n";
@@ -314,11 +336,13 @@ CURRENT_TEST="Test_space_bin__DML_script_file_name_only"
 CURRENT_TEST="Test_space_out__DML_script_with_path"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}" >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${TEMP}"
-    echo "Working directory: $PWD"      >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"               >  /dev/null   2>&1
-    sh "${SPACE_DIR}/bin/${RUN_SCRIPT}" "${SPACE_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}" ${DML_ARGS}  >> ${TEST_LOG}  2>&1
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null    2>&1
+    CMD="\"${SPACE_DIR}/bin/${RUN_SCRIPT}\" \"${SPACE_DIR}/${DML_SCRIPT_PATH}/${DML_SCRIPT}\" ${DML_ARGS}"
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    eval ${CMD}                                   >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then
@@ -329,14 +353,16 @@ CURRENT_TEST="Test_space_out__DML_script_with_path"
         else printf "failed${ERR_MSG}\n"; if [ "${CONTINUE_ON_ERROR}" = "false" ] ; then kill -s TERM $PID ; fi
     fi
 )
-CURRENT_TEST="Test_space_out__DML_script_file_name_only"
+CURRENT_TEST="Test_space_out__DML_script_file_name"
 (
     printf "Running test \"${CURRENT_TEST}\"... "
-    echo "Running test ${CURRENT_TEST}"                          >> ${TEST_LOG}
+    printf "\nTest case: \"${CURRENT_TEST}\"\n"   >> ${TEST_LOG}
     cd "${TEMP}"
-    echo "Working directory: $PWD"                               >> ${TEST_LOG}
-    rm -f "${DML_OUTPUT}"                                        >  /dev/null    2>&1
-    sh "${SPACE_DIR}/bin/${RUN_SCRIPT}" ${DML_SCRIPT_WITH_ARGS}  >> ${TEST_LOG}  2>&1
+    echo "Working directory: \"$PWD\""            >> ${TEST_LOG}
+    rm -f "${DML_OUTPUT}"                         >  /dev/null    2>&1
+    CMD="\"${SPACE_DIR}/bin/${RUN_SCRIPT}\" ${DML_SCRIPT_WITH_ARGS}"
+    echo "${CMD}"                                 >> ${TEST_LOG}  2>&1
+    eval ${CMD}                                   >> ${TEST_LOG}  2>&1
     EXIT_CODE=$?
     if [ ${EXIT_CODE} -eq 0 ]
     then

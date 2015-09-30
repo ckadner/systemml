@@ -86,7 +86,7 @@ SET CURRENT_TEST=Test_root__DML_script_with_path
     IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_root__DML_script_file_name_only
+SET CURRENT_TEST=Test_root__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
@@ -116,7 +116,7 @@ SET CURRENT_TEST=Test_bin__DML_script_with_path
 )
 
 
-SET CURRENT_TEST=Test_bin__DML_script_file_name_only
+SET CURRENT_TEST=Test_bin__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
@@ -146,7 +146,7 @@ SET CURRENT_TEST=Test_out__DML_script_with_path
     IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_out__DML_script_file_name_only
+SET CURRENT_TEST=Test_out__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"                                 >> %TEST_LOG%
@@ -189,7 +189,7 @@ SET CURRENT_TEST=Test_space_root__DML_script_with_path
     IF NOT EXIST "temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &         IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_root__DML_script_file_name_only
+SET CURRENT_TEST=Test_space_root__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"            >> %TEST_LOG%
@@ -220,7 +220,7 @@ SET CURRENT_TEST=Test_space_bin__DML_script_with_path
     IF NOT EXIST "..\temp\%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata &       IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_bin__DML_script_file_name_only
+SET CURRENT_TEST=Test_space_bin__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%"
     echo Running test "%CURRENT_TEST%"        >> %TEST_LOG%
@@ -249,7 +249,7 @@ SET CURRENT_TEST=Test_space_out__DML_script_with_path
     IF NOT EXIST "%DML_OUTPUT%" SET FAILED_TESTS=%FAILED_TESTS% %CURRENT_TEST%-missing-outputdata & IF "%CONTINUE_ON_ERROR%"=="false" GOTO Failure
 )
 
-SET CURRENT_TEST=Test_space_out__DML_script_file_name_only
+SET CURRENT_TEST=Test_space_out__DML_script_file_name
 (
     echo Running test "%CURRENT_TEST%":
     echo Running test "%CURRENT_TEST%"                          >> %TEST_LOG%
