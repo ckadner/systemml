@@ -27,7 +27,7 @@ CONTINUE_ON_ERROR=true
 TEST_SCRIPT_REL_DIR=system-ml/src/test/scripts
 
 # expecting the run script to be in directory ${PROJECT_ROOT_DIR}/bin
-RUN_SCRIPT=systemml.sh
+RUN_SCRIPT=systemml
 
 # the DML script with arguments we use to test the run script
 DML_SCRIPT=genLinearRegressionData.dml
@@ -51,10 +51,12 @@ if [ "${TEST_SCRIPT_PATH}" = "${PROJECT_ROOT_DIR}" ]
 then
     echo This test script "$0" is expected to be located in folder "${TEST_SCRIPT_REL_DIR}" under the project root.
     echo Please update "$0" and correctly set the variable "TEST_SCRIPT_REL_DIR".
+    exit 1
 fi
 if [ ! -f "${PROJECT_ROOT_DIR}/bin/${RUN_SCRIPT}" ]
 then
-  echo "Could not find \"bin/${RUN_SCRIPT}\" in the project root directory. If the actual path of the run script is not \"bin/${RUN_SCRIPT}\", or if the actual project root directory is not \"${PROJECT_ROOT_DIR}\", please update this test script \"$0\"."
+    echo "Could not find \"bin/${RUN_SCRIPT}\" in the project root directory. If the actual path of the run script is not \"bin/${RUN_SCRIPT}\", or if the actual project root directory is not \"${PROJECT_ROOT_DIR}\", please update this test script \"$0\"."
+    exit 1
 fi
 
 
