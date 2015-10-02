@@ -69,7 +69,7 @@ Known issue: package 'methods' is not available for R version 3.2.1. In which ca
 ## Running SystemML in Standalone Mode
 
 SystemML can run in distributed mode as well as in local standalone mode. We'll operate in standalone mode in this guide. 
-After you built SystemML from source (```mvn clean package```) the standalone mode can be executed either on Mac/Unix using the ```./bin/systemml``` script or on Windows using the ```.\bin\systemml.bat``` batch file. 
+After you built SystemML from source (```mvn clean compile```) the standalone mode can be executed either on Mac/Unix using the ```./bin/systemml``` script or on Windows using the ```.\bin\systemml.bat``` batch file. 
 
 If you run from the script from the project root folder ```./``` or from the ```./bin``` folder, then the output files from running SystemML will be created inside the ```./temp``` folder to keep them separate from the SystemML source files managed by Git. The output files for all of the examples in this guide will be created under the ```./temp``` folder.
 
