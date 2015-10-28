@@ -25,11 +25,11 @@
 
   <name>IBM SystemML</name>
 
-	<parent>
-		<groupId>org.apache</groupId>
-		<artifactId>apache</artifactId>
-		<version>17</version>
-	</parent>
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>17</version>
+  </parent>
 
   <modules>
     <module>system-ml</module>
@@ -44,9 +44,9 @@
         </configuration>
       </plugin>
       <plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-surefire-plugin</artifactId>
-		</plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
 
