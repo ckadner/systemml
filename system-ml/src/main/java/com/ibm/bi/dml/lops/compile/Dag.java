@@ -2241,7 +2241,7 @@ public class Dag<N extends Lop>
 	 * Decision depends on the exec location of <code>tmpNode</code>. If the exec location is: 
 	 * MapAndReduce: CAN NOT be piggybacked since it defines its own MR job
 	 * Reduce: CAN NOT be piggybacked since it must execute before <code>node</code>
-	 * Map or MapOrReduce: CAN be piggybacked ONLY IF it is comatible w/ <code>tmpNode</code> 
+	 * Map or MapOrReduce: CAN be piggybacked ONLY IF it is compatible w/ <code>tmpNode</code> 
 	 * 
 	 * @param tmpNode
 	 * @param node
