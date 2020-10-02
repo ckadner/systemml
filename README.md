@@ -1,4 +1,4 @@
-# SystemML
+# SystemML(Machine Learning)
 
 SystemML is a flexible, scalable machine learning (ML) language written in Java.
 SystemML's distinguishing characteristics are: (1) algorithm customizability,
@@ -118,7 +118,7 @@ SystemML is distributed in several packages, including a standalone package. We'
 
 <a name="run-dml-script-to-generate-random-data" />
 
-### Run DML Script to Generate Random Data
+### Run DML(Data manuplation Language) Script to Generate Random Data
 
 We can execute the `genLinearRegressionData.dml` script in Standalone mode using either the `systemml` or `systemml.bat` file.
 In this example, we'll generate a matrix of 1000 rows of 50 columns of test data, with sparsity 0.7. In addition to this, a 51<sup>st</sup> column consisting of labels will
